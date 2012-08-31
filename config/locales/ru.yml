@@ -1,0 +1,23 @@
+ru:
+  project_module_custom_workflows_module: "Пользовательские рабочие процессы"
+  permission_manage_project_workflow: "Управление пользовательскими рабочими процессами в проекте"
+  label_custom_workflow: "Пользовательский рабочий процесс"
+  label_custom_workflow_plural: "Пользовательские рабочие процессы"
+  label_custom_workflow_new: "Новый процесс"
+
+  field_script: "Скрипт управления"
+  field_is_enabled: "Разрешено"
+
+  field_custom_workflow:
+    script: "Скрипт управления"
+
+
+  activerecord:
+    errors:
+      messages:
+        invalid_script: "содержит ошибку: %{error}"
+        custom_workflow_error: "Ошибка в рабочем процессе (обратитесь к администратору)"
+        new_status_invalid: "- переход от '%{old_status}' к '%{new_status}' невозможен"
+
+  text_select_project_custom_workflows: Выберите процессы для данного проекта
+  text_custom_workflow_script_note: Используйте переменную @issue для доступа к задаче. Для завершения процесса с ошибкой используйте исключение WorkflowError.

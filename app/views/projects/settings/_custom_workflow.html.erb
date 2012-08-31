@@ -1,0 +1,20 @@
+<% form = form_for @project do |f| %>
+  <%= hidden_field_tag :tab, 'custom_workflow' %>
+  <%= hidden_field_tag 'project[custom_workflow_ids][]', '' %>
+  <fieldset>
+    <legend><%= l(:text_select_project_custom_workflows) %></legend>
+    <% if CustomWorkflow.exists? %>
+    <dl>
+      <% CustomWorkflow.all.each do |w| %>
+        <dt><label><%= check_box_tag 'project[custom_workflow_ids][]', w.id, @project.custom_workflow_ids.include?(w.id) %> <%= w.name %></label></dt>
+        <dd><em><%= textilizable(w.description) %></em></dd>
+      <% end %>
+    </dl>
+    <% else %>
+      <p class="nodata"><%= l(:label_no_data) %></p>
+    <% end %>
+  </fieldset>
+  <%= submit_tag l(:button_save) %>
+<% end %>
+
+<%= form if Redmine::VERSION::MAJOR >= 2 %>

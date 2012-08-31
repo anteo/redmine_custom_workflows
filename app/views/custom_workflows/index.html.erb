@@ -1,0 +1,35 @@
+<% html_title(l(:label_custom_workflow_plural)) -%>
+<div class="contextual">
+<%= link_to l(:label_custom_workflow_new), new_custom_workflow_path, :class => 'icon icon-add' %>
+</div>
+
+<h2><%=l(:label_custom_workflow_plural)%></h2>
+
+<div class="autoscroll">
+  <% if @workflows.any? %>
+  <table class="custom-workflows list">
+    <thead>
+    <tr>
+      <th><%=l(:field_name)%></th>
+      <th><%=l(:field_description)%></th>
+      <th style="width:15%;"><%= l(:button_sort) %></th>
+      <th style="width:10%;"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @workflows.each do |workflow| %>
+    <tr class="<%= cycle("odd", "even") %>">
+      <td class="name"><%= link_to(workflow.name, edit_custom_workflow_path(workflow)) %></td>
+      <td><%= textilizable(workflow.description) %></td>
+      <td align="center"><%= reorder_links("custom_workflow", {:action => 'update', :id => workflow}, :put) %></td>
+      <td class="buttons">
+        <%= link_to(l(:button_delete), workflow, :class => 'icon icon-del', :data => {:confirm => l(:text_are_you_sure)}, :confirm => l(:text_are_you_sure), :method => :delete) %>
+      </td>
+    </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <% else %>
+    <p class="nodata"><%= l(:label_no_data) %></p>
+  <% end %>
+</div>

@@ -1,0 +1,23 @@
+en:
+  project_module_custom_workflows_module: "Custom workflows"
+  permission_manage_project_workflow: "Manage project custom workflows"
+  label_custom_workflow: "Custom workflows"
+  label_custom_workflow_plural: "Custom workflows"
+  label_custom_workflow_new: "Create a custom workflow"
+
+  field_script: "Workflow script"
+  field_is_enabled: "Enabled"
+
+  field_custom_workflow:
+    script: "Workflow script"
+
+
+  activerecord:
+    errors:
+      messages:
+        invalid_script: "contains error: %{error}"
+        custom_workflow_error: "Custom workflow error (please contact administrator)"
+        new_status_invalid: "transition from '%{old_status}' to '%{new_status}' is prohibited"
+
+  text_select_project_custom_workflows: Select project custom workflows
+  text_custom_workflow_script_note: Use the variable @issue for an access to the issue. To finish the process with an error, use raise WorkflowError, "Message to user"

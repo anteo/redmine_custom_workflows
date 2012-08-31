@@ -1,0 +1,11 @@
+#admin-menu a.custom-workflows {
+    background-image: url(../../../images/ticket_go.png);
+}
+
+table.list.custom-workflows td {
+    vertical-align: middle;
+}
+
+#custom_workflow_description, #custom_workflow_script {
+    width: 99%;
+}

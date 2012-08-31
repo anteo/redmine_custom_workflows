@@ -1,0 +1,12 @@
+<h2><%= link_to l(:label_custom_workflow_plural), custom_workflows_path %> &#187; <%= l(:label_custom_workflow_new) %></h2>
+
+<%= error_messages_for @workflow %>
+
+<% form = labelled_form_for @workflow do |f| %>
+<%= render :partial => 'form', :locals => {:f => f} %>
+<%= submit_tag l(:button_create) %>
+<% end %>
+
+<%= form if Redmine::VERSION::MAJOR >= 2 %>
+
+<% html_title(l(:label_custom_workflow_plural), l(:label_custom_workflow_new), l(:label_administration)) -%>
