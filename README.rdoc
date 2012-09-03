@@ -1,3 +1,47 @@
-= custom_workflow
+= Custom Workflows plug-in
 
-Description goes here
+This plug-in provides a great functionality for those who is familiar with the Ruby language.
+It allows to customize workflow by defining own rules for issues processing. It's possible:
+* To change issue properties if some conditions are met;
+* To create new issues programmatically if the conditions are met (for example you can create an issue in another project if the status of source issue is changed to specific value);
+* To raise custom errors which will display to user, if he does something wrong;
+* To do anything that conforms to your needs;
+
+== Installation
+
+From a ZIP file:
+
+* Download the latest version of the plugin
+* Unzip to */plugins* (Redmine 2.x) or */vendor/plugins* (Redmine 1.x) folder of Redmine
+
+From a GIT repository:
+
+* Clone repository with <b>git clone git://git.academ.org/redmine_custom_workflows.git plugins/redmine_custom_workflows</b> command
+
+After download:
+
+* Run <b>rake redmine:plugins:migrate</b> (Redmine 2.x) or <b>rake db:migrate:plugins</b> (Redmine 1.x).
+* Restart Redmine.
+
+== Configuration
+
+First, you need to define your own custom workflow(s). We already included one, called "Duration/Done Ratio/Status correlation". You'll find it after installing the plug-in. It demonstrates some possibilities of plug-in.
+
+Go to the *Administration* section, then select <b>Custom workflows</b>. A list of defined workflows will appear. Here you can create new workflow, update, reorder and delete existing workflows. The order of workflows specifies the order in which workflow scripts will be executed.
+
+Then click the <b>Create a custom workflow</b> button. Enter a short name, full description and script itself. The script entered will be executed before saving issues (on before_save callback),
+so you can use <b>@issue</b> variable to access the issue properties and methods. You can also raise exceptions by <b>raise WorkflowError, "Your message"</b>. If you change some properties of the issue during the script execution, it will be revalidated then and additional validation errors can appear.
+
+== Enabling workflows for projects
+
+After you defined your custom workflow(s), you need to enable it. Open <b>Project settings</b>. Go to the <b>Enabled modules</b>. Enable the <b>Custom workflows</b> module there and click *Save*. Then go to the <b>Custom workflows</b> tab of the project settings and enable workflow(s) you need for this project.
+
+Now go to the *Issues* and test it.
+
+== Compatibility
+
+This plug-in is compatible with Redmine 1.4.x, 2.0.x, 2.1.x
+
+== Changelog
+
+[0.0.1] Initial commit
