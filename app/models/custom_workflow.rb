@@ -11,22 +11,24 @@ class CustomWorkflow < ActiveRecord::Base
   acts_as_list
 
   default_scope :order => 'position ASC'
-  validates_presence_of :script
   validates_presence_of :name
   validates_uniqueness_of :name, :case_sensitive => false
   validate :validate_syntax
 
-  def eval_script(context)
-    context.each { |k, v| instance_variable_set ("@#{k}").to_sym, v }
-    eval(script)
-  end
-
   def validate_syntax
+    issue = Issue.new
+    issue.send :instance_variable_set, :@issue, issue # compatibility with 0.0.1
     begin
-      eval_script(:issue => Issue.new)
+      issue.instance_eval(before_save)
     rescue WorkflowError => e
     rescue Exception => e
-      errors.add :script, :invalid_script, :error => e
+      errors.add :before_save, :invalid_script, :error => e
+    end
+    begin
+      issue.instance_eval(after_save)
+    rescue WorkflowError => e
+    rescue Exception => e
+      errors.add :after_save, :invalid_script, :error => e
     end
   end
 

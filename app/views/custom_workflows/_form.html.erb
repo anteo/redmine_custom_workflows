@@ -2,8 +2,18 @@
 <div class="box tabular">
   <p><%= f.text_field :name, :required => true, :size => 50 %></p>
   <p><%= f.text_area :description, :cols => 80, :rows => 5 %></p>
-  <p><%= f.text_area :script, :cols => 80, :rows => 20, :wrap => 'off', :required => true %>
-    <em class="info"><%= l(:text_custom_workflow_script_note) %></em>
+  <p><label><%= l(:label_workflow_scripts) %></label>
+    <span class="splitcontentleft">
+      <%= f.text_area :before_save, :cols => 40, :rows => 20, :wrap => 'off', :no_label => true %>
+      <em class="info"><%= l(:text_custom_workflow_before_save_note) %></em>
+    </span>
+    <span class="splitcontentright">
+      <%= f.text_area :after_save, :cols => 40, :rows => 20, :wrap => 'off', :no_label => true %>
+      <em class="info"><%= l(:text_custom_workflow_after_save_note) %></em>
+    </span>
+  </p>
+  <p>
+    <em class="info"><%= l(:text_custom_workflow_general_note) %></em>
   </p>
 </div>
 

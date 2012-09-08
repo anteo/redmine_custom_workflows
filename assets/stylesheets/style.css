@@ -1,11 +1,9 @@
 #admin-menu a.custom-workflows {
-    background-image: url(../../../images/ticket_go.png);
+  background-image: url(../../../images/ticket_go.png);
 }
 
-table.list.custom-workflows td {
-    vertical-align: middle;
-}
+table.list.custom-workflows td { vertical-align: middle; }
 
-#custom_workflow_description, #custom_workflow_script {
-    width: 99%;
-}
+#custom_workflow_description { width: 99%; }
+
+#custom_workflow_before_save, #custom_workflow_after_save { width: 98%; font-size: 11px; }

@@ -1,3 +1,4 @@
+
 class CreateExampleWorkflow < ActiveRecord::Migration
   def self.up
     CustomWorkflow.create(:name => "Duration/Done Ratio/Status correlation", :description => <<EOD, :script => <<EOS)

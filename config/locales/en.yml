@@ -5,12 +5,13 @@ en:
   label_custom_workflow_plural: "Custom workflows"
   label_custom_workflow_new: "Create a custom workflow"
 
-  field_script: "Workflow script"
+  label_workflow_scripts: "Workflow scripts"
+  field_after_save: "Workflow script (after save)"
+  field_before_save: "Workflow script (before save)"
   field_is_enabled: "Enabled"
 
   field_custom_workflow:
     script: "Workflow script"
-
 
   activerecord:
     errors:
@@ -20,4 +21,6 @@ en:
         new_status_invalid: "transition from '%{old_status}' to '%{new_status}' is prohibited"
 
   text_select_project_custom_workflows: Select project custom workflows
-  text_custom_workflow_script_note: Use the variable @issue for an access to the issue. To finish the process with an error, use raise WorkflowError, "Message to user"
+  text_custom_workflow_before_save_note: This script will run BEFORE saving the issue. You can change properties of the issues here. Do not create or update related issues in this script. To finish with error, use raise WorkflowError, "Message to user".
+  text_custom_workflow_after_save_note: This script will run AFTER saving the issue. You can update or create related issues here. Note that this script will be also executed for the newly created issues. So make appropriate checks to prevent infinite recursion.
+  text_custom_workflow_general_note: Both scripts are executed in the context of the issue like ordinary before_save and after_save callbacks. So use methods and properties of the issue directly (or through "self"). Instance variables (@variable) are also allowed and may be used if needed.
