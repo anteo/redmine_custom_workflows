@@ -12,7 +12,7 @@ Set up a correlation between the start date, due date, done ratio and status of 
 To use this script properly, turn off "Use current date as start date for new issues" option in the settings as this script already do it own way.
 EOD
 if @issue.done_ratio_changed?
-  if @issue.done_ratio==100 && @issue.status_id=2
+  if @issue.done_ratio==100 && @issue.status_id==2
     @issue.status_id=3
   elsif [1,3,4].include?(@issue.status_id) && @issue.done_ratio<100
     @issue.status_id=2

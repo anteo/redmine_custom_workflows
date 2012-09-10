@@ -19,13 +19,13 @@ class CustomWorkflow < ActiveRecord::Base
     issue = Issue.new
     issue.send :instance_variable_set, :@issue, issue # compatibility with 0.0.1
     begin
-      issue.instance_eval(before_save)
+      issue.instance_eval(before_save) if respond_to?(:before_save) && before_save
     rescue WorkflowError => e
     rescue Exception => e
       errors.add :before_save, :invalid_script, :error => e
     end
     begin
-      issue.instance_eval(after_save)
+      issue.instance_eval(after_save) if respond_to?(:after_save) && after_save
     rescue WorkflowError => e
     rescue Exception => e
       errors.add :after_save, :invalid_script, :error => e

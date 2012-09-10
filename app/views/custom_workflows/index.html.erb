@@ -21,7 +21,7 @@
     <tr class="<%= cycle("odd", "even") %>">
       <td class="name"><%= link_to(workflow.name, edit_custom_workflow_path(workflow)) %></td>
       <td><%= textilizable(workflow.description) %></td>
-      <td align="center"><%= reorder_links("custom_workflow", {:action => 'update', :id => workflow}, :put) %></td>
+      <td align="center"><%= reorder_links("custom_workflow", {:action => 'update', :id => workflow}) %></td>
       <td class="buttons">
         <%= link_to(l(:button_delete), workflow, :class => 'icon icon-del', :data => {:confirm => l(:text_are_you_sure)}, :confirm => l(:text_are_you_sure), :method => :delete) %>
       </td>

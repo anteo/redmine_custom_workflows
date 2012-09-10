@@ -1,8 +1,8 @@
 <h2><%= link_to l(:label_custom_workflow_plural), custom_workflows_path %> &#187; <%= @workflow %></h2>
 
-<%= error_messages_for @workflow %>
+<%= error_messages_for 'workflow' %>
 
-<% form = labelled_form_for @workflow do |f| %>
+<% form = form_for @workflow, :builder => (TabularFormBuilder rescue Redmine::Views::LabelledFormBuilder) do |f| %>
 <%= render :partial => 'form', :locals => {:f => f} %>
 <%= submit_tag l(:button_save) %>
 <% end %>
