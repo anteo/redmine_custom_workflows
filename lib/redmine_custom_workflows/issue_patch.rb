@@ -13,15 +13,15 @@ module RedmineCustomWorkflows
 
     module InstanceMethods
       def validate_status
-        return true unless @extra_validation
-        if status_id_was != status_id && !new_statuses_allowed_to(User.current, new_record?).collect(&:id).include?(status_id)
-          status_was = IssueStatus.find_by_id(status_id_was)
-          status_new = IssueStatus.find_by_id(status_id)
+        return true unless @saved_attributes && @saved_attributes['status_id'] != status_id &&
+            !new_statuses_allowed_to(User.current, new_record?).collect(&:id).include?(status_id)
 
-          errors.add :status, :new_status_invalid,
-                     :old_status => status_was && status_was.name,
-                     :new_status => status_new && status_new.name
-        end
+        status_was = IssueStatus.find_by_id(status_id_was)
+        status_new = IssueStatus.find_by_id(status_id)
+
+        errors.add :status, :new_status_invalid,
+                   :old_status => status_was && status_was.name,
+                   :new_status => status_new && status_new.name
       end
 
       def run_custom_workflows(on)
@@ -47,10 +47,9 @@ module RedmineCustomWorkflows
       end
 
       def before_save_custom_workflows
-        saved_attributes = attributes.dup
-        @extra_validation = true
-        result = run_custom_workflows(:before_save) && (saved_attributes == attributes || valid?)
-        @extra_validation = false
+        @saved_attributes = attributes.dup
+        result = run_custom_workflows(:before_save) && (@saved_attributes == attributes || valid?)
+        @saved_attributes = nil
         result
       end
 
