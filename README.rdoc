@@ -35,7 +35,9 @@ Both scripts are executed in the context of the issue. So access properties and 
 
 == Enabling workflows for projects
 
-After you defined your custom workflow(s), you need to enable it. Open <b>Project settings</b>. Go to the <b>Enabled modules</b>. Enable the <b>Custom workflows</b> module there and click *Save*. Then go to the <b>Custom workflows</b> tab of the project settings and enable workflow(s) you need for this project.
+After you defined your custom workflow(s), you need to enable it for particular project(s). There are two ways of doing this.
+* While editing existing or creating new custom workflow;
+* In project settings (if the user has appropriate permission). Open <b>Project settings</b>. Go to the <b>Custom workflows</b> tab of the project settings and enable workflow(s) you need for this project.
 
 Now go to the *Issues* and test it.
 
@@ -91,6 +93,8 @@ This plug-in is compatible with Redmine 1.2.x, 1.3.x, 1.4.x, 2.0.x, 2.1.x
 
 == Changelog
 
+[0.0.4] * Added ability to enable workflows globally for all projects. No need to enable 'Custom workflows' project module anymore. Just go to the 'Administration' -> 'Custom workflows' section and enable or disable your workflows in one place.
+        * Fixed bug with 'Status transition prohibited' when updating the issue status by the repository commit
 [0.0.3] Compatibility with 1.2.x, 1.3.x
 [0.0.2] Added ability to define after_save script along with before_save, improved logging, changed context of executing script to the issue.
 [0.0.1] Initial commit

@@ -1,24 +1,53 @@
 
-<div class="box tabular">
-  <p><%= f.text_field :name, :required => true, :size => 50 %></p>
-  <p><%= f.text_area :description, :cols => 80, :rows => 5 %></p>
-  <p><label><%= l(:label_workflow_scripts) %></label>
-    <span class="splitcontentleft">
-      <%= f.text_area :before_save, :cols => 40, :rows => 20, :wrap => 'off', :no_label => true %>
+<div class="splitcontent">
+  <div class="splitcontentleft box">
+    <p><%= f.text_field :name, :required => true, :size => 50 %></p>
+    <p><%= f.text_area :description, :cols => 40, :rows => 5 %></p>
+    <p><label><%= f.check_box :is_for_all, :onclick => "checkAndDisable('custom_workflow_enabled_projects', this.checked);", :no_label => true %> <%= l(:field_enabled_for_all_projects) %></label></p>
+  </div>
+
+  <div class="splitcontentright">
+    <fieldset class="box" id="custom_workflow_enabled_projects">
+      <legend><%= l(:label_enabled_projects) %></legend>
+      <%= custom_workflows_render_nested_projects(Project.visible.active) do |p|
+        content_tag('label', check_box_tag('custom_workflow[project_ids][]', p.id, @workflow.project_ids.include?(p.id) || @workflow.is_for_all?,
+                                           :id => nil, :disabled => @workflow.is_for_all?) + ' ' + h(p), :class => 'block')
+      end %>
+      <%= hidden_field_tag('custom_workflow[project_ids][]', '', :id => nil) %>
+      <p><%= check_all_links 'custom_workflow_enabled_projects' %></p>
+    </fieldset>
+  </div>
+</div>
+
+<div style="clear: left;"></div>
+
+<fieldset class="box">
+  <legend><%= l(:label_workflow_scripts) %></legend>
+  <div class="splitcontent">
+    <div class="splitcontentleft">
+      <%= f.text_area :before_save, :cols => 40, :rows => 20, :wrap => 'off' %>
       <em class="info"><%= l(:text_custom_workflow_before_save_note) %></em>
-    </span>
-    <span class="splitcontentright">
-      <%= f.text_area :after_save, :cols => 40, :rows => 20, :wrap => 'off', :no_label => true %>
+    </div>
+    <div class="splitcontentright">
+      <%= f.text_area :after_save, :cols => 40, :rows => 20, :wrap => 'off' %>
       <em class="info"><%= l(:text_custom_workflow_after_save_note) %></em>
-    </span>
-  </p>
+    </div>
+  </div>
+  <div style="clear: left;"></div>
   <p>
     <em class="info"><%= l(:text_custom_workflow_general_note) %></em>
   </p>
-</div>
+</fieldset>
 
 <script type="text/javascript">
   jQuery('#custom_workflow_script').taboverride(2, true);
+  function checkAndDisable(id, checked) {
+    if (checked) {
+      jQuery('#'+id).find('input[type=checkbox]').attr('checked', true).attr('disabled', true);
+    } else {
+      jQuery('#'+id).find('input[type=checkbox]').removeAttr('checked').removeAttr('disabled');
+    }
+  }
 </script>
 
 <%= wikitoolbar_for :custom_workflow_description %>

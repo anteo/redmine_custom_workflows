@@ -7,6 +7,8 @@ class WorkflowError < StandardError
 end
 
 class CustomWorkflow < ActiveRecord::Base
+  unloadable
+
   has_and_belongs_to_many :projects
   acts_as_list
 
@@ -14,6 +16,12 @@ class CustomWorkflow < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name, :case_sensitive => false
   validate :validate_syntax
+
+  if Gem::Version.new(Rails::VERSION::STRING) < Gem::Version.new("3.1.0")
+    named_scope :for_all, :conditions => {:is_for_all => true}
+  else
+    scope :for_all, where(:is_for_all => true)
+  end
 
   def validate_syntax
     issue = Issue.new
@@ -30,6 +38,10 @@ class CustomWorkflow < ActiveRecord::Base
     rescue Exception => e
       errors.add :after_save, :invalid_script, :error => e
     end
+  end
+
+  def <=>(other)
+    self.position <=> other.position
   end
 
   def to_s

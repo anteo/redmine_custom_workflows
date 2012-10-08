@@ -4,11 +4,13 @@ en:
   label_custom_workflow: "Custom workflows"
   label_custom_workflow_plural: "Custom workflows"
   label_custom_workflow_new: "Create a custom workflow"
-
   label_workflow_scripts: "Workflow scripts"
-  field_after_save: "Workflow script (after save)"
-  field_before_save: "Workflow script (before save)"
+  label_enabled_projects: "Enabled for project(s)"
+
+  field_after_save: "Workflow script executable after saving the issue"
+  field_before_save: "Workflow script executable before saving the issue"
   field_is_enabled: "Enabled"
+  field_enabled_for_all_projects: "Enabled for all projects"
 
   field_custom_workflow:
     script: "Workflow script"
@@ -21,6 +23,7 @@ en:
         new_status_invalid: "transition from '%{old_status}' to '%{new_status}' is prohibited"
 
   text_select_project_custom_workflows: Select project custom workflows
-  text_custom_workflow_before_save_note: This script will run BEFORE saving the issue. You can change properties of the issues here. Do not create or update related issues in this script. To finish with error, use raise WorkflowError, "Message to user".
-  text_custom_workflow_after_save_note: This script will run AFTER saving the issue. You can update or create related issues here. Note that this script will be also executed for the newly created issues. So make appropriate checks to prevent infinite recursion.
+  text_custom_workflow_before_save_note: You can change properties of the issues here. Do not create or update related issues in this script. To finish with error, use raise WorkflowError, "Message to user".
+  text_custom_workflow_after_save_note: You can update or create related issues here. Note that this script will be also executed for the newly created issues. So make appropriate checks to prevent infinite recursion.
   text_custom_workflow_general_note: Both scripts are executed in the context of the issue like ordinary before_save and after_save callbacks. So use methods and properties of the issue directly (or through "self"). Instance variables (@variable) are also allowed and may be used if needed.
+  text_no_enabled_projects: No projects

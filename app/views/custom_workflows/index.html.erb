@@ -12,6 +12,7 @@
     <tr>
       <th><%=l(:field_name)%></th>
       <th><%=l(:field_description)%></th>
+      <th><%=l(:label_project_plural)%></th>
       <th style="width:15%;"><%= l(:button_sort) %></th>
       <th style="width:10%;"></th>
     </tr>
@@ -21,6 +22,15 @@
     <tr class="<%= cycle("odd", "even") %>">
       <td class="name"><%= link_to(workflow.name, edit_custom_workflow_path(workflow)) %></td>
       <td><%= textilizable(workflow.description) %></td>
+      <td align="center">
+        <% if workflow.is_for_all? %>
+          <%= l(:field_enabled_for_all_projects) %>
+        <% elsif workflow.projects.empty? %>
+          <%= l(:text_no_enabled_projects) %>
+        <% else %>
+          <%= workflow.projects.map(&:name).join(", ") %>
+        <% end %>
+      </td>
       <td align="center"><%= reorder_links("custom_workflow", {:action => 'update', :id => workflow}) %></td>
       <td class="buttons">
         <%= link_to(l(:button_delete), workflow, :class => 'icon icon-del', :data => {:confirm => l(:text_are_you_sure)}, :confirm => l(:text_are_you_sure), :method => :delete) %>

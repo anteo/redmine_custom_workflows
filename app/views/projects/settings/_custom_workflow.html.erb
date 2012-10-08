@@ -6,7 +6,7 @@
     <% if CustomWorkflow.exists? %>
     <dl>
       <% CustomWorkflow.all.each do |w| %>
-        <dt><label><%= check_box_tag 'project[custom_workflow_ids][]', w.id, @project.custom_workflow_ids.include?(w.id) %> <%= w.name %></label></dt>
+        <dt><label><%= check_box_tag 'project[custom_workflow_ids][]', w.id, @project.custom_workflow_ids.include?(w.id) || w.is_for_all?, :disabled => w.is_for_all? %> <%= w.name %></label></dt>
         <dd><em><%= textilizable(w.description) %></em></dd>
       <% end %>
     </dl>

@@ -4,6 +4,8 @@
 
 table.list.custom-workflows td { vertical-align: middle; }
 
-#custom_workflow_description { width: 99%; }
+#custom_workflow_description, #custom_workflow_name { width: 98%; }
 
 #custom_workflow_before_save, #custom_workflow_after_save { width: 98%; font-size: 11px; }
+
+#custom_workflow_enabled_projects ul { max-height: 200px; overflow-y: auto; }

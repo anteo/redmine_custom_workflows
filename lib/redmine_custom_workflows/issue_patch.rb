@@ -25,10 +25,12 @@ module RedmineCustomWorkflows
       end
 
       def run_custom_workflows(on)
-        return true unless project && project.module_enabled?(:custom_workflows_module)
+        return true unless project
+        workflows = project.enabled_custom_workflows
+        return true unless workflows.any?
         @issue = self # compatibility with 0.0.1
         Rails.logger.info "= Running #{on} custom workflows for issue \"#{subject}\" (##{id})"
-        project.custom_workflows.each do |workflow|
+        workflows.each do |workflow|
           begin
             Rails.logger.info "== Running #{on} custom workflow \"#{workflow.name}\""
             instance_eval(workflow.read_attribute(on))

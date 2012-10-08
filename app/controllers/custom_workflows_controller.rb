@@ -6,7 +6,7 @@ class CustomWorkflowsController < ApplicationController
   before_filter :find_workflow, :only => [:show, :edit, :update, :destroy]
 
   def index
-    @workflows = CustomWorkflow.all
+    @workflows = CustomWorkflow.find(:all, :include => [:projects])
     respond_to do |format|
       format.html
     end
