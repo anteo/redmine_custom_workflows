@@ -40,7 +40,8 @@
 </fieldset>
 
 <script type="text/javascript">
-  jQuery('#custom_workflow_script').taboverride(2, true);
+  jQuery('#custom_workflow_before_save').taboverride(2, true);
+  jQuery('#custom_workflow_after_save').taboverride(2, true);
   function checkAndDisable(id, checked) {
     if (checked) {
       jQuery('#'+id).find('input[type=checkbox]').attr('checked', true).attr('disabled', true);
