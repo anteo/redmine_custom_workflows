@@ -1,6 +1,5 @@
 module RedmineCustomWorkflows
   module Helper
-    unloadable
 
     # Renders a tree of projects as a nested set of unordered lists
     # The given collection may be a subset of the whole project tree
@@ -13,12 +12,12 @@ module RedmineCustomWorkflows
         projects.sort_by(&:lft).each do |project|
           # set the project environment to please macros.
           @project = project
-          if (ancestors.empty? || project.is_descendant_of?(ancestors.last))
+          if ancestors.empty? || project.is_descendant_of?(ancestors.last)
             s << "<ul class='projects #{ ancestors.empty? ? 'root' : nil}'>\n"
           else
             ancestors.pop
-            s << "</li>"
-            while (ancestors.any? && !project.is_descendant_of?(ancestors.last))
+            s << '</li>'
+            while ancestors.any? && !project.is_descendant_of?(ancestors.last)
               ancestors.pop
               s << "</ul></li>\n"
             end

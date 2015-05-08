@@ -1,9 +1,12 @@
-
 <div class="splitcontent">
   <div class="splitcontentleft box">
     <p><%= f.text_field :name, :required => true, :size => 50 %></p>
+
     <p><%= f.text_area :description, :cols => 40, :rows => 5 %></p>
-    <p><label><%= f.check_box :is_for_all, :onclick => "checkAndDisable('custom_workflow_enabled_projects', this.checked);", :no_label => true %> <%= l(:field_enabled_for_all_projects) %></label></p>
+
+    <p>
+      <label><%= f.check_box :is_for_all, :onclick => "checkAndDisable('custom_workflow_enabled_projects', this.checked);", :no_label => true %> <%= l(:field_enabled_for_all_projects) %></label>
+    </p>
   </div>
 
   <div class="splitcontentright">
@@ -40,25 +43,19 @@
 </fieldset>
 
 <script type="text/javascript">
-  jQuery('#custom_workflow_before_save').taboverride(2, true);
-  jQuery('#custom_workflow_after_save').taboverride(2, true);
-  function checkAndDisable(id, checked) {
-    if (checked) {
-      jQuery('#'+id).find('input[type=checkbox]').attr('checked', true).attr('disabled', true);
-    } else {
-      jQuery('#'+id).find('input[type=checkbox]').removeAttr('checked').removeAttr('disabled');
+    jQuery('#custom_workflow_before_save').taboverride(2, true);
+    jQuery('#custom_workflow_after_save').taboverride(2, true);
+    function checkAndDisable(id, checked) {
+        if (checked) {
+            jQuery('#' + id).find('input[type=checkbox]').attr('checked', true).attr('disabled', true);
+        } else {
+            jQuery('#' + id).find('input[type=checkbox]').removeAttr('checked').removeAttr('disabled');
+        }
     }
-  }
 </script>
 
 <%= wikitoolbar_for :custom_workflow_description %>
 
 <% content_for :header_tags do %>
-  <% if (Redmine::VERSION::ARRAY <=> [2,1,0]) < 0 %>
-    <%= javascript_include_tag "jquery-1.8.1.min.js", :plugin => 'redmine_custom_workflows' %>
-    <script type="text/javascript">
-      jQuery.noConflict();
-    </script>
-  <% end %>
-  <%= javascript_include_tag "tab_override", :plugin => 'redmine_custom_workflows' %>
+    <%= javascript_include_tag "tab_override", :plugin => 'redmine_custom_workflows' %>
 <% end %>

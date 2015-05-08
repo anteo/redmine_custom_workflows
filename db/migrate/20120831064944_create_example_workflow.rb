@@ -1,7 +1,7 @@
 
 class CreateExampleWorkflow < ActiveRecord::Migration
   def self.up
-    CustomWorkflow.create(:name => "Duration/Done Ratio/Status correlation", :description => <<EOD, :script => <<EOS)
+    CustomWorkflow.create!(:name => 'Duration/Done Ratio/Status correlation', :description => <<EOD, :script => <<EOS)
 Set up a correlation between the start date, due date, done ratio and status of issues.
 
 * If done ratio is changed to 100% and status is "In Process", status changes to "Resolved"

@@ -1,12 +1,11 @@
 class CustomWorkflowsController < ApplicationController
-  unloadable
 
   layout 'admin'
   before_filter :require_admin
   before_filter :find_workflow, :only => [:show, :edit, :update, :destroy]
 
   def index
-    @workflows = CustomWorkflow.find(:all, :include => [:projects])
+    @workflows = CustomWorkflow.includes(:projects).all
     respond_to do |format|
       format.html
     end

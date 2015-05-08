@@ -1,6 +1,5 @@
 module RedmineCustomWorkflows
   module IssuePatch
-    unloadable
 
     def self.included(base)
       base.send(:include, InstanceMethods)

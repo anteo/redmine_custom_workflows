@@ -7,21 +7,17 @@ class WorkflowError < StandardError
 end
 
 class CustomWorkflow < ActiveRecord::Base
-  unloadable
 
+  attr_protected :id
   has_and_belongs_to_many :projects
   acts_as_list
 
-  default_scope :order => 'position ASC'
   validates_presence_of :name
   validates_uniqueness_of :name, :case_sensitive => false
   validate :validate_syntax
 
-  if Gem::Version.new(Rails::VERSION::STRING) < Gem::Version.new("3.1.0")
-    named_scope :for_all, :conditions => {:is_for_all => true}
-  else
-    scope :for_all, where(:is_for_all => true)
-  end
+  default_scope { order(:position => :asc) }
+  scope :for_all, lambda { where(:is_for_all => true) }
 
   def validate_syntax
     issue = Issue.new
