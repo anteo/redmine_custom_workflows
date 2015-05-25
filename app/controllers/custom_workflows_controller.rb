@@ -3,13 +3,17 @@ class CustomWorkflowsController < ApplicationController
 
   layout 'admin'
   before_filter :require_admin
-  before_filter :find_workflow, :only => [:show, :edit, :update, :destroy]
+  before_filter :find_workflow, :only => [:show, :edit, :update, :destroy, :export]
 
   def index
     @workflows = CustomWorkflow.find(:all, :include => [:projects])
     respond_to do |format|
       format.html
     end
+  end
+
+  def export
+    send_data @workflow.export_as_xml, :filename => @workflow.name + '.xml', :type => :xml
   end
 
   def show
@@ -23,8 +27,27 @@ class CustomWorkflowsController < ApplicationController
 
   def new
     @workflow = CustomWorkflow.new
+    @workflow.author = cookies[:custom_workflows_author]
     respond_to do |format|
       format.html
+    end
+  end
+
+  def import
+    xml = params[:file].read
+    begin
+      @workflow = CustomWorkflow.import_from_xml(xml)
+      if @workflow.save
+        flash[:notice] = l(:notice_successful_import)
+      else
+        flash[:error] = @workflow.errors.full_messages.to_sentence
+      end
+    rescue Exception => e
+      Rails.logger.warn "Workflow import error: #{e.message}\n #{e.backtrace.join("\n ")}"
+      flash[:error] = l(:error_failed_import)
+    end
+    respond_to do |format|
+      format.html { redirect_to(custom_workflows_path) }
     end
   end
 
@@ -33,6 +56,7 @@ class CustomWorkflowsController < ApplicationController
     respond_to do |format|
       if @workflow.save
         flash[:notice] = l(:notice_successful_create)
+        cookies[:custom_workflows_author] = @workflow.author
         format.html { redirect_to(custom_workflows_path) }
       else
         format.html { render :action => "new" }

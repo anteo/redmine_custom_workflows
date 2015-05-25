@@ -1,5 +1,6 @@
 class WorkflowError < StandardError
   attr_accessor :error
+
   def initialize(message)
     @error = message.dup
     super message
@@ -15,12 +16,21 @@ class CustomWorkflow < ActiveRecord::Base
   default_scope :order => 'position ASC'
   validates_presence_of :name
   validates_uniqueness_of :name, :case_sensitive => false
+  validates_format_of :author, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, :allow_blank => true
   validate :validate_syntax
 
   if Gem::Version.new(Rails::VERSION::STRING) < Gem::Version.new("3.1.0")
     named_scope :for_all, :conditions => {:is_for_all => true}
   else
     scope :for_all, where(:is_for_all => true)
+  end
+
+  class << self
+    def import_from_xml(xml)
+      attributes = Hash.from_xml(xml).values.first
+      attributes.delete('exported_at')
+      CustomWorkflow.new(attributes)
+    end
   end
 
   def validate_syntax
@@ -37,6 +47,12 @@ class CustomWorkflow < ActiveRecord::Base
     rescue WorkflowError => e
     rescue Exception => e
       errors.add :after_save, :invalid_script, :error => e
+    end
+  end
+
+  def export_as_xml
+    to_xml :only => [:author, :name, :description, :before_save, :after_save, :created_at] do |xml|
+      xml.tag! 'exported-at', Time.current.xmlschema
     end
   end
 

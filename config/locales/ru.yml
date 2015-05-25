@@ -1,19 +1,28 @@
 ru:
   project_module_custom_workflows_module: "Пользовательские рабочие процессы"
   permission_manage_project_workflow: "Управление пользовательскими рабочими процессами в проекте"
+
   label_custom_workflow: "Пользовательский рабочий процесс"
   label_custom_workflow_plural: "Пользовательские рабочие процессы"
   label_custom_workflow_new: "Новый процесс"
   label_workflow_scripts: "Сценарии"
   label_enabled_projects: "Разрешен в проектах"
+  label_custom_workflow_export: "Экспорт"
+  label_custom_workflow_import: "Импорт процесса"
+
+  button_import: "Импортировать"
 
   field_after_save: "Сценарий выполняемый после сохранения задачи"
   field_before_save: "Сценарий выполняемый перед сохранением задачи"
   field_is_enabled: "Разрешено"
   field_enabled_for_all_projects: "Разрешен для всех проектов"
-
+  field_custom_workflow_author: "E-Mail адрес автора"
+  field_custom_workflow_file: "Выберите XML файл ранее экспортированного процесса"
   field_custom_workflow:
     script: "Сценарий"
+
+  notice_successful_import: "Рабочий процесс успешно импортирован"
+  error_failed_import: "Ошибка импорта рабочего процесса (неверный формат? смотри журнал)"
 
   activerecord:
     errors:
@@ -27,3 +36,4 @@ ru:
   text_custom_workflow_after_save_note: Вы можете обновлять и создавать задачи (в том числе и связанные задачи) здесь. Обратите внимание, что данный сценарий будет также выполняться и для вновь создаваемых задач. Поэтому используйте дополнительные проверки, чтобы избежать бесконечной рекурсии.
   text_custom_workflow_general_note: Оба сценария исполняются в контексте задачи, как и обычные обратные вызовы before_save и after_save. Поэтому используйте методы и свойства задачи напрямую или через ключевое слово self.
   text_no_enabled_projects: Нет проектов
+  text_custom_workflow_author: Будет использован в XML файле при экспорте

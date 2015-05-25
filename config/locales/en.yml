@@ -1,19 +1,28 @@
 en:
   project_module_custom_workflows_module: "Custom workflows"
   permission_manage_project_workflow: "Manage project custom workflows"
+
   label_custom_workflow: "Custom workflows"
   label_custom_workflow_plural: "Custom workflows"
   label_custom_workflow_new: "Create a custom workflow"
   label_workflow_scripts: "Workflow scripts"
   label_enabled_projects: "Enabled for project(s)"
+  label_custom_workflow_export: "Export"
+  label_custom_workflow_import: "Import workflow"
+
+  button_import: "Import"
 
   field_after_save: "Workflow script executable after saving the issue"
   field_before_save: "Workflow script executable before saving the issue"
   field_is_enabled: "Enabled"
   field_enabled_for_all_projects: "Enabled for all projects"
-
+  field_custom_workflow_author: "Author's e-mail"
+  field_custom_workflow_file: "Select the XML file previously exported process"
   field_custom_workflow:
     script: "Workflow script"
+
+  notice_successful_import: "Custom workflow has successfully imported"
+  error_failed_import: "Error importing custom workflow (unknown format? please see log)"
 
   activerecord:
     errors:
@@ -27,3 +36,4 @@ en:
   text_custom_workflow_after_save_note: You can update or create related issues here. Note that this script will be also executed for the newly created issues. So make appropriate checks to prevent infinite recursion.
   text_custom_workflow_general_note: Both scripts are executed in the context of the issue like ordinary before_save and after_save callbacks. So use methods and properties of the issue directly (or through "self"). Instance variables (@variable) are also allowed and may be used if needed.
   text_no_enabled_projects: No projects
+  text_custom_workflow_author: Will be included in exported XML
