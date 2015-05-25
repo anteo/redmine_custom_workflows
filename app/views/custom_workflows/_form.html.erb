@@ -1,12 +1,13 @@
 <div class="splitcontent">
-  <div class="splitcontentleft box">
-    <p><%= f.text_field :name, :required => true, :size => 50 %></p>
-
-    <p><%= f.text_area :description, :cols => 40, :rows => 5 %></p>
-
-    <p>
-      <label><%= f.check_box :is_for_all, :onclick => "checkAndDisable('custom_workflow_enabled_projects', this.checked);", :no_label => true %> <%= l(:field_enabled_for_all_projects) %></label>
-    </p>
+  <div class="splitcontentleft">
+    <div class="box tabular">
+      <p><%= f.text_field :name, :required => true, :size => 50 %></p>
+      <p><%= f.text_field :author, :size => 50, :label => :field_custom_workflow_author %>
+        <em class="info"><%= l(:text_custom_workflow_author) %></em>
+      </p>
+      <p><%= f.text_area :description, :cols => 40, :rows => 5 %></p>
+      <p><%= f.check_box :is_for_all, :onclick => "checkAndDisable('custom_workflow_enabled_projects', this.checked);", :label => :field_enabled_for_all_projects %></p>
+    </div>
   </div>
 
   <div class="splitcontentright">

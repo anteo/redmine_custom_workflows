@@ -1,6 +1,7 @@
 <% html_title(l(:label_custom_workflow_plural)) -%>
 <div class="contextual">
-<%= link_to l(:label_custom_workflow_new), new_custom_workflow_path, :class => 'icon icon-add' %>
+  <%= link_to l(:label_custom_workflow_import), '#', :class => 'icon icon-import', :onclick => "showModal('import-dialog', '450px'); return false;" %>
+  <%= link_to l(:label_custom_workflow_new), new_custom_workflow_path, :class => 'icon icon-add' %>
 </div>
 
 <h2><%=l(:label_custom_workflow_plural)%></h2>
@@ -12,6 +13,7 @@
     <tr>
       <th><%=l(:field_name)%></th>
       <th><%=l(:field_description)%></th>
+      <th><%=l(:field_author)%></th>
       <th><%=l(:label_project_plural)%></th>
       <th style="width:15%;"><%= l(:button_sort) %></th>
       <th style="width:10%;"></th>
@@ -21,8 +23,9 @@
     <% @workflows.each do |workflow| %>
     <tr class="<%= cycle("odd", "even") %>">
       <td class="name"><%= link_to(workflow.name, edit_custom_workflow_path(workflow)) %></td>
-      <td><%= textilizable(workflow.description) %></td>
-      <td align="center">
+      <td class="description"><%= textilizable(workflow.description) %></td>
+      <td class="author"><%= workflow.author %></td>
+      <td>
         <% if workflow.is_for_all? %>
           <%= l(:field_enabled_for_all_projects) %>
         <% elsif workflow.projects.empty? %>
@@ -33,6 +36,7 @@
       </td>
       <td align="center"><%= reorder_links("custom_workflow", {:action => 'update', :id => workflow}) %></td>
       <td class="buttons">
+        <%= link_to(l(:label_custom_workflow_export), export_custom_workflow_path(workflow), :class => 'icon icon-export', :method => :get) %>
         <%= link_to(l(:button_delete), workflow, :class => 'icon icon-del', :data => {:confirm => l(:text_are_you_sure)}, :confirm => l(:text_are_you_sure), :method => :delete) %>
       </td>
     </tr>
@@ -41,5 +45,23 @@
   </table>
   <% else %>
     <p class="nodata"><%= l(:label_no_data) %></p>
+  <% end %>
+</div>
+
+<div id="import-dialog" style="display: none">
+  <h3 class="title"><%= l(:label_custom_workflow_import) %></h3>
+  <%= form_tag import_custom_workflow_path, :multipart => true do %>
+    <p>
+      <%= l(:field_custom_workflow_file) %>:
+    </p>
+
+    <p>
+      <%= file_field_tag 'file', :accept => 'application/xml' %>
+    </p>
+
+    <p class="buttons">
+      <%= submit_tag l(:button_import), :name => nil, :onclick => "hideModal(this);" %>
+      <%= submit_tag l(:button_cancel), :name => nil, :onclick => "hideModal(this);", :type => 'button' %>
+    </p>
   <% end %>
 </div>

@@ -6,6 +6,10 @@ table.list.custom-workflows td {
     vertical-align: middle;
 }
 
+table.list.custom-workflows td.description {
+    text-align: left;
+}
+
 #custom_workflow_description, #custom_workflow_name {
     width: 98%;
 }
@@ -19,3 +23,6 @@ table.list.custom-workflows td {
     max-height: 200px;
     overflow-y: auto;
 }
+
+.icon-export { background-image: url(../images/export.png); }
+.icon-import { background-image: url(../images/import.png); }

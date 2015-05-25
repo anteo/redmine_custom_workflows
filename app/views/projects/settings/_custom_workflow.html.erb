@@ -1,4 +1,4 @@
-<% form = form_for @project do |f| %>
+<%= form_for @project do |f| %>
   <%= hidden_field_tag :tab, 'custom_workflow' %>
   <%= hidden_field_tag 'project[custom_workflow_ids][]', '' %>
   <fieldset>
@@ -17,4 +17,3 @@
   <%= submit_tag l(:button_save) %>
 <% end %>
 
-<%= form if Redmine::VERSION::MAJOR >= 2 %>
