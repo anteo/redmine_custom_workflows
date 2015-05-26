@@ -99,6 +99,7 @@ This plug-in is compatible with Redmine 1.2.x, 1.3.x, 1.4.x, 2.x.x
 
 == Changelog
 
+[0.0.6] Import/export ability
 [0.0.5] Compatibility with latest versions of Redmine 2.x.x
 [0.0.4] * Added ability to enable workflows globally for all projects. No need to enable 'Custom workflows' project module anymore. Just go to the 'Administration' -> 'Custom workflows' section and enable or disable your workflows in one place.
         * Fixed bug with 'Status transition prohibited' when updating the issue status by the repository commit
