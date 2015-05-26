@@ -11,6 +11,8 @@ en:
   label_custom_workflow_import: "Import workflow"
 
   button_import: "Import"
+  button_custom_workflow_activate: "Activate"
+  button_custom_workflow_deactivate: "Deactivate"
 
   field_after_save: "Workflow script executable after saving the issue"
   field_before_save: "Workflow script executable before saving the issue"
@@ -18,10 +20,12 @@ en:
   field_enabled_for_all_projects: "Enabled for all projects"
   field_custom_workflow_author: "Author's e-mail"
   field_custom_workflow_file: "Select the XML file previously exported process"
+  field_custom_workflow_active: "Active"
   field_custom_workflow:
     script: "Workflow script"
 
   notice_successful_import: "Custom workflow has successfully imported"
+  notice_successful_status_change: "Status has successfully changed"
   error_failed_import: "Error importing custom workflow (unknown format? please see log)"
 
   activerecord:
@@ -37,3 +41,5 @@ en:
   text_custom_workflow_general_note: Both scripts are executed in the context of the issue like ordinary before_save and after_save callbacks. So use methods and properties of the issue directly (or through "self"). Instance variables (@variable) are also allowed and may be used if needed.
   text_no_enabled_projects: No projects
   text_custom_workflow_author: Will be included in exported XML
+  text_custom_workflow_disabled: disabled by admin
+  text_custom_workflow_is_for_all: enabled for all projects

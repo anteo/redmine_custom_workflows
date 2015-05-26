@@ -7,6 +7,7 @@
       </p>
       <p><%= f.text_area :description, :cols => 40, :rows => 5 %></p>
       <p><%= f.check_box :is_for_all, :onclick => "checkAndDisable('custom_workflow_enabled_projects', this.checked);", :label => :field_enabled_for_all_projects %></p>
+      <p><%= f.check_box :active, :label => :field_custom_workflow_active %></p>
     </div>
   </div>
 

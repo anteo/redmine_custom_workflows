@@ -11,6 +11,8 @@ ru:
   label_custom_workflow_import: "Импорт процесса"
 
   button_import: "Импортировать"
+  button_custom_workflow_activate: "Активировать"
+  button_custom_workflow_deactivate: "Деактивировать"
 
   field_after_save: "Сценарий выполняемый после сохранения задачи"
   field_before_save: "Сценарий выполняемый перед сохранением задачи"
@@ -18,10 +20,12 @@ ru:
   field_enabled_for_all_projects: "Разрешен для всех проектов"
   field_custom_workflow_author: "E-Mail адрес автора"
   field_custom_workflow_file: "Выберите XML файл ранее экспортированного процесса"
+  field_custom_workflow_active: "Активен"
   field_custom_workflow:
     script: "Сценарий"
 
   notice_successful_import: "Рабочий процесс успешно импортирован"
+  notice_successful_status_change: "Статус успешно изменен"
   error_failed_import: "Ошибка импорта рабочего процесса (неверный формат? смотри журнал)"
 
   activerecord:
@@ -37,3 +41,5 @@ ru:
   text_custom_workflow_general_note: Оба сценария исполняются в контексте задачи, как и обычные обратные вызовы before_save и after_save. Поэтому используйте методы и свойства задачи напрямую или через ключевое слово self.
   text_no_enabled_projects: Нет проектов
   text_custom_workflow_author: Будет использован в XML файле при экспорте
+  text_custom_workflow_disabled: отключен администратором
+  text_custom_workflow_is_for_all: разрешен для всех проектов

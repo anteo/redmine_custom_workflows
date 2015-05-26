@@ -101,7 +101,8 @@ This plug-in is compatible with Redmine 1.2.x, 1.3.x, 1.4.x, 2.x.x, 3.x.x (start
 
 Redmine 3.x.x branch:
 
-[0.1.1] Import/export ability
+[0.1.1] * Import/export ability
+        * Administrator can activate/deactivate workflows globally
 [0.1.0] Compatibility with Redmine 3.x, support of Redmine 2.x.x has dropped (for Redmine 2.x.x please use version 0.0.6)
 
 Redmine 2.x.x branch:

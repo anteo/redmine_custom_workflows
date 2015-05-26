@@ -20,6 +20,7 @@ class CustomWorkflow < ActiveRecord::Base
 
   default_scope { order(:position => :asc) }
   scope :for_all, lambda { where(:is_for_all => true) }
+  scope :active, lambda { where(:active => true) }
 
   class << self
     def import_from_xml(xml)

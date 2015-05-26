@@ -2,7 +2,7 @@ class CustomWorkflowsController < ApplicationController
 
   layout 'admin'
   before_filter :require_admin
-  before_filter :find_workflow, :only => [:show, :edit, :update, :destroy, :export]
+  before_filter :find_workflow, :only => [:show, :edit, :update, :destroy, :export, :change_status]
 
   def index
     @workflows = CustomWorkflow.includes(:projects).all
@@ -36,6 +36,7 @@ class CustomWorkflowsController < ApplicationController
     xml = params[:file].read
     begin
       @workflow = CustomWorkflow.import_from_xml(xml)
+      @workflow.active = false
       if @workflow.save
         flash[:notice] = l(:notice_successful_import)
       else
@@ -60,6 +61,14 @@ class CustomWorkflowsController < ApplicationController
       else
         format.html { render :action => "new" }
       end
+    end
+  end
+
+  def change_status
+    respond_to do |format|
+      @workflow.update_attributes(:active => params[:active])
+      flash[:notice] = l(:notice_successful_status_change)
+      format.html { redirect_to(custom_workflows_path) }
     end
   end
 

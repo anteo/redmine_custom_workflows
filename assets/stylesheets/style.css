@@ -2,12 +2,20 @@
     background-image: url(../../../images/ticket_go.png);
 }
 
+#tab-content-custom_workflows .disabled {
+    color: silver;
+}
+
 table.list.custom-workflows td {
     vertical-align: middle;
 }
 
 table.list.custom-workflows td.description {
     text-align: left;
+}
+
+table.list.custom-workflows tr.disabled {
+    color: silver;
 }
 
 #custom_workflow_description, #custom_workflow_name {
@@ -26,3 +34,5 @@ table.list.custom-workflows td.description {
 
 .icon-export { background-image: url(../images/export.png); }
 .icon-import { background-image: url(../images/import.png); }
+.icon-active { background-image: url(../images/active.png); }
+.icon-inactive { background-image: url(../images/inactive.png); }

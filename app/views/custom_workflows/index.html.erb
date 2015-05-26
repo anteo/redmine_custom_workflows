@@ -21,7 +21,7 @@
     </thead>
     <tbody>
     <% @workflows.each do |workflow| %>
-    <tr class="<%= cycle("odd", "even") %>">
+    <tr class="<%= cycle("odd", "even") %> <%= 'disabled' unless workflow.active? %>">
       <td class="name"><%= link_to(workflow.name, edit_custom_workflow_path(workflow)) %></td>
       <td class="description"><%= textilizable(workflow.description) %></td>
       <td class="author"><%= mail_to workflow.author if workflow.author.present? %></td>
@@ -36,6 +36,11 @@
       </td>
       <td align="center"><%= reorder_links("custom_workflow", {:action => 'update', :id => workflow}) %></td>
       <td class="buttons">
+        <% if workflow.active? %>
+          <%= link_to(l(:button_custom_workflow_deactivate), custom_workflow_status_path(workflow, :active => false), :class => 'icon icon-inactive', :method => :post) %>
+        <% else %>
+          <%= link_to(l(:button_custom_workflow_activate), custom_workflow_status_path(workflow, :active => true), :class => 'icon icon-active', :method => :post) %>
+        <% end %>
         <%= link_to(l(:label_custom_workflow_export), export_custom_workflow_path(workflow), :class => 'icon icon-export', :method => :get) %>
         <%= link_to(l(:button_delete), workflow, :class => 'icon icon-del', :data => {:confirm => l(:text_are_you_sure)}, :confirm => l(:text_are_you_sure), :method => :delete) %>
       </td>
