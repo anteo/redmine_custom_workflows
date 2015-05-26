@@ -16,7 +16,7 @@ en:
   field_before_save: "Workflow script executable before saving the issue"
   field_is_enabled: "Enabled"
   field_enabled_for_all_projects: "Enabled for all projects"
-  field_custom_workflow_author: "Custom workflow's author"
+  field_custom_workflow_author: "Author's e-mail"
   field_custom_workflow_file: "Select the XML file previously exported process"
   field_custom_workflow:
     script: "Workflow script"

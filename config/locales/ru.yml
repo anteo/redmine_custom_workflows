@@ -16,7 +16,7 @@ ru:
   field_before_save: "Сценарий выполняемый перед сохранением задачи"
   field_is_enabled: "Разрешено"
   field_enabled_for_all_projects: "Разрешен для всех проектов"
-  field_custom_workflow_author: "Автор рабочего процесса"
+  field_custom_workflow_author: "E-Mail адрес автора"
   field_custom_workflow_file: "Выберите XML файл ранее экспортированного процесса"
   field_custom_workflow:
     script: "Сценарий"

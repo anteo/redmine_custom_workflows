@@ -15,6 +15,7 @@ class CustomWorkflow < ActiveRecord::Base
 
   validates_presence_of :name
   validates_uniqueness_of :name, :case_sensitive => false
+  validates_format_of :author, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, :allow_blank => true
   validate :validate_syntax
 
   default_scope { order(:position => :asc) }

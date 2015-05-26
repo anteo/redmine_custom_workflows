@@ -24,7 +24,7 @@
     <tr class="<%= cycle("odd", "even") %>">
       <td class="name"><%= link_to(workflow.name, edit_custom_workflow_path(workflow)) %></td>
       <td class="description"><%= textilizable(workflow.description) %></td>
-      <td class="author"><%= workflow.author %></td>
+      <td class="author"><%= mail_to workflow.author if workflow.author.present? %></td>
       <td>
         <% if workflow.is_for_all? %>
           <%= l(:field_enabled_for_all_projects) %>
