@@ -28,7 +28,7 @@ Redmine::Plugin.register :redmine_custom_workflows do
   author 'Anton Argirov'
   description 'Allows to create custom workflows for issues, defined in the plain Ruby language'
   version '0.0.6'
-  url 'http://redmine.academ.org'
+  url 'http://www.redmine.org/plugins/custom-workflows'
 
   menu :admin_menu, :custom_workflows, {:controller => 'custom_workflows', :action => 'index'}, :caption => :label_custom_workflow_plural
 
