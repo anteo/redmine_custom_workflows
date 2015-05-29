@@ -1,14 +1,11 @@
+
 class CreateExampleWorkflow < ActiveRecord::Migration
   def self.up
-<<<<<<< HEAD:db/migrate/20120831064944_create_example_workflow.rb
-    CustomWorkflow.create(:name => "Duration/Done Ratio/Status correlation", :description => <<EOD, :script => <<EOS)
-=======
     CustomWorkflow.reset_column_information
-    old = CustomWorkflow.find_by :name => 'Duration/Done Ratio/Status correlation'
+    old = CustomWorkflow.find(:first, :conditions => ['name=?', 'Duration/Done Ratio/Status correlation'])
     old.destroy if old
 
-    CustomWorkflow.create!(:name => 'Duration/Done Ratio/Status correlation', :author => 'anton.argirov@gmail.com', :description => <<EOD, :before_save => <<EOS)
->>>>>>> 75fa968... #8: fixed crash during migrations on new install:db/migrate/20150526132244_create_example_workflow.rb
+    CustomWorkflow.create!(:name => 'Duration/Done Ratio/Status correlation', :description => <<EOD, :script => <<EOS)
 Set up a correlation between the start date, due date, done ratio and status of issues.
 
 * If done ratio is changed to 100% and status is "In Process", status changes to "Resolved"
