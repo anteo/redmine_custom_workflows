@@ -1,7 +1,7 @@
 class CreateExampleWorkflow < ActiveRecord::Migration
   def self.up
     CustomWorkflow.reset_column_information
-    old = CustomWorkflow.find_by :name => 'Duration/Done Ratio/Status correlation'
+    old = CustomWorkflow.where(:name => 'Duration/Done Ratio/Status correlation').first
     old.destroy if old
 
     CustomWorkflow.create!(:name => 'Duration/Done Ratio/Status correlation', :author => 'anton.argirov@gmail.com', :description => <<EOD, :before_save => <<EOS)
