@@ -1,0 +1,45 @@
+pt-br:
+  project_module_custom_workflows_module: "Fluxo de Trabalho Personalizado"
+  permission_manage_project_workflow: "Gerenciar fluxos de trabalho personalizados de projeto"
+
+  label_custom_workflow: "Fluxo de Trabalho personalizado"
+  label_custom_workflow_plural: ""Fluxos de Trabalho personalizados"
+  label_custom_workflow_new: "Criar um fluxo de trabalho personalizado"
+  label_workflow_scripts: "Scripts de fluxo de trabalho"
+  label_enabled_projects: "Habilitado para o(s) projeto(s)"
+  label_custom_workflow_export: "Exportar"
+  label_custom_workflow_import: "Importar fluxo de trabalho"
+
+  button_import: "Importar"
+  button_custom_workflow_activate: "Ativar"
+  button_custom_workflow_deactivate: "Desativar"
+
+  field_after_save: "Script do fluxo de trabalho executado depois de salvar a Tarefa"
+  field_before_save: "Script do fluxo de trabalho executado antes de salvar a Tarefa"
+  field_is_enabled: "Ativado"
+  field_enabled_for_all_projects: "Ativado para todos os projetos"
+  field_custom_workflow_author: "E-mail do autor"
+  field_custom_workflow_file: "Selecione o arquivo XML exportado anteriormente"
+  field_custom_workflow_active: "Ativo"
+  field_custom_workflow:
+    script: "Script do Fluxo de Trabalho"
+
+  notice_successful_import: "Fluxo de Trabalho Personalizado foi importado com sucesso"
+  notice_successful_status_change: "Situação foi alterada com sucesso"
+  error_failed_import: "Erro ao importar o fluxo de trabalho customizado (Formato desconhecido? Por favor verifique o log)"
+
+  activerecord:
+    errors:
+      messages:
+        invalid_script: "contém erro: %{error}"
+        custom_workflow_error: "Erro no fluxo de trabalho customizado (por favor contate o administrador)"
+        new_status_invalid: "Transição de '%{old_status}' para '%{new_status}' é proibida"
+
+  text_select_project_custom_workflows: Selecione o projeto para os fluxos de trabalho
+  text_custom_workflow_before_save_note: Você pode alterar as propriedades das tarefas aqui. Não crie ou atualize tarefas relacionadas neste script. Para terminar com o erro, utilize a exceção WorkflowError, "Mensagem para o usuário".
+  text_custom_workflow_after_save_note: Você pode atualizar ou criar tarefas relacionadas aqui. Note que esse script também será executado para as tarefas criadas recentemente. Então, faça as verificações adequadas para evitar que entre em recursividade infinita.
+  text_custom_workflow_general_note: Ambos os scripts são executados no contexto da tarefa pelas chamadas before_save com retornos para a chamada after_save. Portanto, use métodos e propriedades da tarefa diretamente (ou através de "self"). Variáveis de instância (@variable) também são permitidos e podem ser utilizados, se necessário.
+  text_no_enabled_projects: Não há projeto
+  text_custom_workflow_author: Será incluído no XML exportado
+  text_custom_workflow_disabled: desabilitado por admin
+  text_custom_workflow_is_for_all: Ativado para todos os projetos
