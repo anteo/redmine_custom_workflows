@@ -3,7 +3,7 @@ pt-br:
   permission_manage_project_workflow: "Gerenciar fluxos de trabalho personalizados de projeto"
 
   label_custom_workflow: "Fluxo de Trabalho personalizado"
-  label_custom_workflow_plural: ""Fluxos de Trabalho personalizados"
+  label_custom_workflow_plural: "Fluxos de Trabalho personalizados"
   label_custom_workflow_new: "Criar um fluxo de trabalho personalizado"
   label_workflow_scripts: "Scripts de fluxo de trabalho"
   label_enabled_projects: "Habilitado para o(s) projeto(s)"
