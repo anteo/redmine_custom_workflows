@@ -17,6 +17,9 @@ Rails.application.config.to_prepare do
   unless Group.include?(RedmineCustomWorkflows::GroupPatch)
     Group.send(:include, RedmineCustomWorkflows::GroupPatch)
   end
+  unless Mailer.include?(RedmineCustomWorkflows::MailerPatch)
+    Mailer.send(:include, RedmineCustomWorkflows::MailerPatch)
+  end
   unless ActionView::Base.include?(RedmineCustomWorkflows::Helper)
     ActionView::Base.send(:include, RedmineCustomWorkflows::Helper)
   end
