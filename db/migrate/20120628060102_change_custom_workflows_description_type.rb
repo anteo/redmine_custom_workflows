@@ -4,6 +4,5 @@ class ChangeCustomWorkflowsDescriptionType < ActiveRecord::Migration
   end
 
   def self.down
-    change_column :custom_workflows, :description, :string, :null => false, :default => ''
   end
 end
