@@ -23,39 +23,17 @@ module RedmineCustomWorkflows
                    :new_status => status_new && status_new.name
       end
 
-      def run_custom_workflows(on)
-        return true unless project
-        workflows = project.enabled_custom_workflows
-        return true unless workflows.any?
-        @issue = self # compatibility with 0.0.1
-        Rails.logger.info "= Running #{on} custom workflows for issue \"#{subject}\" (##{id})"
-        workflows.each do |workflow|
-          begin
-            Rails.logger.info "== Running #{on} custom workflow \"#{workflow.name}\""
-            instance_eval(workflow.read_attribute(on))
-          rescue WorkflowError => e
-            Rails.logger.info "== User workflow error: #{e.message}"
-            errors.add :base, e.error
-            return false
-          rescue Exception => e
-            Rails.logger.error "== Custom workflow exception: #{e.message}\n #{e.backtrace.join("\n ")}"
-            errors.add :base, :custom_workflow_error
-            return false
-          end
-        end
-        Rails.logger.info "= Finished running #{on} custom workflows for issue \"#{subject}\" (##{id})."
-        true
-      end
-
       def before_save_custom_workflows
+        @issue = self
         @saved_attributes = attributes.dup
-        result = run_custom_workflows(:before_save) && (@saved_attributes == attributes || valid?)
+        CustomWorkflow.run_shared_code(self)
+        result = CustomWorkflow.run_custom_workflows(:issue, self, :before_save) && (@saved_attributes == attributes || valid?)
         @saved_attributes = nil
         result
       end
 
       def after_save_custom_workflows
-        run_custom_workflows(:after_save)
+        CustomWorkflow.run_custom_workflows(:issue, self, :after_save)
       end
     end
   end

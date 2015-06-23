@@ -14,8 +14,14 @@ en:
   button_custom_workflow_activate: "Activate"
   button_custom_workflow_deactivate: "Deactivate"
 
-  field_after_save: "Workflow script executable after saving the issue"
-  field_before_save: "Workflow script executable before saving the issue"
+  field_after_save: "Workflow script executable after saving observable object"
+  field_before_save: "Workflow script executable before saving observable object"
+  field_after_add: "Workflow script executable after adding observable object to collection"
+  field_before_add: "Workflow script executable before adding observable object to collection"
+  field_after_remove: "Workflow script executable after removing observable object from collection"
+  field_before_remove: "Workflow script executable before removing observable object from collection"
+  field_shared_code: "Shared code"
+  field_observable: "Observable object"
   field_is_enabled: "Enabled"
   field_enabled_for_all_projects: "Enabled for all projects"
   field_custom_workflow_author: "Author's e-mail"
@@ -38,8 +44,18 @@ en:
   text_select_project_custom_workflows: Select project custom workflows
   text_custom_workflow_before_save_note: You can change properties of the issues here. Do not create or update related issues in this script. To finish with error, use raise WorkflowError, "Message to user".
   text_custom_workflow_after_save_note: You can update or create related issues here. Note that this script will be also executed for the newly created issues. So make appropriate checks to prevent infinite recursion.
-  text_custom_workflow_general_note: Both scripts are executed in the context of the issue like ordinary before_save and after_save callbacks. So use methods and properties of the issue directly (or through "self"). Instance variables (@variable) are also allowed and may be used if needed.
+  text_custom_workflow_issue_code_note: Both scripts are executed in the context of the issue like ordinary before_save and after_save callbacks. So use methods and properties of the issue directly (or through "self"). Instance variables (@variable) are also allowed and may be used if needed.
+  text_custom_workflow_shared_code_note: This code will run before any other workflow and may contain shared code, e.g. functions and classes needed by other workflows
+  text_custom_workflow_user_code_note: Both scripts are executed in the context of the user object when user object changes. Use methods and properties of the user directly (or through "self")
+  text_custom_workflow_group_code_note: Both scripts are executed in the context of the group object when group object changes. Use methods and properties of the group directly (or through "self")
+  text_custom_workflow_group_users_code_note: These scripts are executed when user being added to group/removed from group. Use variables @user and @group to access appropriate objects in your scripts.
   text_no_enabled_projects: No projects
   text_custom_workflow_author: Will be included in exported XML
   text_custom_workflow_disabled: disabled by admin
   text_custom_workflow_is_for_all: enabled for all projects
+
+  custom_workflow_observable_shared: "<shared code>"
+  custom_workflow_observable_issue: "Issue"
+  custom_workflow_observable_group: "Group"
+  custom_workflow_observable_user: "User"
+  custom_workflow_observable_group_users: "Group Users"

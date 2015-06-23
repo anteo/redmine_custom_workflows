@@ -11,12 +11,13 @@
   <table class="custom-workflows list">
     <thead>
     <tr>
-      <th><%=l(:field_name)%></th>
-      <th><%=l(:field_description)%></th>
-      <th><%=l(:field_author)%></th>
-      <th><%=l(:label_project_plural)%></th>
-      <th style="width:15%;"><%= l(:button_sort) %></th>
-      <th style="width:10%;"></th>
+      <th><%= l(:field_name) %></th>
+      <th><%= l(:field_description) %></th>
+      <th><%= l(:field_observable) %></th>
+      <th><%= l(:field_author) %></th>
+      <th><%= l(:label_project_plural) %></th>
+      <th><%= l(:button_sort) %></th>
+      <th></th>
     </tr>
     </thead>
     <tbody>
@@ -24,9 +25,12 @@
     <tr class="<%= cycle("odd", "even") %> <%= 'disabled' unless workflow.active? %>">
       <td class="name"><%= link_to(workflow.name, edit_custom_workflow_path(workflow)) %></td>
       <td class="description"><%= textilizable(workflow.description) %></td>
+      <td class="observable"><%= l("custom_workflow_observable_#{workflow.observable}") %></td>
       <td class="author"><%= mail_to workflow.author if workflow.author.present? %></td>
       <td>
-        <% if workflow.is_for_all? %>
+        <% if not workflow.has_projects_association? %>
+          -
+        <% elsif workflow.is_for_all? %>
           <%= l(:field_enabled_for_all_projects) %>
         <% elsif workflow.projects.empty? %>
           <%= l(:text_no_enabled_projects) %>
@@ -34,7 +38,7 @@
           <%= workflow.projects.map(&:name).join(", ") %>
         <% end %>
       </td>
-      <td align="center"><%= reorder_links("custom_workflow", {:action => 'update', :id => workflow}) %></td>
+      <td align="center"><%= reorder_links("custom_workflow", {:action => 'update', :id => workflow, :commit => true}) %></td>
       <td class="buttons">
         <% if workflow.active? %>
           <%= link_to(l(:button_custom_workflow_deactivate), custom_workflow_status_path(workflow, :active => false), :class => 'icon icon-inactive', :method => :post) %>

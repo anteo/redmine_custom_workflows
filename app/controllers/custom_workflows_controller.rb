@@ -54,7 +54,7 @@ class CustomWorkflowsController < ApplicationController
   def create
     @workflow = CustomWorkflow.new(params[:custom_workflow])
     respond_to do |format|
-      if @workflow.save
+      if params.has_key?(:commit) && @workflow.save
         flash[:notice] = l(:notice_successful_create)
         cookies[:custom_workflows_author] = @workflow.author
         format.html { redirect_to(custom_workflows_path) }
@@ -74,7 +74,8 @@ class CustomWorkflowsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @workflow.update_attributes(params[:custom_workflow])
+      @workflow.assign_attributes(params[:custom_workflow])
+      if params.has_key?(:commit) && @workflow.save
         flash[:notice] = l(:notice_successful_update)
         format.html { redirect_to(custom_workflows_path) }
       else

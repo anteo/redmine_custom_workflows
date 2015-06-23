@@ -12,9 +12,6 @@ module RedmineCustomWorkflows
     end
 
     module InstanceMethods
-      def enabled_custom_workflows
-        (CustomWorkflow.for_all + custom_workflows).select { |w| w.active? }.uniq.sort
-      end
     end
   end
 end

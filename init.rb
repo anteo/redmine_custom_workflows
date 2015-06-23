@@ -11,6 +11,12 @@ Rails.application.config.to_prepare do
   unless Issue.include?(RedmineCustomWorkflows::IssuePatch)
     Issue.send(:include, RedmineCustomWorkflows::IssuePatch)
   end
+  unless User.include?(RedmineCustomWorkflows::UserPatch)
+    User.send(:include, RedmineCustomWorkflows::UserPatch)
+  end
+  unless Group.include?(RedmineCustomWorkflows::GroupPatch)
+    Group.send(:include, RedmineCustomWorkflows::GroupPatch)
+  end
   unless ActionView::Base.include?(RedmineCustomWorkflows::Helper)
     ActionView::Base.send(:include, RedmineCustomWorkflows::Helper)
   end

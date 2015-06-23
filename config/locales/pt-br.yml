@@ -14,8 +14,14 @@ pt-br:
   button_custom_workflow_activate: "Ativar"
   button_custom_workflow_deactivate: "Desativar"
 
-  field_after_save: "Script do fluxo de trabalho executado depois de salvar a Tarefa"
-  field_before_save: "Script do fluxo de trabalho executado antes de salvar a Tarefa"
+  field_after_save: "Workflow script executable after saving observable object"
+  field_before_save: "Workflow script executable before saving observable object"
+  field_after_add: "Workflow script executable after adding observable object to collection"
+  field_before_add: "Workflow script executable before adding observable object to collection"
+  field_after_remove: "Workflow script executable after removing observable object from collection"
+  field_before_remove: "Workflow script executable before removing observable object from collection"
+  field_shared_code: "Shared code"
+  field_observable: "Observable object"
   field_is_enabled: "Ativado"
   field_enabled_for_all_projects: "Ativado para todos os projetos"
   field_custom_workflow_author: "E-mail do autor"
@@ -38,8 +44,18 @@ pt-br:
   text_select_project_custom_workflows: Selecione o projeto para os fluxos de trabalho
   text_custom_workflow_before_save_note: Você pode alterar as propriedades das tarefas aqui. Não crie ou atualize tarefas relacionadas neste script. Para terminar com o erro, utilize a exceção WorkflowError, "Mensagem para o usuário".
   text_custom_workflow_after_save_note: Você pode atualizar ou criar tarefas relacionadas aqui. Note que esse script também será executado para as tarefas criadas recentemente. Então, faça as verificações adequadas para evitar que entre em recursividade infinita.
-  text_custom_workflow_general_note: Ambos os scripts são executados no contexto da tarefa pelas chamadas before_save com retornos para a chamada after_save. Portanto, use métodos e propriedades da tarefa diretamente (ou através de "self"). Variáveis de instância (@variable) também são permitidos e podem ser utilizados, se necessário.
+  text_custom_workflow_issue_code_note: Ambos os scripts são executados no contexto da tarefa pelas chamadas before_save com retornos para a chamada after_save. Portanto, use métodos e propriedades da tarefa diretamente (ou através de "self"). Variáveis de instância (@variable) também são permitidos e podem ser utilizados, se necessário.
+  text_custom_workflow_shared_code_note: This code will run before any other workflow and may contain shared code, e.g. functions and classes needed by other workflows.
+  text_custom_workflow_user_code_note: Both scripts are executed in the context of the user object when user object changes. Use methods and properties of the user directly (or through "self")
+  text_custom_workflow_group_code_note: Both scripts are executed in the context of the group object when group object changes. Use methods and properties of the group directly (or through "self")
+  text_custom_workflow_group_users_code_note: These scripts are executed when user being added to group/removed from group. Use variables @user and @group to access appropriate objects in your scripts.
   text_no_enabled_projects: Não há projeto
   text_custom_workflow_author: Será incluído no XML exportado
   text_custom_workflow_disabled: desabilitado por admin
   text_custom_workflow_is_for_all: Ativado para todos os projetos
+
+  custom_workflow_observable_shared: "<shared code>"
+  custom_workflow_observable_issue: "Issue"
+  custom_workflow_observable_group: "Group"
+  custom_workflow_observable_user: "User"
+  custom_workflow_observable_group_users: "Group Users"
