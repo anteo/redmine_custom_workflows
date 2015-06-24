@@ -7,17 +7,24 @@ module RedmineCustomWorkflows
         before_save :before_save_custom_workflows
         after_save :after_save_custom_workflows
 
-        callback = lambda do |event, group, user|
+        def self.users_callback(event, group, user)
           group.instance_variable_set(:@group, group)
           group.instance_variable_set(:@user, user)
           CustomWorkflow.run_shared_code(group) if event.to_s.starts_with? 'before_'
           CustomWorkflow.run_custom_workflows(:group_users, group, event)
         end
-
-        before_add_for_users << callback
-        before_remove_for_users << callback
-        after_add_for_users << callback
-        after_remove_for_users << callback
+        if Rails::VERSION::MAJOR >= 4
+          callback_lambda = lambda { |event, group, user| Group.users_callback(event, group, user) }
+          before_add_for_users << callback_lambda
+          before_remove_for_users << callback_lambda
+          after_add_for_users << callback_lambda
+          after_remove_for_users << callback_lambda
+        else
+          before_add_for_users << lambda { |group, user| Group.users_callback(:before_add, group, user) }
+          before_remove_for_users << lambda { |group, user| Group.users_callback(:before_remove, group, user) }
+          after_add_for_users << lambda { |group, user| Group.users_callback(:after_add, group, user) }
+          after_remove_for_users << lambda { |group, user| Group.users_callback(:after_remove, group, user) }
+        end
       end
     end
 
