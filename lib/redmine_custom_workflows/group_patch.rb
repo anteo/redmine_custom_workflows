@@ -33,9 +33,10 @@ module RedmineCustomWorkflows
         @group = self
         @saved_attributes = attributes.dup
         CustomWorkflow.run_shared_code(self)
-        result = CustomWorkflow.run_custom_workflows(:group, self, :before_save) && (@saved_attributes == attributes || valid?)
+        CustomWorkflow.run_custom_workflows(:group, self, :before_save)
+        errors.empty? && (@saved_attributes == attributes || valid?)
+      ensure
         @saved_attributes = nil
-        result
       end
 
       def after_save_custom_workflows

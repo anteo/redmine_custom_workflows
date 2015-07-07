@@ -45,13 +45,20 @@ class CustomWorkflow < ActiveRecord::Base
       CustomWorkflow.new(attributes)
     end
 
+    def log_message(str, object)
+      Rails.logger.info str + " for #{object.class} \"#{object}\" (\##{object.id})"
+    end
+
     def run_shared_code(object)
       workflows = CustomWorkflow.observing(:shared).active
-      Rails.logger.info "= Running shared code for #{object.class} \"#{object}\" (\##{object.id})"
+      log_message '= Running shared code', object
       workflows.each do |workflow|
-        return false unless workflow.run(object, :shared_code)
+        if workflow.run(object, :shared_code) == false
+          log_message '= Abort running shared code', object
+          return false
+        end
       end
-      Rails.logger.info "= Finished running shared code for #{object.class} \"#{object}\" (\##{object.id})"
+      log_message '= Finished running shared code', object
       true
     end
 
@@ -62,11 +69,14 @@ class CustomWorkflow < ActiveRecord::Base
         workflows = workflows.for_project(object.project)
       end
       return true unless workflows.any?
-      Rails.logger.info "= Running #{event} custom workflows for #{object.class} \"#{object}\" (\##{object.id})"
+      log_message "= Running #{event} custom workflows", object
       workflows.each do |workflow|
-        return false unless workflow.run(object, event)
+        if workflow.run(object, event) == false
+          log_message "= Abort running #{event} custom workflows", object
+          return false
+        end
       end
-      Rails.logger.info "= Finished running #{event} custom workflows for #{object.class} \"#{object}\" (\##{object.id})"
+      log_message "= Finished running #{event} custom workflows", object
       true
     end
   end
