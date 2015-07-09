@@ -66,9 +66,12 @@ class CustomWorkflowsController < ApplicationController
 
   def change_status
     respond_to do |format|
-      @workflow.update_attributes(:active => params[:active])
-      flash[:notice] = l(:notice_successful_status_change)
-      format.html { redirect_to(custom_workflows_path) }
+      if @workflow.update_attributes(:active => params[:active])
+        flash[:notice] = l(:notice_successful_status_change)
+        format.html { redirect_to(custom_workflows_path) }
+      else
+        format.html { render :action => :edit }
+      end
     end
   end
 

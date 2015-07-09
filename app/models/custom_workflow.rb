@@ -107,7 +107,7 @@ class CustomWorkflow < ActiveRecord::Base
   end
 
   def validate_syntax
-    return unless respond_to? :observable
+    return unless respond_to?(:observable) && active?
     case observable
       when 'shared'
         CustomWorkflow.run_shared_code(self)
