@@ -118,6 +118,8 @@ This plug-in is compatible with Redmine 2.x.x, 3.x.x
 
 == Changelog
 
+[0.1.4] * Ability to exit current workflow with `return` or `return true` and cancel workflow's execution chain with `return false`
+        * Non-active workflows are now not checked for syntax. Now you can import non-valid (for your Redmine instance for example) workflow, make changes to it and then activate.
 [0.1.3] Compatibility with Redmine 2.x.x returned, support of Redmine 1.x.x cancelled
 [0.1.2] * Added new observable objects. Along with Issue objects you can now watch for changes in User and Group objects
         * Added support of shared workflows - special workflows that running before all other workflows and can provide functions and classes for it
