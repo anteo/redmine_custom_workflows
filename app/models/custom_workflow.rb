@@ -46,7 +46,7 @@ class CustomWorkflow < ActiveRecord::Base
     end
 
     def log_message(str, object)
-      Rails.logger.info str + " for #{object.class} \"#{object}\" (\##{object.id})"
+      Rails.logger.info str + " for #{object.class} (\##{object.id}) \"#{object}\""
     end
 
     def run_shared_code(object)
