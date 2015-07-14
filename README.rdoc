@@ -37,16 +37,16 @@ https://github.com/anteo/redmine_custom_workflows/wiki
 From a ZIP file:
 
 * Download the latest version of the plugin
-* Unzip to */plugins* (Redmine 2.x) or */vendor/plugins* (Redmine 1.x) folder of Redmine
+* Unzip to */plugins*
 
 From a GIT repository:
 
-* Clone repository with <b>git clone git://git.academ.org/redmine_custom_workflows.git plugins/redmine_custom_workflows</b> command
+* Clone repository with <b>git clone https://github.com/anteo/redmine_custom_workflows.git plugins/redmine_custom_workflows</b> command
 
 After download:
 
-* Run <b>rake redmine:plugins:migrate</b> (Redmine 2.x) or <b>rake db:migrate:plugins</b> (Redmine 1.x).
-* Restart Redmine.
+* Run <b>rake redmine:plugins:migrate</b>
+* Restart Redmine
 
 == Configuration
 
