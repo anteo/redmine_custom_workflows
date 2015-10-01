@@ -14,7 +14,7 @@ module RedmineCustomWorkflows
         text_body = headers.delete :text_body
         html_body = headers.delete :html_body
         template_name = headers.delete :template_name
-        template_params = headers.delete :template_params || {}
+        template_params = headers.delete(:template_params) || {}
         if text_body || html_body
           mail headers do |format|
             format.text { render :text => text_body } if text_body
