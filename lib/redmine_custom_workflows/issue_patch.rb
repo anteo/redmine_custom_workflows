@@ -6,7 +6,24 @@ module RedmineCustomWorkflows
       base.class_eval do
         before_save :before_save_custom_workflows
         after_save :after_save_custom_workflows
+        before_destroy :before_destroy_custom_workflows
+        after_destroy :after_destroy_custom_workflows
         validate :validate_status
+
+        def self.attachments_callback(event, issue, attachment)
+          issue.instance_variable_set(:@issue, issue)
+          issue.instance_variable_set(:@attachment, attachment)
+          CustomWorkflow.run_shared_code(issue) if event.to_s.starts_with? 'before_'
+          CustomWorkflow.run_custom_workflows(:issue_attachments, issue, event)
+        end
+
+        [:before_add, :before_remove, :after_add, :after_remove].each do |observable|
+          send("#{observable}_for_attachments") << if Rails::VERSION::MAJOR >= 4
+                                                     lambda { |event, issue, attachment| Issue.attachments_callback(event, issue, attachment) }
+                                                   else
+                                                     lambda { |issue, attachment| Issue.attachments_callback(observable, issue, attachment) }
+                                                   end
+        end
       end
     end
 
@@ -35,6 +52,14 @@ module RedmineCustomWorkflows
 
       def after_save_custom_workflows
         CustomWorkflow.run_custom_workflows(:issue, self, :after_save)
+      end
+
+      def before_destroy_custom_workflows
+        CustomWorkflow.run_custom_workflows(:issue, self, :before_destroy)
+      end
+
+      def after_destroy_custom_workflows
+        CustomWorkflow.run_custom_workflows(:issue, self, :after_destroy)
       end
     end
   end

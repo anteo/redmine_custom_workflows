@@ -1,5 +1,5 @@
 module RedmineCustomWorkflows
-  module UserPatch
+  module WikiContentPatch
 
     def self.included(base)
       base.send(:include, InstanceMethods)
@@ -13,25 +13,25 @@ module RedmineCustomWorkflows
 
     module InstanceMethods
       def before_save_custom_workflows
-        @user = self
+        @content = self
         @saved_attributes = attributes.dup
         CustomWorkflow.run_shared_code(self)
-        CustomWorkflow.run_custom_workflows(:user, self, :before_save)
+        CustomWorkflow.run_custom_workflows(:wiki_content, self, :before_save)
         errors.empty? && (@saved_attributes == attributes || valid?)
       ensure
         @saved_attributes = nil
       end
 
       def after_save_custom_workflows
-        CustomWorkflow.run_custom_workflows(:user, self, :after_save)
+        CustomWorkflow.run_custom_workflows(:wiki_content, self, :after_save)
       end
 
       def before_destroy_custom_workflows
-        CustomWorkflow.run_custom_workflows(:user, self, :before_destroy)
+        CustomWorkflow.run_custom_workflows(:wiki_content, self, :before_destroy)
       end
 
       def after_destroy_custom_workflows
-        CustomWorkflow.run_custom_workflows(:user, self, :after_destroy)
+        CustomWorkflow.run_custom_workflows(:wiki_content, self, :after_destroy)
       end
     end
   end

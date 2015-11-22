@@ -118,6 +118,8 @@ This plug-in is compatible with Redmine 2.x.x, 3.x.x
 
 == Changelog
 
+[0.1.5] * New observable objects added (Project, Wiki Content, Attachment, Issue Attachments, Project Attachments, Wiki Page Attachments)
+        * Ability to hook before_destroy and after_destroy events
 [0.1.4] * Ability to exit current workflow with `return` or `return true` and cancel workflow's execution chain with `return false`
         * Non-active workflows are now not checked for syntax. Now you can import non-valid (for your Redmine instance for example) workflow, make changes to it and then activate.
 [0.1.3] Compatibility with Redmine 2.x.x returned, support of Redmine 1.x.x cancelled

@@ -8,9 +8,11 @@ class WorkflowError < StandardError
 end
 
 class CustomWorkflow < ActiveRecord::Base
-  OBSERVABLES = [:issue, :user, :group, :group_users, :shared]
-  PROJECT_OBSERVABLES = [:issue]
-  COLLECTION_OBSERVABLES = [:group_users]
+  OBSERVABLES = [:issue, :issue_attachments, :user, :attachment, :group, :group_users, :project, :project_attachments,
+                 :wiki_content, :wiki_page_attachments, :shared]
+  PROJECT_OBSERVABLES = [:issue, :issue_attachments, :project, :project_attachments, :wiki_content, :wiki_page_attachments]
+  COLLECTION_OBSERVABLES = [:group_users, :issue_attachments, :project_attachments, :wiki_page_attachments]
+  SINGLE_OBSERVABLES = [:issue, :user, :group, :attachment, :project, :wiki_content]
 
   attr_protected :id
   has_and_belongs_to_many :projects
@@ -19,7 +21,7 @@ class CustomWorkflow < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name, :case_sensitive => false
   validates_format_of :author, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, :allow_blank => true
-  validate :validate_syntax
+  validate :validate_syntax, :validate_scripts_presence, :if => Proc.new {|workflow| workflow.respond_to?(:observable) and workflow.active?}
 
   if Rails::VERSION::MAJOR >= 4
     default_scope { order(:position => :asc) }
@@ -53,7 +55,7 @@ class CustomWorkflow < ActiveRecord::Base
       workflows = CustomWorkflow.observing(:shared).active
       log_message '= Running shared code', object
       workflows.each do |workflow|
-        if workflow.run(object, :shared_code) == false
+        unless workflow.run(object, :shared_code)
           log_message '= Abort running shared code', object
           return false
         end
@@ -64,14 +66,14 @@ class CustomWorkflow < ActiveRecord::Base
 
     def run_custom_workflows(observable, object, event)
       workflows = CustomWorkflow.active.observing(observable)
-      if object.respond_to? :project
+      if PROJECT_OBSERVABLES.include? observable
         return true unless object.project
         workflows = workflows.for_project(object.project)
       end
       return true unless workflows.any?
       log_message "= Running #{event} custom workflows", object
       workflows.each do |workflow|
-        if workflow.run(object, event) == false
+        unless workflow.run(object, event)
           log_message "= Abort running #{event} custom workflows", object
           return false
         end
@@ -82,6 +84,7 @@ class CustomWorkflow < ActiveRecord::Base
   end
 
   def run(object, event)
+    return true unless attribute_present?(event)
     Rails.logger.info "== Running #{event} custom workflow \"#{name}\""
     object.instance_eval(read_attribute(event))
     true
@@ -106,32 +109,60 @@ class CustomWorkflow < ActiveRecord::Base
     errors.add event, :invalid_script, :error => e
   end
 
+  def validate_scripts_presence
+    case observable.to_sym
+      when :shared
+        fields = [shared_code]
+      when *SINGLE_OBSERVABLES
+        fields = [before_save, after_save, before_destroy, after_destroy]
+      when *COLLECTION_OBSERVABLES
+        fields = [before_add, after_add, before_remove, after_remove]
+      else
+        fields = []
+    end
+    unless fields.any? {|field| field.present?}
+      errors.add :base, :scripts_absent
+    end
+  end
+
   def validate_syntax
-    return unless respond_to?(:observable) && active?
-    case observable
-      when 'shared'
-        CustomWorkflow.run_shared_code(self)
-        validate_syntax_for(self, :shared_code)
-      when 'user', 'group', 'issue'
+    case observable.to_sym
+      when :shared
+        CustomWorkflow.run_shared_code self
+        validate_syntax_for self, :shared_code
+      when *SINGLE_OBSERVABLES
         object = observable.camelize.constantize.new
         object.send :instance_variable_set, "@#{observable}", object # compatibility with 0.0.1
-        CustomWorkflow.run_shared_code(object)
-        validate_syntax_for(object, :before_save)
-        validate_syntax_for(object, :after_save)
-      when 'group_users'
-        @user = User.new
-        @group = Group.new
-        CustomWorkflow.run_shared_code(self)
-        validate_syntax_for(self, :before_add)
-        validate_syntax_for(self, :before_remove)
-        validate_syntax_for(self, :after_add)
-        validate_syntax_for(self, :after_remove)
+        CustomWorkflow.run_shared_code object
+        [:before_save, :after_save, :before_destroy, :after_destroy].each {|field| validate_syntax_for object, field}
+      when *COLLECTION_OBSERVABLES
+        object = nil
+        case observable.to_sym
+          when :group_users
+            object = Group.new
+            object.send :instance_variable_set, :@user, User.new
+            object.send :instance_variable_set, :@group, object
+          when :issue_attachments
+            object = Issue.new
+            object.send :instance_variable_set, :@attachment, Attachment.new
+            object.send :instance_variable_set, :@issue, object
+          when :project_attachments
+            object = Project.new
+            object.send :instance_variable_set, :@attachment, Attachment.new
+            object.send :instance_variable_set, :@project, object
+          when :wiki_page_attachments
+            object = WikiPage.new
+            object.send :instance_variable_set, :@attachment, Attachment.new
+            object.send :instance_variable_set, :@page, object
+        end
+        CustomWorkflow.run_shared_code self
+        [:before_add, :after_add, :before_remove, :after_remove].each {|field| validate_syntax_for object, field}
     end
   end
 
   def export_as_xml
     only = [:author, :name, :description, :before_save, :after_save, :shared_code, :observable,
-            :before_add, :after_add, :before_remove, :after_remove, :created_at]
+            :before_add, :after_add, :before_remove, :after_remove, :before_destroy, :after_destroy, :created_at]
     only = only.select { |p| self[p] }
     to_xml :only => only  do |xml|
       xml.tag! 'exported-at', Time.current.xmlschema

@@ -36,54 +36,74 @@
 
 <fieldset class="box">
   <legend><%= l(:label_workflow_scripts) %></legend>
-  <% case @workflow.observable %>
-  <% when 'shared' %>
-    <%= f.text_area :shared_code, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
-  <% when 'group_users' %>
-    <div class="splitcontent">
-      <div class="splitcontentleft">
-        <%= f.text_area :before_add, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
-      </div>
-      <div class="splitcontentright">
-        <%= f.text_area :after_add, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
-      </div>
-    </div>
-    <div style="clear: left;"></div>
-    <div class="splitcontent">
-      <div class="splitcontentleft">
-        <%= f.text_area :before_remove, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
-      </div>
-      <div class="splitcontentright">
-        <%= f.text_area :after_remove, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
-      </div>
-    </div>
-    <div style="clear: left;"></div>
-  <% when 'user', 'group' %>
-    <div class="splitcontent">
-      <div class="splitcontentleft">
-        <%= f.text_area :before_save, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
-      </div>
-      <div class="splitcontentright">
-        <%= f.text_area :after_save, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
-      </div>
-    </div>
-    <div style="clear: left;"></div>
-  <% when 'issue' %>
-    <div class="splitcontent">
-      <div class="splitcontentleft">
-        <%= f.text_area :before_save, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
-        <em class="info"><%= l(:text_custom_workflow_before_save_note) %></em>
-      </div>
-      <div class="splitcontentright">
-        <%= f.text_area :after_save, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
-        <em class="info"><%= l(:text_custom_workflow_after_save_note) %></em>
-      </div>
-    </div>
-    <div style="clear: left;"></div>
-  <% end %>
+  <% observable = @workflow.observable.to_sym %>
   <p>
-    <em class="info"><%= l("text_custom_workflow_#{@workflow.observable}_code_note") %></em>
+    <em class="info"><%= l("text_custom_workflow_#{observable}_code_note") %></em>
   </p>
+  <% case observable %>
+  <% when :shared %>
+    <%= f.text_area :shared_code, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
+  <% when *CustomWorkflow::COLLECTION_OBSERVABLES %>
+    <%= render :layout => 'layouts/collapsible',
+               :locals => {
+                   :collapsed => (not (@workflow.before_add.present? or @workflow.after_add.present? or @workflow.errors[:base].present?)),
+                   :label => l(:label_add_workflows)} do %>
+      <div class="splitcontent">
+        <div class="splitcontentleft">
+          <%= f.text_area :before_add, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
+        </div>
+        <div class="splitcontentright">
+          <%= f.text_area :after_add, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
+        </div>
+      </div>
+    <% end %>
+    <%= render :layout => 'layouts/collapsible',
+               :locals => {
+                   :collapsed => (not (@workflow.before_remove.present? or @workflow.after_remove.present?)),
+                   :label => l(:label_remove_workflows)} do %>
+      <div class="splitcontent">
+        <div class="splitcontentleft">
+          <%= f.text_area :before_remove, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
+        </div>
+        <div class="splitcontentright">
+          <%= f.text_area :after_remove, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
+        </div>
+      </div>
+    <% end %>
+  <% when *CustomWorkflow::SINGLE_OBSERVABLES %>
+    <%= render :layout => 'layouts/collapsible',
+               :locals => {
+                   :collapsed => (not (@workflow.before_save.present? or @workflow.after_save.present? or @workflow.errors[:base].present?)),
+                   :label => l(:label_save_workflows)} do %>
+      <div class="splitcontent">
+        <div class="splitcontentleft">
+          <%= f.text_area :before_save, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
+          <% if observable == :issue %>
+            <em class="info"><%= l(:text_custom_workflow_before_save_note) %></em>
+          <% end %>
+        </div>
+        <div class="splitcontentright">
+          <%= f.text_area :after_save, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
+          <% if observable == :issue %>
+            <em class="info"><%= l(:text_custom_workflow_after_save_note) %></em>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    <%= render :layout => 'layouts/collapsible',
+               :locals => {
+                   :collapsed => (not (@workflow.before_destroy.present? or @workflow.before_destroy.present?)),
+                   :label => l(:label_destroy_workflows)} do %>
+      <div class="splitcontent">
+        <div class="splitcontentleft">
+          <%= f.text_area :before_destroy, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
+        </div>
+        <div class="splitcontentright">
+          <%= f.text_area :after_destroy, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
 </fieldset>
 
 <script type="text/javascript">
