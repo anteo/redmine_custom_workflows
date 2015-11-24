@@ -155,7 +155,7 @@ class CustomWorkflow < ActiveRecord::Base
             object.send :instance_variable_set, :@attachment, Attachment.new
             object.send :instance_variable_set, :@page, object
         end
-        CustomWorkflow.run_shared_code self
+        CustomWorkflow.run_shared_code object
         [:before_add, :after_add, :before_remove, :after_remove].each {|field| validate_syntax_for object, field}
     end
   end
