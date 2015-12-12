@@ -62,6 +62,7 @@ ru:
   text_custom_workflow_project_attachments_code_note: Эти сценарии выполняются когда файл загружается в проект/удаляется из проекта. Используйте переменные @project и @attachment для доступа к соответствующим объектам из Ваших сценариев.
   text_custom_workflow_wiki_content_code_note: Эти сценарии исполняются в контексте объекта Wiki содержания когда объект Wiki содержания изменяется (удаляется). Используйте методы и свойства объекта содержания Wiki (WikiContent) напрямую или через ключевое слово self.
   text_custom_workflow_wiki_page_attachments_code_note: Эти сценарии выполняются когда файл загружается на Wiki страницу/удаляется с Wiki страницы. Используйте переменные @page и @attachment для доступа к соответствующим объектам из Ваших сценариев.
+  text_custom_workflow_time_entry_code_note: Эти сценарии исполняются в контексте объекта затраченного времени когда объект пользователя изменяется (удаляется). Используйте методы и свойства объекта затраченного времени (TimeEntry) напрямую или через ключевое слово self.
 
   text_no_enabled_projects: Нет проектов
   text_custom_workflow_author: Будет использован в XML файле при экспорте
@@ -79,3 +80,4 @@ ru:
   custom_workflow_observable_wiki_content: "Содержание Wiki"
   custom_workflow_observable_wiki_page_attachments: "Вложения страниц Wiki"
   custom_workflow_observable_group_users: "Пользователи группы"
+  custom_workflow_observable_time_entry: "Затраченное время"
