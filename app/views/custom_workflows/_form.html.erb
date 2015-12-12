@@ -92,7 +92,7 @@
     <% end %>
     <%= render :layout => 'layouts/collapsible',
                :locals => {
-                   :collapsed => (not (@workflow.before_destroy.present? or @workflow.before_destroy.present?)),
+                   :collapsed => (not (@workflow.before_destroy.present? or @workflow.after_destroy.present?)),
                    :label => l(:label_destroy_workflows)} do %>
       <div class="splitcontent">
         <div class="splitcontentleft">
