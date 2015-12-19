@@ -9,10 +9,10 @@ end
 
 class CustomWorkflow < ActiveRecord::Base
   OBSERVABLES = [:issue, :issue_attachments, :user, :attachment, :group, :group_users, :project, :project_attachments,
-                 :wiki_content, :wiki_page_attachments, :time_entry, :shared]
-  PROJECT_OBSERVABLES = [:issue, :issue_attachments, :project, :project_attachments, :wiki_content, :wiki_page_attachments, :time_entry]
+                 :wiki_content, :wiki_page_attachments, :time_entry, :version, :shared]
+  PROJECT_OBSERVABLES = [:issue, :issue_attachments, :project, :project_attachments, :wiki_content, :wiki_page_attachments, :time_entry, :version]
   COLLECTION_OBSERVABLES = [:group_users, :issue_attachments, :project_attachments, :wiki_page_attachments]
-  SINGLE_OBSERVABLES = [:issue, :user, :group, :attachment, :project, :wiki_content, :time_entry]
+  SINGLE_OBSERVABLES = [:issue, :user, :group, :attachment, :project, :wiki_content, :time_entry, :version]
 
   attr_protected :id
   has_and_belongs_to_many :projects

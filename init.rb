@@ -23,6 +23,9 @@ Rails.application.config.to_prepare do
   unless TimeEntry.include?(RedmineCustomWorkflows::TimeEntryPatch)
     TimeEntry.send(:include, RedmineCustomWorkflows::TimeEntryPatch)
   end
+  unless Version.include?(RedmineCustomWorkflows::VersionPatch)
+    Version.send(:include, RedmineCustomWorkflows::VersionPatch)
+  end
   unless WikiContent.include?(RedmineCustomWorkflows::WikiContentPatch)
     WikiContent.send(:include, RedmineCustomWorkflows::WikiContentPatch)
   end

@@ -63,6 +63,7 @@ en:
   text_custom_workflow_wiki_content_code_note: Scripts are executed in the context of Wiki Content object when project object changes (destroys). Use methods and properties of the project directly (or through "self")
   text_custom_workflow_wiki_page_attachments_code_note: These scripts are executed when a file being added to wiki page/removed from wiki page. Use variables @page and @attachment to access appropriate objects in your scripts.
   text_custom_workflow_time_entry_code_note: Scripts are executed in the context of TimeEntry object when time enty object changes (destroys). Use methods and properties of the time entry directly (or through "self")
+  text_custom_workflow_version_code_note: Scripts are executed in the context of Version object when version object changes (destroys). Use methods and properties of the version directly (or through "self")
 
   text_no_enabled_projects: No projects
   text_custom_workflow_author: Will be included in exported XML
@@ -81,3 +82,4 @@ en:
   custom_workflow_observable_wiki_page_attachments: "Wiki Page Attachments"
   custom_workflow_observable_group_users: "Group Users"
   custom_workflow_observable_time_entry: "Time Entry"
+  custom_workflow_observable_version: "Version"
