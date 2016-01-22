@@ -22,7 +22,7 @@ module RedmineCustomWorkflows
                                                lambda { |group, user| Group.users_callback(observable, group, user) }
                                              end
         end
-      end
+      end if CustomWorkflow.table_exists?
     end
 
     module InstanceMethods
