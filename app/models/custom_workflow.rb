@@ -33,7 +33,7 @@ class CustomWorkflow < ActiveRecord::Base
 
   scope :active, lambda { where(:active => true) }
   scope :for_project, (lambda do |project|
-    where("is_for_all OR EXISTS (SELECT * FROM #{projects_join_table} WHERE project_id=? AND custom_workflow_id=id)", project.id)
+    where("is_for_all=1 OR EXISTS (SELECT * FROM #{projects_join_table} WHERE project_id=? AND custom_workflow_id=id)", project.id)
   end)
   scope :observing, lambda { |observable| where(:observable => observable) }
 
