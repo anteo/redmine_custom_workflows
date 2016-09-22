@@ -35,7 +35,6 @@ table.list.custom-workflows tr.disabled {
 }
 
 #custom_workflow_enabled_projects ul {
-    max-height: 200px;
     overflow-y: auto;
 }
 
