@@ -47,7 +47,8 @@ Redmine::Plugin.register :redmine_custom_workflows do
   version '0.1.6'
   url 'http://www.redmine.org/plugins/custom-workflows'
 
-  menu :admin_menu, :custom_workflows, {:controller => 'custom_workflows', :action => 'index'}, :caption => :label_custom_workflow_plural
+  menu :admin_menu, :custom_workflows, {:controller => 'custom_workflows', :action => 'index'},
+       :if => Proc.new { User.current.admin? }, :caption => :label_custom_workflow_plural
 
   permission :manage_project_workflow, {}, :require => :member
 end
