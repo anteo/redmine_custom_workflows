@@ -1,4 +1,18 @@
 require 'redmine'
+
+Redmine::Plugin.register :redmine_custom_workflows do
+  name 'Redmine Custom Workflow plugin'
+  author 'Anton Argirov'
+  description 'Allows to create custom workflows for issues, defined in the plain Ruby language'
+  version '0.1.6'
+  url 'http://www.redmine.org/plugins/custom-workflows'
+
+  menu :admin_menu, :custom_workflows, {:controller => 'custom_workflows', :action => 'index'},
+       :if => Proc.new { User.current.admin? }, :caption => :label_custom_workflow_plural
+
+  permission :manage_project_workflow, {}, :require => :member
+end
+
 require 'redmine_custom_workflows/hooks'
 
 Rails.application.config.to_prepare do
@@ -38,17 +52,4 @@ Rails.application.config.to_prepare do
   unless ActionView::Base.include?(RedmineCustomWorkflows::Helper)
     ActionView::Base.send(:include, RedmineCustomWorkflows::Helper)
   end
-end
-
-Redmine::Plugin.register :redmine_custom_workflows do
-  name 'Redmine Custom Workflow plugin'
-  author 'Anton Argirov'
-  description 'Allows to create custom workflows for issues, defined in the plain Ruby language'
-  version '0.1.6'
-  url 'http://www.redmine.org/plugins/custom-workflows'
-
-  menu :admin_menu, :custom_workflows, {:controller => 'custom_workflows', :action => 'index'},
-       :if => Proc.new { User.current.admin? }, :caption => :label_custom_workflow_plural
-
-  permission :manage_project_workflow, {}, :require => :member
 end
