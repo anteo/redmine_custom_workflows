@@ -1,6 +1,8 @@
 #admin-menu a.custom-workflows {
     background-image: url(../../../images/ticket_go.png);
+    background-position: 0% 50%;
     background-repeat: no-repeat;
+    padding-left: 20px;
 }
 
 #tab-content-custom_workflows .disabled {
