@@ -15,12 +15,11 @@ end
 
 require 'redmine_custom_workflows/hooks'
 
+require File.dirname(__FILE__) + '/lib/redmine_custom_workflows/projects_helper_patch'
+
 Rails.application.config.to_prepare do
   unless Project.include?(RedmineCustomWorkflows::ProjectPatch)
     Project.send(:include, RedmineCustomWorkflows::ProjectPatch)
-  end
-  unless ProjectsHelper.include?(RedmineCustomWorkflows::ProjectsHelperPatch)
-    ProjectsHelper.send(:include, RedmineCustomWorkflows::ProjectsHelperPatch)
   end
   unless Attachment.include?(RedmineCustomWorkflows::AttachmentPatch)
     Attachment.send(:include, RedmineCustomWorkflows::AttachmentPatch)
