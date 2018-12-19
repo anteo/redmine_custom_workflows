@@ -1,5 +1,5 @@
-class CreateCustomWorkflowsProjects < ActiveRecord::Migration
-  def self.up
+class CreateCustomWorkflowsProjects < ActiveRecord::Migration[4.2]
+  def change
     create_table :custom_workflows_projects, :force => true, :id => false do |t|
       t.references :project
       t.references :custom_workflow
@@ -8,7 +8,4 @@ class CreateCustomWorkflowsProjects < ActiveRecord::Migration
     add_index :custom_workflows_projects, [:custom_workflow_id]
   end
 
-  def self.down
-    drop_table :custom_workflows_projects
-  end
 end

@@ -1,4 +1,4 @@
-class AddAdditionalScriptFieldsToCustomWorkflows < ActiveRecord::Migration
+class AddAdditionalScriptFieldsToCustomWorkflows < ActiveRecord::Migration[4.2]
   def change
     add_column :custom_workflows, :shared_code, :text, :null => true
     add_column :custom_workflows, :before_add, :text, :null => true

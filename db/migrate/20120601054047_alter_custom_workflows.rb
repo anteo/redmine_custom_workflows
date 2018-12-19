@@ -1,4 +1,4 @@
-class AlterCustomWorkflows < ActiveRecord::Migration
+class AlterCustomWorkflows < ActiveRecord::Migration[4.2]
   def self.up
     remove_column :custom_workflows, :project_id
     remove_column :custom_workflows, :is_enabled
@@ -7,6 +7,4 @@ class AlterCustomWorkflows < ActiveRecord::Migration
     add_column :custom_workflows, :position, :integer, :null => false, :default => 1
   end
 
-  def self.down
-  end
 end

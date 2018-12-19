@@ -9,7 +9,7 @@
                       CustomWorkflow::OBSERVABLES.collect {|o| [l("custom_workflow_observable_#{o}"), o]}, {},
                       :onchange => 'this.form.submit()',
                       :disabled => !@workflow.new_record? %></p>
-      <p><%= f.text_area :description, :cols => 40, :rows => 5 %></p>
+      <p><%= f.text_area :description, cols: 40, rows: 5 , class: 'wiki-edit' %></p>
       <% if @workflow.has_projects_association? %>
         <p><%= f.check_box :is_for_all, :onclick => "checkAndDisable('custom_workflow_enabled_projects', this.checked);", :label => :field_enabled_for_all_projects %></p>
       <% end %>
@@ -44,69 +44,73 @@
   <% when :shared %>
     <%= f.text_area :shared_code, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
   <% when *CustomWorkflow::COLLECTION_OBSERVABLES %>
-    <%= render :layout => 'layouts/collapsible',
-               :locals => {
-                   :collapsed => (not (@workflow.before_add.present? or @workflow.after_add.present? or @workflow.errors[:base].present?)),
-                   :label => l(:label_add_workflows)} do %>
-      <div class="splitcontent">
-        <div class="splitcontentleft">
-          <%= f.text_area :before_add, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
-        </div>
-        <div class="splitcontentright">
-          <%= f.text_area :after_add, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
-        </div>
-      </div>
-    <% end %>
-    <%= render :layout => 'layouts/collapsible',
-               :locals => {
-                   :collapsed => (not (@workflow.before_remove.present? or @workflow.after_remove.present?)),
-                   :label => l(:label_remove_workflows)} do %>
-      <div class="splitcontent">
-        <div class="splitcontentleft">
-          <%= f.text_area :before_remove, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
-        </div>
-        <div class="splitcontentright">
-          <%= f.text_area :after_remove, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
+    <% collapsed = (not (@workflow.before_add.present? or @workflow.after_add.present? or @workflow.errors[:base].present?)) %>
+    <fieldset class="collapsible <%= collapsed ? 'collapsed' : '' %>">
+      <legend onclick="toggleFieldset(this);"><%= l(:label_add_workflows) %></legend>
+      <div style="<%= collapsed ? 'display: none' : '' %>">
+        <div class="splitcontent">
+          <div class="splitcontentleft">
+            <%= f.text_area :before_add, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
+          </div>
+          <div class="splitcontentright">
+            <%= f.text_area :after_add, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
+          </div>
         </div>
       </div>
-    <% end %>
+    </fieldset>
+    <% collapsed = (not (@workflow.before_remove.present? or @workflow.after_remove.present?)) %>
+    <fieldset class="collapsible <%= collapsed ? 'collapsed' : '' %>">
+      <legend onclick="toggleFieldset(this);"><%= l(:label_remove_workflows) %></legend>
+      <div style="<%= collapsed ? 'display: none' : '' %>">
+        <div class="splitcontent">
+          <div class="splitcontentleft">
+            <%= f.text_area :before_remove, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
+          </div>
+          <div class="splitcontentright">
+            <%= f.text_area :after_remove, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
+          </div>
+        </div>
+      </div>
+    </fieldset>
   <% when *CustomWorkflow::SINGLE_OBSERVABLES %>
-    <%= render :layout => 'layouts/collapsible',
-               :locals => {
-                   :collapsed => (not (@workflow.before_save.present? or @workflow.after_save.present? or @workflow.errors[:base].present?)),
-                   :label => l(:label_save_workflows)} do %>
-      <div class="splitcontent">
-        <div class="splitcontentleft">
-          <%= f.text_area :before_save, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
-          <% if observable == :issue %>
-            <em class="info"><%= l(:text_custom_workflow_before_save_note) %></em>
-          <% end %>
-        </div>
-        <div class="splitcontentright">
-          <%= f.text_area :after_save, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
-          <% if observable == :issue %>
-            <em class="info"><%= l(:text_custom_workflow_after_save_note) %></em>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
-    <%= render :layout => 'layouts/collapsible',
-               :locals => {
-                   :collapsed => (not (@workflow.before_destroy.present? or @workflow.after_destroy.present?)),
-                   :label => l(:label_destroy_workflows)} do %>
-      <div class="splitcontent">
-        <div class="splitcontentleft">
-          <%= f.text_area :before_destroy, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
-        </div>
-        <div class="splitcontentright">
-          <%= f.text_area :after_destroy, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
+    <% collapsed = (not (@workflow.before_save.present? or @workflow.after_save.present? or @workflow.errors[:base].present?)) %>
+    <fieldset class="collapsible <%= collapsed ? 'collapsed' : '' %>">
+      <legend onclick="toggleFieldset(this);"><%= l(:label_save_workflows) %></legend>
+      <div style="<%= collapsed ? 'display: none' : '' %>">
+        <div class="splitcontent">
+          <div class="splitcontentleft">
+            <%= f.text_area :before_save, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
+            <% if observable == :issue %>
+              <em class="info"><%= l(:text_custom_workflow_before_save_note) %></em>
+            <% end %>
+          </div>
+          <div class="splitcontentright">
+            <%= f.text_area :after_save, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
+            <% if observable == :issue %>
+              <em class="info"><%= l(:text_custom_workflow_after_save_note) %></em>
+            <% end %>
+          </div>
         </div>
       </div>
-    <% end %>
+    </fieldset>
+    <% collapsed = (not (@workflow.before_destroy.present? or @workflow.after_destroy.present?)) %>
+    <fieldset class="collapsible <%= collapsed ? 'collapsed' : '' %>">
+      <legend onclick="toggleFieldset(this);"><%= l(:label_destroy_workflows) %></legend>
+      <div style="<%= collapsed ? 'display: none' : '' %>">
+        <div class="splitcontent">
+          <div class="splitcontentleft">
+            <%= f.text_area :before_destroy, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
+          </div>
+          <div class="splitcontentright">
+            <%= f.text_area :after_destroy, :cols => 40, :rows => 20, :wrap => 'off', :class => 'custom_workflow_script' %>
+          </div>
+        </div>
+      </div>
+    </fieldset>
   <% end %>
 </fieldset>
 
-<script type="text/javascript">
+<script>
     jQuery('.custom_workflow_script').taboverride(2, true);
     function checkAndDisable(id, checked) {
         if (checked) {
