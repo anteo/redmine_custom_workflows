@@ -18,7 +18,7 @@ module RedmineCustomWorkflows
         if text_body || html_body
           mail headers do |format|
             format.text { render :text => text_body } if text_body
-            format.html { render :html => html_body } if html_body
+            format.html { render :text => html_body } if html_body
           end
         elsif template_name
           template_params.each { |k,v| instance_variable_set("@#{k}", v) }

@@ -11,7 +11,7 @@ Redmine::Plugin.register :redmine_custom_workflows do
 
   menu :admin_menu, :custom_workflows, {:controller => 'custom_workflows', :action => 'index'},
        :if => Proc.new { User.current.admin? }, :caption => :label_custom_workflow_plural,
-	:html => {:class => 'icon icon-workflows'}
+	     :html => {:class => 'icon icon-workflows'}
 
   permission :manage_project_workflow, {}, :require => :member
 end
