@@ -1,4 +1,4 @@
-class CreateExampleWorkflow < ActiveRecord::Migration
+class CreateExampleWorkflow < ActiveRecord::Migration[4.2]
   def self.up
     CustomWorkflow.reset_column_information
     old = CustomWorkflow.where(:name => 'Duration/Done Ratio/Status correlation').first

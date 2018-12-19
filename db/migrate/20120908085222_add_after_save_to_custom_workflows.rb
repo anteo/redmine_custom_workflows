@@ -1,4 +1,4 @@
-class AddAfterSaveToCustomWorkflows < ActiveRecord::Migration
+class AddAfterSaveToCustomWorkflows < ActiveRecord::Migration[4.2]
   def self.up
     rename_column :custom_workflows, :script, :before_save
     change_column :custom_workflows, :before_save, :text, :null => true

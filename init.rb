@@ -7,20 +7,22 @@ Redmine::Plugin.register :redmine_custom_workflows do
   version '0.1.6'
   url 'http://www.redmine.org/plugins/custom-workflows'
 
+  requires_redmine version_or_higher: '4.0.0'
+
   menu :admin_menu, :custom_workflows, {:controller => 'custom_workflows', :action => 'index'},
-       :if => Proc.new { User.current.admin? }, :caption => :label_custom_workflow_plural
+       :if => Proc.new { User.current.admin? }, :caption => :label_custom_workflow_plural,
+	:html => {:class => 'icon icon-workflows'}
 
   permission :manage_project_workflow, {}, :require => :member
 end
 
 require 'redmine_custom_workflows/hooks'
 
+require File.dirname(__FILE__) + '/lib/redmine_custom_workflows/projects_helper_patch'
+
 Rails.application.config.to_prepare do
   unless Project.include?(RedmineCustomWorkflows::ProjectPatch)
     Project.send(:include, RedmineCustomWorkflows::ProjectPatch)
-  end
-  unless ProjectsHelper.include?(RedmineCustomWorkflows::ProjectsHelperPatch)
-    ProjectsHelper.send(:include, RedmineCustomWorkflows::ProjectsHelperPatch)
   end
   unless Attachment.include?(RedmineCustomWorkflows::AttachmentPatch)
     Attachment.send(:include, RedmineCustomWorkflows::AttachmentPatch)

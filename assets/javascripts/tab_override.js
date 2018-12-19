@@ -6,7 +6,7 @@
   };
 
   function TabOverride(element, tabSize, autoIndent) {
-    var ta = document.createElement('textarea');
+    let ta = document.createElement('textarea');
     ta.value = '\n';
 
     this.newline = ta.value;
@@ -43,12 +43,11 @@
      * @function
      */
     setTabSize:function (size) {
-      var i;
       if (!size) { // size is 0 or not specified (or falsy)
         this.aTab = '\t';
       } else if (typeof size === 'number' && size > 0) {
         this.aTab = '';
-        for (i = 0; i < size; i += 1) {
+        for (let i = 0; i < size; i += 1) {
           this.aTab += ' ';
         }
       }
@@ -64,7 +63,7 @@
      * @private
      */
     overrideKeyPress:function (e) {
-      var key = e.keyCode;
+      let key = e.keyCode;
       if ((key === 9 || (key === 13 && this.autoIndent && !this.inWhitespace)) && !e.ctrlKey && !e.altKey) {
         e.preventDefault();
       }
@@ -78,7 +77,7 @@
      * @private
      */
     overrideKeyDown:function (e) {
-      var key = e.keyCode, // the key code for the key that was pressed
+      let key = e.keyCode, // the key code for the key that was pressed
         tab, // the string representing a tab
         tabLen, // the length of a tab
         text, // initial text in the textarea

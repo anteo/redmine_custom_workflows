@@ -8,7 +8,7 @@ module RedmineCustomWorkflows
     end
 
     module InstanceMethods
-      def custom_email(headers={})
+      def self.deliver_custom_email(headers={})
         user = headers.delete :user
         headers[:to] = user.mail if user
         text_body = headers.delete :text_body

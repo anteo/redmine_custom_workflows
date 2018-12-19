@@ -38,7 +38,9 @@
           <%= workflow.projects.map(&:name).join(", ") %>
         <% end %>
       </td>
-      <td align="center" nowrap><%= reorder_links("custom_workflow", {:action => 'update', :id => workflow, :commit => true}) %></td>
+      <td align="center" nowrap>
+        <%= reorder_handle(workflow, url: url_for(action: 'reorder', id: workflow) ) %>
+      </td>
       <td class="buttons">
         <% if workflow.active? %>
           <%= link_to(l(:button_custom_workflow_deactivate), custom_workflow_status_path(workflow, :active => false), :class => 'icon icon-inactive', :method => :post) %>
@@ -74,3 +76,7 @@
     </p>
   <% end %>
 </div>
+
+<%= javascript_tag do %>
+  $(function() { $("table.custom-workflows tbody").positionedItems(); });
+<% end %>
