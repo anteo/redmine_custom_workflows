@@ -14,7 +14,6 @@ class CustomWorkflow < ActiveRecord::Base
   COLLECTION_OBSERVABLES = [:group_users, :issue_attachments, :project_attachments, :wiki_page_attachments]
   SINGLE_OBSERVABLES = [:issue, :user, :group, :attachment, :project, :wiki_content, :time_entry, :version]
 
-  attr_protected :id
   has_and_belongs_to_many :projects
   acts_as_list
 
@@ -33,7 +32,8 @@ class CustomWorkflow < ActiveRecord::Base
 
   scope :active, lambda { where(:active => true) }
   scope :for_project, (lambda do |project|
-    where("is_for_all OR EXISTS (SELECT * FROM #{projects_join_table} WHERE project_id=? AND custom_workflow_id=id)", project.id)
+    where("is_for_all=? OR EXISTS (SELECT * FROM #{projects_join_table} WHERE project_id=? AND custom_workflow_id=id)",
+          1, project.id)
   end)
   scope :observing, lambda { |observable| where(:observable => observable) }
 
@@ -104,7 +104,7 @@ class CustomWorkflow < ActiveRecord::Base
 
   def validate_syntax_for(object, event)
     object.instance_eval(read_attribute(event)) if respond_to?(event) && read_attribute(event)
-  rescue WorkflowError => e
+  rescue WorkflowError => _
   rescue Exception => e
     errors.add event, :invalid_script, :error => e
   end

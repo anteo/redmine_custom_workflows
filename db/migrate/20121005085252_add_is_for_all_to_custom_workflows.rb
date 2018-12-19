@@ -1,8 +1,5 @@
-class AddIsForAllToCustomWorkflows < ActiveRecord::Migration
-  def self.up
+class AddIsForAllToCustomWorkflows < ActiveRecord::Migration[4.2]
+  def change
     add_column :custom_workflows, :is_for_all, :boolean, :null => false, :default => false
-  end
-  def self.down
-    remove_column :custom_workflows, :is_for_all
   end
 end

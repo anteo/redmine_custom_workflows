@@ -8,7 +8,7 @@ module RedmineCustomWorkflows
     end
 
     module InstanceMethods
-      def custom_email(headers={})
+      def self.deliver_custom_email(headers={})
         user = headers.delete :user
         headers[:to] = user.mail if user
         text_body = headers.delete :text_body
@@ -27,7 +27,7 @@ module RedmineCustomWorkflows
             format.html { render template_name } unless Setting.plain_text_mail?
           end
         else
-          raise 'Nor :text_body, :html_body or :template_name specified'
+          raise 'Not :text_body, :html_body or :template_name specified'
         end
       end
     end
