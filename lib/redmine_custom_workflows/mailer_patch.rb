@@ -27,7 +27,7 @@ module RedmineCustomWorkflows
             format.html { render template_name } unless Setting.plain_text_mail?
           end
         else
-          raise 'Nor :text_body, :html_body or :template_name specified'
+          raise 'Not :text_body, :html_body or :template_name specified'
         end
       end
     end
