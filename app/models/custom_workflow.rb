@@ -103,8 +103,7 @@ class CustomWorkflow < ActiveRecord::Base
 
   def validate_syntax_for(object, event)
     object.instance_eval(read_attribute(event)) if respond_to?(event) && read_attribute(event)
-  rescue WorkflowError => e
-    errors.add event, :invalid_script, :error => e
+  rescue WorkflowError => _
   rescue Exception => e
     errors.add event, :invalid_script, :error => e
   end
