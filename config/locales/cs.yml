@@ -1,0 +1,104 @@
+cs:
+  project_module_custom_workflows_module: Uživatelské procesy
+  permission_manage_project_workflow: Spravovat uživatelské procesy
+
+  label_custom_workflow: Uživatelský proces
+  label_custom_workflow_plural: Uživatelské procesy
+  label_custom_workflow_new: Vytvořit uživatelský proces
+  label_workflow_scripts: Skript procesu
+  label_enabled_projects: Povoleno pro projekt(y)
+  label_custom_workflow_export: Export
+  label_custom_workflow_import: Importovat proces
+  label_save_workflows: Uložení sledovaných objektů
+  label_destroy_workflows: Smazání sledovaných objektů
+  label_add_workflows: Přidání sledovaných objektů do sezanmu
+  label_remove_workflows: Odstranění sledovaných objektů za seznamu
+
+  button_import: Import
+  button_custom_workflow_activate: Aktivovat
+  button_custom_workflow_deactivate: Deaktivovat
+
+  field_after_save: Skript spuštěný po uložení sledovaného objektu
+  field_before_save: Skript spuštěný před uložením sledovaného objektu
+  field_after_destroy: Skript spuštěný po smazání sledovaného objektu
+  field_before_destroy: Skript spuštěný před smazáním sledovaného objektu
+  field_after_add: Skript spuštěný po přidání sledovaného objektu do seznamu
+  field_before_add: Skript spuštěný před přidáním sledovaného objektu do seznamu
+  field_after_remove: Skript spuštěný po odstranění sledovaného objektu ze seznamu
+  field_before_remove: Skript spuštěný před odstraněním sledovaného objektu ze seznamu
+  field_shared_code: Sdílený kód
+  field_observable: Sledovaný objekt
+  field_is_enabled: Povoleno
+  field_enabled_for_all_projects: Povoleno pro všechny projekty
+  field_custom_workflow_author: Autorův e-mail
+  field_custom_workflow_file: Select the XML file previously exported process
+  field_custom_workflow_active: Aktivní
+  field_custom_workflow:
+    script: Skript
+
+  notice_successful_import: Uživatelský proces byl úspěšně naimportován
+  notice_successful_status_change: Status byl úspěšně změněn
+  error_failed_import: Chyba při importu uživatelského procesu (Neznámý formát? Podívejte se do logu.)
+
+  activerecord:
+    errors:
+      messages:
+        invalid_script: "obsahuje chyby: %{error}"
+        custom_workflow_error: Chyba uživatelského procesu (kontaktujte administrátora)
+        new_status_invalid: "změna z '%{old_status}' na '%{new_status}' není povolena"
+        scripts_absent: Musí být definován alespoň jeden skript
+
+  text_select_project_custom_workflows: Vyberte uživatelský skript projektu
+  text_custom_workflow_before_save_note: "Zde můžete měnit vlastnosti úkolu. Ve skriptu nevytvářejte ani neměňte
+    související úkoly. Pro ukončení skriptu chybou použijte: `raise WorkflowError, 'Zpráva uživateli'`."
+  text_custom_workflow_after_save_note: Zde můžete aktualizovat nebo vytvářet souvissející úkoly. Mějte na paměti, že
+    tento skript bude také vykonán pro nově vytvořené úkoly. Takže nezapomeňte udělat vhodné kontroly pro zabránění
+    rekurzivnímu volání.
+  text_custom_workflow_issue_code_note: Skripty jsou vykonávány v rámci objektu úkolu stejně jako volání `before_save`
+    a `after_save` funkcí. Takže lze použít přímo vlastností úkolů. Proměnné (@variable) jsou rovněž dostupné a lze jich
+    použít.
+  text_custom_workflow_shared_code_note: Tento kód bude spuštěn pře jakýmkoli jiným procesem a může obsahovat sdílený
+    kód, např. funkce a třídy, které jsou potřeba v jiných procesech
+  text_custom_workflow_user_code_note: Skripty jsou vykonávány v rámci objektu uživatel, když se objekt mění (maže).
+    Můžete přímo použít metody a vlastnosti objektu.
+  text_custom_workflow_group_code_note: Skripty jsou vykonávány v rámci objektu skupina, když se objekt mění (maže).
+    Můžete přímo použít metody a vlastnosti objektu.
+  text_custom_workflow_group_users_code_note: Tyto skripty jsou vykonávány, když je uživatel přidán nebo odebrán ze
+    skupiny. Pro přístup k objektům použijte proměnné @user a @group.
+  text_custom_workflow_attachment_code_note: Skripty jsou vykonávány v rámci objektu příloha, když se tento objekt mění
+    (maže se). Můžete přímo použít metody a vlastnosti objektu. Mějte na paměti, že se to týká všech typů příloh
+    (u úkolů, dokumentů, wiki stránek atd.), takže byste měli zkontrolovat proměnnou 'container_type' pro určení,
+    o jakou přílohu se jedná.
+  text_custom_workflow_issue_attachments_code_note: Tento skripty se vykonávají když je příloha přidána nebo odebrába
+    z úkolu. Můžete použít proměnné @issue a @attachment pro přístup k těmto objektům ve skriptu.
+  text_custom_workflow_project_code_note: SSkripty jsou vykonávány v rámci objektu projekt, když se objekt mění (maže).
+    Můžete přímo použít metody a vlastnosti objektu.
+  text_custom_workflow_project_attachments_code_note: Tyto skripty jsou vykonávány, když se přidává nebo se maže soubor
+    u projektu. Můžete použít proměnné @project a @attachment pro přístup k těmto objektům ve skriptu.
+  text_custom_workflow_wiki_content_code_note: Tyto kripty jsou vykonávány v rámci objektu Wiki, když se mění nebo se
+    maže. Můžete přímo použít metody a vlastnosti objektu.
+  text_custom_workflow_wiki_page_attachments_code_note: Tyto skripty jsou vykonávány, když se přidává nebo se maže
+    příloha u wiki stránky. Můžete použít proměnné @page a @attachment pro přístup k těmto objektům ve skriptu.
+  text_custom_workflow_time_entry_code_note: Skripty jsou vykonávány v rámci objektu časový záznam, kdyže se mění nebo
+    se maže. Můžete přímo použít metody a vlastnosti objektu.
+  text_custom_workflow_version_code_note: Skripty jsou vykonávány v rámci objektu verze, když se mění nebo se maže.
+    Můžete přímo použít metody a vlastnosti objektu.
+
+  text_no_enabled_projects: Žádné projekty
+  text_custom_workflow_author: Bude zahrnuto do exportovaného XML
+  text_custom_workflow_disabled: zakázáno administrátorem
+  text_custom_workflow_is_for_all: povoleno pro všechny projekty
+
+  custom_workflow_observable_shared: <sdílený kód>
+  custom_workflow_observable_issue: Úkol
+  custom_workflow_observable_issue_attachments: Přílohy úkolů
+  custom_workflow_observable_group: Skupina
+  custom_workflow_observable_user: Uživatel
+  custom_workflow_observable_attachment: Příloha
+  custom_workflow_observable_project: Projekt
+  custom_workflow_observable_project_attachments: Soubory
+  custom_workflow_observable_wiki_content: Wiki
+  custom_workflow_observable_wiki_page_attachments: Přílohy na wiki
+  custom_workflow_observable_group_users: Uživatelé skupin
+  custom_workflow_observable_time_entry: Časový záznam
+  custom_workflow_observable_version: Verze
