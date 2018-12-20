@@ -1,3 +1,24 @@
+# encoding: utf-8
+#
+# Redmine plugin for Custom Workflows
+#
+# Copyright Anton Argirov
+# Copyright Karel Pičman <karel.picman@kontron.com>
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
 require 'redmine'
 
 Redmine::Plugin.register :redmine_custom_workflows do
@@ -9,49 +30,13 @@ Redmine::Plugin.register :redmine_custom_workflows do
 
   requires_redmine version_or_higher: '3.0.0'
 
-  menu :admin_menu, :custom_workflows, {:controller => 'custom_workflows', :action => 'index'},
-       :if => Proc.new { User.current.admin? }, :caption => :label_custom_workflow_plural,
-	     :html => {:class => 'icon icon-workflows'}
-
   permission :manage_project_workflow, {}, :require => :member
 end
 
-require 'redmine_custom_workflows/hooks'
+require_dependency File.dirname(__FILE__) + '/lib/redmine_custom_workflows.rb'
 
-require File.dirname(__FILE__) + '/lib/redmine_custom_workflows/projects_helper_patch'
-
-Rails.application.config.to_prepare do
-  unless Project.include?(RedmineCustomWorkflows::ProjectPatch)
-    Project.send(:include, RedmineCustomWorkflows::ProjectPatch)
-  end
-  unless Attachment.include?(RedmineCustomWorkflows::AttachmentPatch)
-    Attachment.send(:include, RedmineCustomWorkflows::AttachmentPatch)
-  end
-  unless Issue.include?(RedmineCustomWorkflows::IssuePatch)
-    Issue.send(:include, RedmineCustomWorkflows::IssuePatch)
-  end
-  unless User.include?(RedmineCustomWorkflows::UserPatch)
-    User.send(:include, RedmineCustomWorkflows::UserPatch)
-  end
-  unless Group.include?(RedmineCustomWorkflows::GroupPatch)
-    Group.send(:include, RedmineCustomWorkflows::GroupPatch)
-  end
-  unless TimeEntry.include?(RedmineCustomWorkflows::TimeEntryPatch)
-    TimeEntry.send(:include, RedmineCustomWorkflows::TimeEntryPatch)
-  end
-  unless Version.include?(RedmineCustomWorkflows::VersionPatch)
-    Version.send(:include, RedmineCustomWorkflows::VersionPatch)
-  end
-  unless WikiContent.include?(RedmineCustomWorkflows::WikiContentPatch)
-    WikiContent.send(:include, RedmineCustomWorkflows::WikiContentPatch)
-  end
-  unless WikiPage.include?(RedmineCustomWorkflows::WikiPagePatch)
-    WikiPage.send(:include, RedmineCustomWorkflows::WikiPagePatch)
-  end
-  unless Mailer.include?(RedmineCustomWorkflows::MailerPatch)
-    Mailer.send(:include, RedmineCustomWorkflows::MailerPatch)
-  end
-  unless ActionView::Base.include?(RedmineCustomWorkflows::Helper)
-    ActionView::Base.send(:include, RedmineCustomWorkflows::Helper)
-  end
+# Administration menu extension
+Redmine::MenuManager.map :admin_menu do |menu|
+  menu.push :custom_workflows, { controller: 'custom_workflows', action: 'index'},
+       caption: :label_custom_workflow_plural, html: { class: 'icon icon-workflows'}
 end

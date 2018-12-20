@@ -19,14 +19,21 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-class AddAdditionalScriptFieldsToCustomWorkflows < ActiveRecord::Migration[4.2]
+module RedmineCustomWorkflows
+  module Test
+    class UnitTest < ActiveSupport::TestCase
 
-  def change
-    add_column :custom_workflows, :shared_code, :text, :null => true
-    add_column :custom_workflows, :before_add, :text, :null => true
-    add_column :custom_workflows, :after_add, :text, :null => true
-    add_column :custom_workflows, :before_remove, :text, :null => true
-    add_column :custom_workflows, :after_remove, :text, :null => true
+      # Allow us to override the fixtures method to implement fixtures for our plugin.
+      # Ultimately it allows for better integration without blowing redmine fixtures up,
+      # and allowing us to suppliment redmine fixtures if we need to.
+      def self.fixtures(*table_names)
+        dir = File.join( File.dirname(__FILE__), '../../../test/fixtures')
+        table_names.each do |x|
+          Rails.logger.info ">>> #{dir}/#{x}.yml"
+          ActiveRecord::FixtureSet.create_fixtures(dir, x) if File.exist?("#{dir}/#{x}.yml")
+        end
+        super(table_names)
+      end      
+    end
   end
-
 end

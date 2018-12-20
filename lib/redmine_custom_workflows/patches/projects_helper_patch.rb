@@ -19,14 +19,19 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-class AddAdditionalScriptFieldsToCustomWorkflows < ActiveRecord::Migration[4.2]
+module RedmineCustomWorkflows
+  module Patches
+    module ProjectsHelperPatch
 
-  def change
-    add_column :custom_workflows, :shared_code, :text, :null => true
-    add_column :custom_workflows, :before_add, :text, :null => true
-    add_column :custom_workflows, :after_add, :text, :null => true
-    add_column :custom_workflows, :before_remove, :text, :null => true
-    add_column :custom_workflows, :after_remove, :text, :null => true
+      def project_settings_tabs
+        tabs = super
+        tabs << { name: 'custom_workflows', action: :manage_project_workflow, partial: 'projects/settings/custom_workflow',
+                 label: :label_custom_workflow_plural } if User.current.allowed_to?(:manage_project_workflow, @project)
+        tabs
+      end
+
+    end
   end
-
 end
+
+ProjectsHelper.send(:prepend, RedmineCustomWorkflows::Patches::ProjectsHelperPatch)

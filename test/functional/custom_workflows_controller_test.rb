@@ -19,14 +19,38 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-class AddAdditionalScriptFieldsToCustomWorkflows < ActiveRecord::Migration[4.2]
+require File.expand_path('../../test_helper', __FILE__)
 
-  def change
-    add_column :custom_workflows, :shared_code, :text, :null => true
-    add_column :custom_workflows, :before_add, :text, :null => true
-    add_column :custom_workflows, :after_add, :text, :null => true
-    add_column :custom_workflows, :before_remove, :text, :null => true
-    add_column :custom_workflows, :after_remove, :text, :null => true
+class CustomWorkflowsControllerTest < RedmineCustomWorkflows::Test::TestCase
+
+  fixtures :users, :email_addresses, :custom_workflows, :custom_workflows_projects, :projects, :roles,
+           :members, :member_roles
+
+  def setup
+    @cw1 = CustomWorkflow.find 1
+    @project1 = Project.find 1
+    @admin = User.find 1
+    @manager = User.find 2
+    User.current = nil
+    @request.session[:user_id] = @admin.id
+  end
+
+  def test_truth
+    assert_kind_of CustomWorkflow, @cw1
+    assert_kind_of Project, @project1
+    assert_kind_of User, @manager
+    assert_kind_of User, @admin
+  end
+
+  def test_index_admin
+    get :index
+    assert_response :success
+  end
+
+  def test_index_non_admin
+    @request.session[:user_id] = @manager.id
+    get :index
+    assert_response :forbidden
   end
 
 end

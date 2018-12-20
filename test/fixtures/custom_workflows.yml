@@ -1,0 +1,21 @@
+---
+custom_workflows_001:
+  id:             1
+  before_save:    "Rails.logger.info '>>> before save'"
+  after_save:     "Rails.logger.info '>>> after save'"
+  name:           'Issue CW test'
+  description:    NULL
+  position:       1
+  is_for_all:     0
+  author:         'karel.picman@kontron.com'
+  created_at:     2018-12-20 14:01:27 +02:00
+  updated_at:     2018-12-20 14:01:27 +02:00
+  active:         1
+  observable:     'issue'
+  shared_code:    NULL
+  before_add:     NULL
+  after_add:      NULL
+  before_remove:  NULL
+  after_remove:   NULL
+  before_destroy: "Rails.logger.info '>>> before destroy'"
+  after_destroy : "Rails.logger.info '>>> after destroy'"

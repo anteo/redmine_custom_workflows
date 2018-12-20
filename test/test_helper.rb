@@ -19,14 +19,5 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-class AddAdditionalScriptFieldsToCustomWorkflows < ActiveRecord::Migration[4.2]
-
-  def change
-    add_column :custom_workflows, :shared_code, :text, :null => true
-    add_column :custom_workflows, :before_add, :text, :null => true
-    add_column :custom_workflows, :after_add, :text, :null => true
-    add_column :custom_workflows, :before_remove, :text, :null => true
-    add_column :custom_workflows, :after_remove, :text, :null => true
-  end
-
-end
+# Load the normal Rails helper
+require File.expand_path('../../../../test/test_helper', __FILE__)

@@ -19,14 +19,12 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-class AddAdditionalScriptFieldsToCustomWorkflows < ActiveRecord::Migration[4.2]
+module RedmineCustomWorkflows
 
-  def change
-    add_column :custom_workflows, :shared_code, :text, :null => true
-    add_column :custom_workflows, :before_add, :text, :null => true
-    add_column :custom_workflows, :after_add, :text, :null => true
-    add_column :custom_workflows, :before_remove, :text, :null => true
-    add_column :custom_workflows, :after_remove, :text, :null => true
+  class Hooks < Redmine::Hook::ViewListener
+    def view_layouts_base_html_head(context)
+      stylesheet_link_tag :style, :plugin => 'redmine_custom_workflows'
+    end
   end
 
 end

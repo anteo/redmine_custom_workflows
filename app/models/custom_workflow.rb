@@ -1,11 +1,23 @@
-class WorkflowError < StandardError
-  attr_accessor :error
-
-  def initialize(message)
-    @error = message.dup
-    super message
-  end
-end
+# encoding: utf-8
+#
+# Redmine plugin for Custom Workflows
+#
+# Copyright Anton Argirov
+# Copyright Karel Pičman <karel.picman@kontron.com>
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class CustomWorkflow < ActiveRecord::Base
   OBSERVABLES = [:issue, :issue_attachments, :user, :attachment, :group, :group_users, :project, :project_attachments,
@@ -37,50 +49,48 @@ class CustomWorkflow < ActiveRecord::Base
   end)
   scope :observing, lambda { |observable| where(:observable => observable) }
 
-  class << self
-    def import_from_xml(xml)
-      attributes = Hash.from_xml(xml).values.first
-      attributes.delete('exported_at')
-      attributes.delete('plugin_version')
-      attributes.delete('ruby_version')
-      attributes.delete('rails_version')
-      CustomWorkflow.new(attributes)
-    end
+  def self.import_from_xml(xml)
+    attributes = Hash.from_xml(xml).values.first
+    attributes.delete('exported_at')
+    attributes.delete('plugin_version')
+    attributes.delete('ruby_version')
+    attributes.delete('rails_version')
+    CustomWorkflow.new(attributes)
+  end
 
-    def log_message(str, object)
-      Rails.logger.info str + " for #{object.class} (\##{object.id}) \"#{object}\""
-    end
+  def self.log_message(str, object)
+    Rails.logger.info str + " for #{object.class} (\##{object.id}) \"#{object}\""
+  end
 
-    def run_shared_code(object)
-      workflows = CustomWorkflow.observing(:shared).active
-      log_message '= Running shared code', object
-      workflows.each do |workflow|
-        unless workflow.run(object, :shared_code)
-          log_message '= Abort running shared code', object
-          return false
-        end
+  def self.run_shared_code(object)
+    workflows = CustomWorkflow.observing(:shared).active
+    log_message '= Running shared code', object
+    workflows.each do |workflow|
+      unless workflow.run(object, :shared_code)
+        log_message '= Abort running shared code', object
+        return false
       end
-      log_message '= Finished running shared code', object
-      true
     end
+    log_message '= Finished running shared code', object
+    true
+  end
 
-    def run_custom_workflows(observable, object, event)
-      workflows = CustomWorkflow.active.observing(observable)
-      if PROJECT_OBSERVABLES.include? observable
-        return true unless object.project
-        workflows = workflows.for_project(object.project)
-      end
-      return true unless workflows.any?
-      log_message "= Running #{event} custom workflows", object
-      workflows.each do |workflow|
-        unless workflow.run(object, event)
-          log_message "= Abort running #{event} custom workflows", object
-          return false
-        end
-      end
-      log_message "= Finished running #{event} custom workflows", object
-      true
+  def self.run_custom_workflows(observable, object, event)
+    workflows = CustomWorkflow.active.observing(observable)
+    if PROJECT_OBSERVABLES.include? observable
+      return true unless object.project
+      workflows = workflows.for_project(object.project)
     end
+    return true unless workflows.any?
+    log_message "= Running #{event} custom workflows", object
+    workflows.each do |workflow|
+      unless workflow.run(object, event)
+        log_message "= Abort running #{event} custom workflows", object
+        return false
+      end
+    end
+    log_message "= Finished running #{event} custom workflows", object
+    true
   end
 
   def run(object, event)
@@ -106,7 +116,7 @@ class CustomWorkflow < ActiveRecord::Base
     object.instance_eval(read_attribute(event)) if respond_to?(event) && read_attribute(event)
   rescue WorkflowError => _
   rescue Exception => e
-    errors.add event, :invalid_script, :error => e
+    errors.add event, :invalid_script, :errors => e
   end
 
   def validate_scripts_presence
