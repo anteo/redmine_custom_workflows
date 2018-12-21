@@ -21,8 +21,6 @@
 
 source 'https://rubygems.org'
 
-require 'rails'
-
 # In order to the plugin in Redmine < 4 (Rails < 5), comment out the following lines
 # I don't know how to check Redmine or better Rails version here :-(
 gem 'acts_as_list'
