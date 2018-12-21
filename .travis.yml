@@ -1,0 +1,63 @@
+# encoding: utf-8
+#
+# Redmine plugin for Custom Workflows
+#
+# Copyright Anton Argirov
+# Copyright Karel Pičman <karel.picman@kontron.com>
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+language: ruby
+
+sudo: true
+
+dist: xenial
+
+rvm:      
+  - 2.5
+
+before_install:
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS test CHARACTER SET utf8mb4;'
+  - psql -c 'create database test;' -U postgres
+  - export WORKSPACE=`pwd`/workspace
+  - export $PATH_TO_CUSTOM_WORKFLOWS=`pwd`
+  - export PATH_TO_REDMINE=$WORKSPACE/redmine
+  - export BUNDLE_GEMFILE=$PATH_TO_REDMINE/Gemfile
+  - mkdir -p ${WORKSPACE}
+  - cp -f ./test/ci/${DB}.yml ${WORKSPACE}/database.yml
+  - bash -x ./test/ci/redmine_install.sh -c
+  - bash -x ./test/ci/redmine_install.sh -i
+
+install:
+
+script:
+  - bash -x ./test/ci/redmine_install.sh -t
+
+after_script:
+  - bash -x ./test/ci/redmine_install.sh -u
+
+env:
+  - DB=sqlite
+  - DB=mysql
+  - DB=postgres
+
+cache: bundler
+
+services:
+  - mysql
+  - postgresql
+
+addons:
+  mariadb: '10.3'

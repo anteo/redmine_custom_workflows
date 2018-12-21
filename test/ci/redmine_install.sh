@@ -65,7 +65,7 @@ install()
   echo current directory is `pwd`
 
   # Create a link to the Custom Workflows plugin
-  ln -sf $PATH_TO_CUSTOMWORKFLOWS plugins/redmine_custom_workflows
+  ln -sf $PATH_TO_CUSTOM_WORKFLOWS plugins/redmine_custom_workflows
 
   # Copy database.yml
   cp $WORKSPACE/database.yml config/
