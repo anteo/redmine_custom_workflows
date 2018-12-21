@@ -28,7 +28,9 @@ Redmine::Plugin.register :redmine_custom_workflows do
   version '0.1.6'
   url 'http://www.redmine.org/plugins/custom-workflows'
 
-  requires_redmine version_or_higher: '3.0.0'
+  # In order to the plugin in Redmine < 4 (Rails < 5), comment out the following line and modify Gemfile according to
+  # the recommendation written there.
+  requires_redmine version_or_higher: '4.0.0'
 
   permission :manage_project_workflow, {}, :require => :member
 end
