@@ -34,4 +34,4 @@ module RedmineCustomWorkflows
   end
 end
 
-ProjectsHelper.send(:prepend, RedmineCustomWorkflows::Patches::ProjectsHelperPatch)
+ProjectsController.send :helper, RedmineCustomWorkflows::Patches::ProjectsHelperPatch
