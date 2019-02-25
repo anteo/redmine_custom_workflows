@@ -116,7 +116,7 @@ class CustomWorkflow < ActiveRecord::Base
     object.instance_eval(read_attribute(event)) if respond_to?(event) && read_attribute(event)
   rescue WorkflowError => _
   rescue Exception => e
-    errors.add event, :invalid_script, :errors => e
+    errors.add event, :invalid_script, error: e
   end
 
   def validate_scripts_presence
