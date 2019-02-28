@@ -22,7 +22,7 @@ Starting with version 0.1.2 you can specify observable object for workflow. Supp
 Thanks to
 ---------
 
-Plugin development is supported by DOM Digital Online Media GmbH
+Plugin development was supported by DOM Digital Online Media GmbH
 
 http://www.dom.de
 
@@ -125,6 +125,6 @@ Do not forget to check whether issue is just created. Here we create the new iss
 Compatibility
 -------------
 
-This plug-in is compatible with Redmine 3.4.x and 4.x.x
+This plug-in is compatible with Redmine 4.x.x
 
 

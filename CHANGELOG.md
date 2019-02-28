@@ -6,6 +6,17 @@ Changelog for Custom Workflows
 -----
 
     Redmine 4.0 compatibility
+    
+* Bug: #116 - raise errors bug
+* New: #114 - rails 5
+* Bug: #112 - devel 1.0.0 on redmine 4.0.0 problem. bug
+* New: #111 - Travis CI help wanted
+* New: #109 - Redmine 4.0 compatibility enhancement
+* Bug: #89 - Custom workflow for @time_entry doesn't raise on submit of issue form if spent time subform filled bug wontfix
+* Bug: #88 - Rendering bug after upgrading to Redmine 3.4.2 bug
+* Bug: #63 - Redmine 3.2.1 - Internal Server Error on new Issue with MS SQL bug
+* Bug: #60 - Fresh new install on 3.2.2.stable don't work bug
+* Bug: #46 - Error in pt-br.yml file bug
 
 0.1.6
 -----

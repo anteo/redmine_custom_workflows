@@ -23,9 +23,9 @@ require 'redmine'
 
 Redmine::Plugin.register :redmine_custom_workflows do
   name 'Redmine Custom Workflow plugin'
-  author 'Anton Argirov'
+  author 'Anton Argirov/Karel Pičman'
   description 'Allows to create custom workflows for issues, defined in the plain Ruby language'
-  version '1.0.0 devel'
+  version '1.0.0'
   url 'http://www.redmine.org/plugins/custom-workflows'
 
   # In order to the plugin in Redmine < 4 (Rails < 5), comment out the following line and modify Gemfile according to
