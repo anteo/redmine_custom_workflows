@@ -56,7 +56,7 @@ class CustomWorkflow < ActiveRecord::Base
   def self.run_shared_code(object)
     log_message '= Running shared code', object
     if CustomWorkflow.table_exists? # Due to DB migration
-      CustomWorkflow.active.where(:observable => :shared).find_each do |workflow|
+      CustomWorkflow.active.where(observable: :shared).find_each do |workflow|
         unless workflow.run(object, :shared_code)
           log_message '= Abort running shared code', object
           return false
@@ -68,20 +68,22 @@ class CustomWorkflow < ActiveRecord::Base
   end
 
   def self.run_custom_workflows(observable, object, event)
-    workflows = CustomWorkflow.active.observing(observable)
-    if PROJECT_OBSERVABLES.include? observable
-      return true unless object.project
-      workflows = workflows.for_project(object.project)
-    end
-    return true unless workflows.any?
-    log_message "= Running #{event} custom workflows", object
-    workflows.each do |workflow|
-      unless workflow.run(object, event)
-        log_message "= Abort running #{event} custom workflows", object
-        return false
+    if CustomWorkflow.table_exists? # Due to DB migration
+      workflows = CustomWorkflow.active.where(observable: observable)
+      if PROJECT_OBSERVABLES.include? observable
+        return true unless object.project
+        workflows = workflows.for_project(object.project)
       end
+      return true unless workflows.any?
+      log_message "= Running #{event} custom workflows", object
+      workflows.each do |workflow|
+        unless workflow.run(object, event)
+          log_message "= Abort running #{event} custom workflows", object
+          return false
+        end
+      end
+      log_message "= Finished running #{event} custom workflows", object
     end
-    log_message "= Finished running #{event} custom workflows", object
     true
   end
 
