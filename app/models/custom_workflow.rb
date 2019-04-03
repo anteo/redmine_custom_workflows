@@ -55,7 +55,7 @@ class CustomWorkflow < ActiveRecord::Base
 
   def self.run_shared_code(object)
     log_message '= Running shared code', object
-    CustomWorkflow.table_exists? # Due to DB migration
+    if CustomWorkflow.table_exists? # Due to DB migration
       CustomWorkflow.active.where(:observable => :shared).find_each do |workflow|
         unless workflow.run(object, :shared_code)
           log_message '= Abort running shared code', object
