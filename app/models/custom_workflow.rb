@@ -33,13 +33,12 @@ class CustomWorkflow < ActiveRecord::Base
   validates_uniqueness_of :name, :case_sensitive => false
   validates_format_of :author, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, :allow_blank => true
   validate :validate_syntax, :validate_scripts_presence, :if => Proc.new {|workflow| workflow.respond_to?(:observable) and workflow.active?}
-  
+
   scope :active, lambda { where(:active => true) }
   scope :for_project, (lambda do |project|
     where("is_for_all=? OR EXISTS (SELECT * FROM #{reflect_on_association(:projects).join_table} WHERE project_id=? AND custom_workflow_id=id)",
           true, project.id)
   end)
-  scope :observing, lambda { |observable| where(:observable => observable) }
 
   def self.import_from_xml(xml)
     attributes = Hash.from_xml(xml).values.first
@@ -55,7 +54,7 @@ class CustomWorkflow < ActiveRecord::Base
   end
 
   def self.run_shared_code(object)
-    workflows = CustomWorkflow.observing(:shared).active
+    workflows = CustomWorkflow.active.where(:observable => :shared)
     log_message '= Running shared code', object
     workflows.each do |workflow|
       unless workflow.run(object, :shared_code)

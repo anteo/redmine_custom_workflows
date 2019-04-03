@@ -3,9 +3,10 @@
   <%= hidden_field_tag 'project[custom_workflow_ids][]', '' %>
   <fieldset>
     <legend><%= l(:text_select_project_custom_workflows) %></legend>
-    <% if CustomWorkflow.observing(CustomWorkflow::PROJECT_OBSERVABLES).exists? %>
+    <% cws = CustomWorkflow.where(observable: CustomWorkflow::PROJECT_OBSERVABLES) %>
+    <% if cws.any? %>
     <dl>
-      <% CustomWorkflow.observing(CustomWorkflow::PROJECT_OBSERVABLES).each do |w| %>
+      <% cws.find_each do |w| %>
         <dt class="<%= 'disabled' unless w.active? %>">
           <label>
             <%= check_box_tag 'project[custom_workflow_ids][]', w.id, @project.custom_workflow_ids.include?(w.id) || w.is_for_all?, :disabled => w.is_for_all? %> <%= w.name %>
