@@ -33,11 +33,7 @@ module RedmineCustomWorkflows
           end
 
           [:before_add, :before_remove, :after_add, :after_remove].each do |observable|
-            send("#{observable}_for_attachments") << if Rails::VERSION::MAJOR >= 4
-                                                       lambda { |event, page, attachment| WikiPage.attachments_callback(event, page, attachment) }
-                                                     else
-                                                       lambda { |page, attachment| WikiPage.attachments_callback(observable, page, attachment) }
-                                                     end
+            send("#{observable}_for_attachments") << lambda { |event, page, attachment| WikiPage.attachments_callback(event, page, attachment) }
           end
         end
       end

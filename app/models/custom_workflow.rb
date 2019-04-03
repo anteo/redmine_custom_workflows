@@ -34,17 +34,10 @@ class CustomWorkflow < ActiveRecord::Base
   validates_format_of :author, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, :allow_blank => true
   validate :validate_syntax, :validate_scripts_presence, :if => Proc.new {|workflow| workflow.respond_to?(:observable) and workflow.active?}
 
-  if Rails::VERSION::MAJOR >= 4
-    default_scope { order(:position => :asc) }
-    projects_join_table = reflect_on_association(:projects).join_table
-  else
-    default_scope :order => 'position ASC'
-    projects_join_table = reflect_on_association(:projects).options[:join_table]
-  end
-
+  default_scope { order(:position => :asc) }
   scope :active, lambda { where(:active => true) }
   scope :for_project, (lambda do |project|
-    where("is_for_all=? OR EXISTS (SELECT * FROM #{projects_join_table} WHERE project_id=? AND custom_workflow_id=id)",
+    where("is_for_all=? OR EXISTS (SELECT * FROM #{reflect_on_association(:projects).join_table} WHERE project_id=? AND custom_workflow_id=id)",
           true, project.id)
   end)
   scope :observing, lambda { |observable| where(:observable => observable) }
