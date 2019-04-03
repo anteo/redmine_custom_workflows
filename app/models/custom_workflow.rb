@@ -33,8 +33,7 @@ class CustomWorkflow < ActiveRecord::Base
   validates_uniqueness_of :name, :case_sensitive => false
   validates_format_of :author, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, :allow_blank => true
   validate :validate_syntax, :validate_scripts_presence, :if => Proc.new {|workflow| workflow.respond_to?(:observable) and workflow.active?}
-
-  default_scope { order(:position => :asc) }
+  
   scope :active, lambda { where(:active => true) }
   scope :for_project, (lambda do |project|
     where("is_for_all=? OR EXISTS (SELECT * FROM #{reflect_on_association(:projects).join_table} WHERE project_id=? AND custom_workflow_id=id)",

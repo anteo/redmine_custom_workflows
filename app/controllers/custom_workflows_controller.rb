@@ -50,7 +50,7 @@ class CustomWorkflowsController < ApplicationController
   end
 
   def index
-    @workflows = CustomWorkflow.includes(:projects).all
+    @workflows = CustomWorkflow.includes(:projects).order(:position => :asc)
     respond_to do |format|
       format.html
     end
