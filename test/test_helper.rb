@@ -21,3 +21,5 @@
 
 # Load the normal Rails helper
 require File.expand_path('../../../../test/test_helper', __FILE__)
+
+require_relative 'unit_test'

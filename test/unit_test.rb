@@ -19,20 +19,22 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-# Hooks
-require 'redmine_custom_workflows/hooks/hooks'
+module RedmineCustomWorkflows
+  module Test
 
-# Errors
-require 'redmine_custom_workflows/errors/workflow_error'
+    class UnitTest < ActiveSupport::TestCase
 
-# Patches
-require 'redmine_custom_workflows/patches/attachment_patch'
-require 'redmine_custom_workflows/patches/group_patch'
-require 'redmine_custom_workflows/patches/issue_patch'
-require 'redmine_custom_workflows/patches/project_patch'
-require 'redmine_custom_workflows/patches/projects_helper_patch'
-require 'redmine_custom_workflows/patches/time_entry_patch'
-require 'redmine_custom_workflows/patches/user_patch'
-require 'redmine_custom_workflows/patches/version_patch'
-require 'redmine_custom_workflows/patches/wiki_content_patch'
-require 'redmine_custom_workflows/patches/wiki_page_patch'
+      # Allow us to override the fixtures method to implement fixtures for our plugin.
+      # Ultimately it allows for better integration without blowing redmine fixtures up,
+      # and allowing us to suppliment redmine fixtures if we need to.
+      def self.fixtures(*table_names)
+        dir = File.join( File.dirname(__FILE__), '/fixtures')
+        table_names.each do |x|
+          ActiveRecord::FixtureSet.create_fixtures(dir, x) if File.exist?("#{dir}/#{x}.yml")
+        end
+        super(table_names)
+      end      
+    end
+
+  end
+end

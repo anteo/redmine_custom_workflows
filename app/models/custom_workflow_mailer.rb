@@ -19,20 +19,19 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-# Hooks
-require 'redmine_custom_workflows/hooks/hooks'
+require 'mailer'
 
-# Errors
-require 'redmine_custom_workflows/errors/workflow_error'
+class CustomWorkflowMailer < Mailer
+  layout 'mailer'
 
-# Patches
-require 'redmine_custom_workflows/patches/attachment_patch'
-require 'redmine_custom_workflows/patches/group_patch'
-require 'redmine_custom_workflows/patches/issue_patch'
-require 'redmine_custom_workflows/patches/project_patch'
-require 'redmine_custom_workflows/patches/projects_helper_patch'
-require 'redmine_custom_workflows/patches/time_entry_patch'
-require 'redmine_custom_workflows/patches/user_patch'
-require 'redmine_custom_workflows/patches/version_patch'
-require 'redmine_custom_workflows/patches/wiki_content_patch'
-require 'redmine_custom_workflows/patches/wiki_page_patch'
+  def self.deliver_custom_email(user, subject, text)
+    custom_email(user, subject, text).deliver_later
+  end
+
+  def custom_email(user, subject, text)
+    set_language_if_valid user.language
+    @text = text
+    mail to: user.mail, subject: subject
+  end
+
+end
