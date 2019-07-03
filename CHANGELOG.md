@@ -1,6 +1,14 @@
 Changelog for Custom Workflows
 ==========================
 
+1.0.1
+-----
+
+    Custom emails
+        
+* Bug: #128 - Undefined method `custom_email`
+* Bug: #122 - NameError: uninitialized constant
+* Bug: #119 - PostgreSQL querry error
 
 1.0.0
 -----
