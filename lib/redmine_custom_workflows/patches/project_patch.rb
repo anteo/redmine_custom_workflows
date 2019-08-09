@@ -24,7 +24,6 @@ module RedmineCustomWorkflows
     module ProjectPatch
 
       def self.included(base)
-        base.send :include, InstanceMethods
         base.class_eval do
           has_and_belongs_to_many :custom_workflows
           safe_attributes :custom_workflow_ids, :if =>
@@ -48,37 +47,33 @@ module RedmineCustomWorkflows
         end
       end
 
-      module InstanceMethods
+      def before_save_custom_workflows
+        @project = self
+        @saved_attributes = attributes.dup
+        CustomWorkflow.run_shared_code(self)
+        CustomWorkflow.run_custom_workflows(:project, self, :before_save)
+        throw :abort if errors.any?
+        errors.empty? && (@saved_attributes == attributes || valid?)
+      ensure
+        @saved_attributes = nil
+      end
 
-        def before_save_custom_workflows
-          @project = self
-          @saved_attributes = attributes.dup
-          CustomWorkflow.run_shared_code(self)
-          CustomWorkflow.run_custom_workflows(:project, self, :before_save)
-          throw :abort if errors.any?
-          errors.empty? && (@saved_attributes == attributes || valid?)
-        ensure
-          @saved_attributes = nil
-        end
+      def after_save_custom_workflows
+        CustomWorkflow.run_custom_workflows(:project, self, :after_save)
+      end
 
-        def after_save_custom_workflows
-          CustomWorkflow.run_custom_workflows(:project, self, :after_save)
-        end
+      def before_destroy_custom_workflows
+        CustomWorkflow.run_custom_workflows(:project, self, :before_destroy)
+      end
 
-        def before_destroy_custom_workflows
-          CustomWorkflow.run_custom_workflows(:project, self, :before_destroy)
-        end
-
-        def after_destroy_custom_workflows
-          CustomWorkflow.run_custom_workflows(:project, self, :after_destroy)
-        end
-
+      def after_destroy_custom_workflows
+        CustomWorkflow.run_custom_workflows(:project, self, :after_destroy)
       end
 
     end
   end
 end
 
-unless Project.include?(RedmineCustomWorkflows::Patches::ProjectPatch)
-  Project.send(:include, RedmineCustomWorkflows::Patches::ProjectPatch)
-end
+# Apply patch
+RedmineExtensions::PatchManager.register_model_patch 'Project',
+  'RedmineCustomWorkflows::Patches::ProjectPatch'

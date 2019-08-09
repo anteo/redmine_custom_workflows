@@ -19,25 +19,22 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-Redmine::Plugin.register :redmine_custom_workflows do
-  if Redmine::Plugin.installed?(:easy_extensions)
-    name 'Easy Custom Workflow plugin'
-    url 'https://www.easyredmine.com'
-    author_url 'https://www.easyredmine.com'
-  else
-    name 'Redmine Custom Workflow plugin'
-    url 'https://www.redmine.org/plugins/custom-workflows'
-    author_url 'https://github.com/danmunn/redmine_custom_workflows/graphs/contributors'
+require_dependency File.dirname(__FILE__) + '/lib/redmine_custom_workflows.rb'
+
+ActiveSupport::Dependencies.autoload_paths << File.join(File.dirname(__FILE__), 'app')
+
+def custom_workflows_init
+  # Administration menu extension
+  Redmine::MenuManager.map :admin_menu do |menu|
+    menu.push :custom_workflows, { controller: 'custom_workflows', action: 'index'},
+         caption: :label_custom_workflow_plural, html: { class: 'icon icon-custom-workflows'}
   end
-  author 'Anton Argirov/Karel Pičman'
-  description 'Allows to create custom workflows for objects, defined in the plain Ruby language'
-  version '1.0.1'
-
-  requires_redmine version_or_higher: '4.0.0'
-
-  permission :manage_project_workflow, {}, :require => :member
 end
 
-unless Redmine::Plugin.installed?(:easy_extensions)
-  require_relative 'after_init'
+if Redmine::Plugin.installed?(:easy_extensions)
+  ActiveSupport.on_load(:easyproject, yield: true) do
+    custom_workflows_init
+  end
+else
+  custom_workflows_init
 end

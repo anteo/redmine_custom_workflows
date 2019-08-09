@@ -24,7 +24,6 @@ module RedmineCustomWorkflows
     module WikiContentPatch
 
       def self.included(base)
-        base.send(:include, InstanceMethods)
         base.class_eval do
           before_save :before_save_custom_workflows
           after_save :after_save_custom_workflows
@@ -33,37 +32,33 @@ module RedmineCustomWorkflows
         end
       end
 
-      module InstanceMethods
+      def before_save_custom_workflows
+        @content = self
+        @saved_attributes = attributes.dup
+        CustomWorkflow.run_shared_code(self)
+        CustomWorkflow.run_custom_workflows(:wiki_content, self, :before_save)
+        throw :abort if errors.any?
+        errors.empty? && (@saved_attributes == attributes || valid?)
+      ensure
+        @saved_attributes = nil
+      end
 
-        def before_save_custom_workflows
-          @content = self
-          @saved_attributes = attributes.dup
-          CustomWorkflow.run_shared_code(self)
-          CustomWorkflow.run_custom_workflows(:wiki_content, self, :before_save)
-          throw :abort if errors.any?
-          errors.empty? && (@saved_attributes == attributes || valid?)
-        ensure
-          @saved_attributes = nil
-        end
+      def after_save_custom_workflows
+        CustomWorkflow.run_custom_workflows(:wiki_content, self, :after_save)
+      end
 
-        def after_save_custom_workflows
-          CustomWorkflow.run_custom_workflows(:wiki_content, self, :after_save)
-        end
+      def before_destroy_custom_workflows
+        CustomWorkflow.run_custom_workflows(:wiki_content, self, :before_destroy)
+      end
 
-        def before_destroy_custom_workflows
-          CustomWorkflow.run_custom_workflows(:wiki_content, self, :before_destroy)
-        end
-
-        def after_destroy_custom_workflows
-          CustomWorkflow.run_custom_workflows(:wiki_content, self, :after_destroy)
-        end
-
+      def after_destroy_custom_workflows
+        CustomWorkflow.run_custom_workflows(:wiki_content, self, :after_destroy)
       end
 
     end
   end
 end
 
-unless WikiContent.include?(RedmineCustomWorkflows::Patches::WikiContentPatch)
-  WikiContent.send(:include, RedmineCustomWorkflows::Patches::WikiContentPatch)
-end
+# Apply patch
+RedmineExtensions::PatchManager.register_model_patch 'WikiContent',
+  'RedmineCustomWorkflows::Patches::WikiContentPatch'

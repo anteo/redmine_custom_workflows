@@ -42,6 +42,6 @@ module RedmineCustomWorkflows
   end
 end
 
-unless WikiPage.include?(RedmineCustomWorkflows::Patches::WikiPagePatch)
-  WikiPage.send(:include, RedmineCustomWorkflows::Patches::WikiPagePatch)
-end
+# Apply patch
+RedmineExtensions::PatchManager.register_model_patch 'WikiPage',
+  'RedmineCustomWorkflows::Patches::WikiPagePatch'

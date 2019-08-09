@@ -24,7 +24,6 @@ module RedmineCustomWorkflows
     module IssuePatch
 
       def self.included(base)
-        base.send(:include, InstanceMethods)
         base.class_eval do
           before_save :before_save_custom_workflows
           after_save :after_save_custom_workflows
@@ -48,8 +47,6 @@ module RedmineCustomWorkflows
           end
         end
       end
-
-      module InstanceMethods
 
         def validate_status
           return true unless @saved_attributes && @saved_attributes['status_id'] != status_id &&
@@ -86,12 +83,10 @@ module RedmineCustomWorkflows
           CustomWorkflow.run_custom_workflows(:issue, self, :after_destroy)
         end
 
-      end
-
     end
   end
 end
 
-unless Issue.include?(RedmineCustomWorkflows::Patches::IssuePatch)
-  Issue.send(:include, RedmineCustomWorkflows::Patches::IssuePatch)
-end
+# Apply patch
+RedmineExtensions::PatchManager.register_model_patch 'Issue',
+  'RedmineCustomWorkflows::Patches::IssuePatch'

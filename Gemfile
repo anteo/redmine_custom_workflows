@@ -21,7 +21,10 @@
 
 source 'https://rubygems.org'
 
-# In order to the plugin in Redmine < 4 (Rails < 5), comment out the following lines
-# I don't know how to check Redmine or better Rails version here :-(
 gem 'acts_as_list'
 gem 'activemodel-serializers-xml'
+
+# Redmine extensions
+unless %w(easyproject easy_gantt).any? { |plugin| Dir.exist?(File.expand_path("../../#{plugin}", __FILE__)) }
+  gem 'redmine_extensions', '~> 0.2.5'
+end

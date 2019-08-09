@@ -34,4 +34,9 @@ module RedmineCustomWorkflows
   end
 end
 
-ProjectsController.send :helper, RedmineCustomWorkflows::Patches::ProjectsHelperPatch
+if Redmine::Plugin.installed?(:easy_extensions)
+  RedmineExtensions::PatchManager.register_helper_patch 'ProjectsHelper',
+    'RedmineCustomWorkflows::Patches::ProjectsHelperPatch', prepend: true
+else
+  ProjectsController.send :helper, RedmineCustomWorkflows::Patches::ProjectsHelperPatch
+end
