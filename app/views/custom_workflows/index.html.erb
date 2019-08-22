@@ -42,13 +42,16 @@
         <%= reorder_handle(workflow, url: url_for(action: 'reorder', id: workflow) ) %>
       </td>
       <td class="buttons">
+        <div class="icon"></div>
         <% if workflow.active? %>
-          <%= link_to(l(:button_custom_workflow_deactivate), custom_workflow_status_path(workflow, :active => false), :class => 'icon icon-inactive', :method => :post) %>
+          <%= link_to(l(:button_custom_workflow_deactivate), custom_workflow_status_path(workflow, active: false), class: 'icon icon-lock', method: :post) %>
         <% else %>
-          <%= link_to(l(:button_custom_workflow_activate), custom_workflow_status_path(workflow, :active => true), :class => 'icon icon-active', :method => :post) %>
+          <%= link_to(l(:button_custom_workflow_activate), custom_workflow_status_path(workflow, active: true), class: 'icon icon-unlock', method: :post) %>
         <% end %>
-        <%= link_to(l(:label_custom_workflow_export), export_custom_workflow_path(workflow), :class => 'icon icon-export', :method => :get) %>
-        <%= link_to(l(:button_delete), workflow, :class => 'icon icon-del', :data => {:confirm => l(:text_are_you_sure)}, :confirm => l(:text_are_you_sure), :method => :delete) %>
+        <br/>
+        <%= link_to(l(:label_custom_workflow_export), export_custom_workflow_path(workflow), class: 'icon icon-export', method: :get) %>
+        <br/>
+        <%= link_to(l(:button_delete), workflow, class: 'icon icon-del', data: { confirm: l(:text_are_you_sure) }, confirm: l(:text_are_you_sure), method: :delete) %>
       </td>
     </tr>
     <% end %>

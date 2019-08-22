@@ -57,7 +57,10 @@ table.list.custom-workflows tr.disabled {
 }
 
 /* Icons */
-.icon-export { background-image: url(../images/export.png); }
-.icon-import { background-image: url(../images/import.png); }
-.icon-active { background-image: url(../images/active.png); }
-.icon-inactive { background-image: url(../images/inactive.png); }
+.icon-import {
+    background-image: url(../images/export.png);
+}
+
+.icon-export {
+    background-image: url(../images/import.png);
+}
