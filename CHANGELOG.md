@@ -1,8 +1,8 @@
 Changelog for Custom Workflows
 ==========================
 
-1.0.1
------
+1.0.1 *2019-09-13*
+------------------
 
     Custom emails
         
