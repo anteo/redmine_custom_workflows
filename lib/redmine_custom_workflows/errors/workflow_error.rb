@@ -1,4 +1,5 @@
 # encoding: utf-8
+# frozen_string_literal: true
 #
 # Redmine plugin for Custom Workflows
 #
@@ -23,7 +24,7 @@ class WorkflowError < StandardError
   attr_accessor :error
 
   def initialize(message)
-    @error = message.dup
+    @error = message
     super message
   end
 end

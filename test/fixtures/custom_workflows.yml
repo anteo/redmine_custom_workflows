@@ -4,7 +4,7 @@ custom_workflows_001:
   before_save:    "Rails.logger.info '>>> before save'"
   after_save:     "Rails.logger.info '>>> after save'"
   name:           'Issue CW test'
-  description:    NULL
+  description:    'Testing workflow'
   position:       1
   is_for_all:     0
   author:         'karel.picman@kontron.com'

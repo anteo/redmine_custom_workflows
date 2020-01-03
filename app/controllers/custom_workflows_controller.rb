@@ -1,4 +1,5 @@
 # encoding: utf-8
+# frozen_string_literal: true
 #
 # Redmine plugin for Custom Workflows
 #
@@ -50,14 +51,14 @@ class CustomWorkflowsController < ApplicationController
   end
 
   def index
-    @workflows = CustomWorkflow.includes(:projects).order(:position => :asc)
+    @workflows = CustomWorkflow.includes(:projects).order(position: :asc)
     respond_to do |format|
       format.html
     end
   end
 
   def export
-    send_data @workflow.export_as_xml, :filename => @workflow.name + '.xml', :type => :xml
+    send_data @workflow.export_as_xml, filename: "#{@workflow.name}.xml", type: :xml
   end
 
   def show
@@ -87,7 +88,7 @@ class CustomWorkflowsController < ApplicationController
       else
         flash[:errors] = @workflow.errors.full_messages.to_sentence
       end
-    rescue Exception => e
+    rescue => e
       Rails.logger.warn "Workflow import error: #{e.message}\n #{e.backtrace.join("\n ")}"
       flash[:errors] = l(:error_failed_import)
     end
