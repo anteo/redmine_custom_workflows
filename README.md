@@ -1,7 +1,7 @@
 Custom Workflows plug-in
 ========================
 
-The current version of Redmine CustomWorkflows is **1.0.1** [![Build Status](https://api.travis-ci.org/anteo/redmine_custom_workflows.png)](https://travis-ci.org/anteo/redmine_custom_workflows)
+The current version of Redmine CustomWorkflows is **1.0.2** [![Build Status](https://api.travis-ci.org/anteo/redmine_custom_workflows.png)](https://travis-ci.org/anteo/redmine_custom_workflows)
 
 This plug-in provides a great functionality for those who is familiar with the Ruby language.
 It allows to customize workflow by defining own rules for issues processing. It's possible:
@@ -125,6 +125,4 @@ Do not forget to check whether issue is just created. Here we create the new iss
 Compatibility
 -------------
 
-This plug-in is compatible with Redmine 4.x.x
-
-
+This plug-in is compatible with Redmine 4.
