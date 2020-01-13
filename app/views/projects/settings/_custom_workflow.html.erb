@@ -1,7 +1,7 @@
 <%= form_for @project do %>
   <%= hidden_field_tag :tab, 'custom_workflow' %>
   <%= hidden_field_tag 'project[custom_workflow_ids][]', '' %>
-  <fieldset>
+  <fieldset class="box">
     <legend><%= l(:text_select_project_custom_workflows) %></legend>
     <% cws = CustomWorkflow.where(observable: CustomWorkflow::PROJECT_OBSERVABLES) %>
     <% if cws.any? %>
@@ -9,7 +9,8 @@
       <% cws.find_each do |w| %>
         <dt class="<%= 'disabled' unless w.active? %>">
           <label>
-            <%= check_box_tag 'project[custom_workflow_ids][]', w.id, @project.custom_workflow_ids.include?(w.id) || w.is_for_all?, :disabled => w.is_for_all? %> <%= w.name %>
+            <%= check_box_tag 'project[custom_workflow_ids][]', w.id,
+                  @project.custom_workflow_ids.include?(w.id) || w.is_for_all?, disabled: w.is_for_all? %> <%= w.name %>
             <% if !w.active? %>
               (<%= l(:text_custom_workflow_disabled) %>)
             <% elsif w.is_for_all? %>
@@ -26,4 +27,3 @@
   </fieldset>
   <%= submit_tag l(:button_save) %>
 <% end %>
-
