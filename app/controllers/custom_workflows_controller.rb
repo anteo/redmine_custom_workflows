@@ -86,11 +86,11 @@ class CustomWorkflowsController < ApplicationController
       if @workflow.save
         flash[:notice] = l(:notice_successful_import)
       else
-        flash[:errors] = @workflow.errors.full_messages.to_sentence
+        flash[:error] = @workflow.errors.full_messages.to_sentence
       end
     rescue => e
       Rails.logger.warn "Workflow import error: #{e.message}\n #{e.backtrace.join("\n ")}"
-      flash[:errors] = l(:error_failed_import)
+      flash[:error] = l(:error_failed_import)
     end
     respond_to do |format|
       format.html { redirect_to(custom_workflows_path) }
