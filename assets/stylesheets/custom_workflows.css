@@ -51,8 +51,8 @@ table.list.custom-workflows tr.disabled {
     font-size: 11px;
 }
 
-#custom_workflow_enabled_projects ul {
-    max-height: 200px;
+#custom_workflow_enabled_projects ul.root {
+    max-height: 400px;
     overflow-y: auto;
 }
 
