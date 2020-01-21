@@ -1,6 +1,14 @@
 Changelog for Custom Workflows
 ==========================
 
+1.0.2 *2020-01-21*
+------------------
+
+    Redmine 4.1 compatibility
+        
+* Bug: #149 - Error install on Redmine 4.1.0
+* Bug: #141 - Bug when using PT-BR
+
 1.0.1 *2019-09-13*
 ------------------
 

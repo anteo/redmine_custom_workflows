@@ -125,4 +125,4 @@ Do not forget to check whether issue is just created. Here we create the new iss
 Compatibility
 -------------
 
-This plug-in is compatible with Redmine 4.
+This plug-in is compatible with Redmine 4.1.x.
