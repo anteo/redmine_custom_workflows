@@ -27,7 +27,6 @@ cs:
   label_custom_workflow_plural: Uživatelské procesy
   label_custom_workflow_new: Vytvořit uživatelský proces
   label_workflow_scripts: Skript procesu
-  label_enabled_projects: Povoleno pro projekt(y)
   label_custom_workflow_export: Export
   label_custom_workflow_import: Importovat proces
   label_save_workflows: Uložení sledovaných objektů
@@ -35,8 +34,6 @@ cs:
   label_add_workflows: Přidání sledovaných objektů do sezanmu
   label_remove_workflows: Odstranění sledovaných objektů za seznamu
 
-  button_import: Import
-  button_custom_workflow_activate: Aktivovat
   button_custom_workflow_deactivate: Deaktivovat
 
   field_after_save: Skript spuštěný po uložení sledovaného objektu
@@ -49,11 +46,9 @@ cs:
   field_before_remove: Skript spuštěný před odstraněním sledovaného objektu ze seznamu
   field_shared_code: Sdílený kód
   field_observable: Sledovaný objekt
-  field_is_enabled: Povoleno
   field_enabled_for_all_projects: Povoleno pro všechny projekty
   field_custom_workflow_author: Autorův e-mail
   field_custom_workflow_file: Select the XML file previously exported process
-  field_custom_workflow_active: Aktivní
   field_custom_workflow:
     script: Skript
 
@@ -70,8 +65,8 @@ cs:
         scripts_absent: Musí být definován alespoň jeden skript
 
   text_select_project_custom_workflows: Vyberte uživatelský skript projektu
-  text_custom_workflow_before_save_note: "Zde můžete měnit vlastnosti úkolu. Ve skriptu nevytvářejte ani neměňte
-    související úkoly. Pro ukončení skriptu chybou použijte: `raise WorkflowError, 'Zpráva uživateli'`."
+  text_custom_workflow_before_save_note: Zde můžete měnit vlastnosti úkolu. Ve skriptu nevytvářejte ani neměňte
+    související úkoly. Pro ukončení skriptu chybou použijte `raise WorkflowError, 'Zpráva uživateli'`.
   text_custom_workflow_after_save_note: Zde můžete aktualizovat nebo vytvářet souvissející úkoly. Mějte na paměti, že
     tento skript bude také vykonán pro nově vytvořené úkoly. Takže nezapomeňte udělat vhodné kontroly pro zabránění
     rekurzivnímu volání.

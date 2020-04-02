@@ -20,87 +20,101 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 ru:
-  project_module_custom_workflows_module: "Пользовательские рабочие процессы"
-  permission_manage_project_workflow: "Управление пользовательскими рабочими процессами в проекте"
+  project_module_custom_workflows_module: Пользовательские рабочие процессы
+  permission_manage_project_workflow: Управление пользовательскими рабочими процессами в проекте
 
-  label_custom_workflow: "Пользовательский рабочий процесс"
-  label_custom_workflow_plural: "Пользовательские рабочие процессы"
-  label_custom_workflow_new: "Новый процесс"
-  label_workflow_scripts: "Сценарии"
-  label_enabled_projects: "Разрешен в проектах"
-  label_custom_workflow_export: "Экспорт"
-  label_custom_workflow_import: "Импорт процесса"
-  label_save_workflows: "Сохранение наблюдаемых объектов"
-  label_destroy_workflows: "Уничтожение наблюдаемых объектов"
-  label_add_workflows: "Добавление наблюдаемых объектов в коллекцию"
-  label_remove_workflows: "Удаление наблюдаемых объектов из коллекции"
+  label_custom_workflow: Пользовательский рабочий процесс
+  label_custom_workflow_plural: Пользовательские рабочие процессы
+  label_custom_workflow_new: Новый процесс
+  label_workflow_scripts: Сценарии
+  label_custom_workflow_export: Экспорт
+  label_custom_workflow_import: Импорт процесса
+  label_save_workflows: Сохранение наблюдаемых объектов
+  label_destroy_workflows: Уничтожение наблюдаемых объектов
+  label_add_workflows: Добавление наблюдаемых объектов в коллекцию
+  label_remove_workflows: Удаление наблюдаемых объектов из коллекции
 
-  button_import: "Импортировать"
-  button_custom_workflow_activate: "Активировать"
-  button_custom_workflow_deactivate: "Деактивировать"
+  button_custom_workflow_deactivate: Деактивировать
 
-  field_after_save: "Сценарий выполняемый после сохранения наблюдаемого объекта"
-  field_before_save: "Сценарий выполняемый перед сохранением наблюдаемого объекта"
-  field_after_destroy: "Сценарий выполняемый после уничтожения наблюдаемого объекта"
-  field_before_destroy: "Сценарий выполняемый перед уничтожением наблюдаемого объекта"
-  field_after_add: "Сценарий выполняемый после добавления наблюдаемого объекта в коллекцию"
-  field_before_add: "Сценарий выполняемый перед добавлением наблюдаемого объекта в коллекцию"
-  field_after_remove: "Сценарий выполняемый после удаления наблюдаемого объекта из коллекции"
-  field_before_remove: "Сценарий выполняемый перед удалением наблюдаемого объекта из коллекции"
-  field_shared_code: "Общий код"
-  field_observable: "Наблюдаемый объект"
-  field_is_enabled: "Разрешено"
-  field_enabled_for_all_projects: "Разрешен для всех проектов"
-  field_custom_workflow_author: "E-Mail адрес автора"
-  field_custom_workflow_file: "Выберите XML файл ранее экспортированного процесса"
-  field_custom_workflow_active: "Активен"
+  field_after_save: Сценарий выполняемый после сохранения наблюдаемого объекта
+  field_before_save: Сценарий выполняемый перед сохранением наблюдаемого объекта
+  field_after_destroy: Сценарий выполняемый после уничтожения наблюдаемого объекта
+  field_before_destroy: Сценарий выполняемый перед уничтожением наблюдаемого объекта
+  field_after_add: Сценарий выполняемый после добавления наблюдаемого объекта в коллекцию
+  field_before_add: Сценарий выполняемый перед добавлением наблюдаемого объекта в коллекцию
+  field_after_remove: Сценарий выполняемый после удаления наблюдаемого объекта из коллекции
+  field_before_remove: Сценарий выполняемый перед удалением наблюдаемого объекта из коллекции
+  field_shared_code: Общий код
+  field_observable: Наблюдаемый объект
+  field_enabled_for_all_projects: Разрешен для всех проектов
+  field_custom_workflow_author: E-Mail адрес автора
+  field_custom_workflow_file: Выберите XML файл ранее экспортированного процесса
   field_custom_workflow:
-    script: "Сценарий"
+    script: Сценарий
 
-  notice_successful_import: "Рабочий процесс успешно импортирован"
-  notice_successful_status_change: "Статус успешно изменен"
-  error_failed_import: "Ошибка импорта рабочего процесса (неверный формат? смотри журнал)"
+  notice_successful_import: Рабочий процесс успешно импортирован
+  notice_successful_status_change: Статус успешно изменен
+  error_failed_import: Ошибка импорта рабочего процесса (неверный формат? смотри журнал)
 
   activerecord:
     errors:
       messages:
         invalid_script: "содержит ошибку: %{error}"
-        custom_workflow_error: "Ошибка в сценарии рабочего процесса (обратитесь к администратору)"
+        custom_workflow_error: Ошибка в сценарии рабочего процесса (Обратитесь к администратору)
         new_status_invalid: "- переход от '%{old_status}' к '%{new_status}' невозможен"
-        scripts_absent: "Хотя бы один скрипт должен быть определен"
+        scripts_absent: Хотя бы один скрипт должен быть определен
 
   text_select_project_custom_workflows: Выберите процессы для данного проекта
-  text_custom_workflow_before_save_note: Здесь вы можете изменять свойства задачи. Не создавайте и не обновляйте связанные задачи в этом сценарии. Чтобы завершить сценарий с произвольной ошибкой, используйте raise WorkflowError, "Message to user".
-  text_custom_workflow_after_save_note: Вы можете обновлять и создавать задачи (в том числе и связанные задачи) здесь. Обратите внимание, что данный сценарий будет также выполняться и для вновь создаваемых задач. Поэтому используйте дополнительные проверки, чтобы избежать бесконечной рекурсии.
-  text_custom_workflow_issue_code_note: Эти сценарии исполняются в контексте задачи, как и обычные обратные вызовы before_save и after_save. Поэтому используйте методы и свойства задачи (Issue) напрямую или через ключевое слово self.
-  text_custom_workflow_shared_code_note: Этот код будет исполняться перед любым другим процессом и может содержать общий код, например, функции и классы, необходимые для работы других процессов.
-  text_custom_workflow_user_code_note: Эти сценарии исполняются в контексте объекта пользователя когда объект пользователя изменяется (удаляется). Используйте методы и свойства объекта пользователя (User) напрямую или через ключевое слово self.
-  text_custom_workflow_group_code_note: Эти сценарии исполняются в контексте объекта группы когда объект группы изменяется (удаляется). Используйте методы и свойства объекта группы (Group) напрямую или через ключевое слово self.
-  text_custom_workflow_group_users_code_note: Эти сценарии выполняются когда пользователь добавляется в группу/удаляется из группы. Используйте переменные @user и @group для доступа к соответствующим объектам из Ваших сценариев.
-  text_custom_workflow_attachment_code_note: Эти сценарии исполняются в контексте объекта вложения когда объект вложения изменяется (удаляется). Используйте методы и свойства объекта вложения (Attachment) напрямую или через ключевое слово self. Обратите внимание на то, что данные сценарии выполняются при сохранении (удалении) вложения любого типа (задача, документ, страница Wiki и т.д.), поэтому следует дополнительно проверять в коде поле container_type либо в качестве наблюдаемого объекта выбрать конкретный тип вложения.
-  text_custom_workflow_issue_attachments_code_note: Эти сценарии выполняются когда вложение прикладывается к задаче/удаляется из задачи. Используйте переменные @issue и @attachment для доступа к соответствующим объектам из Ваших сценариев.
-  text_custom_workflow_project_code_note: Эти сценарии исполняются в контексте объекта проекта когда объект проекта изменяется (удаляется). Используйте методы и свойства объекта группы (Project) напрямую или через ключевое слово self.
-  text_custom_workflow_project_attachments_code_note: Эти сценарии выполняются когда файл загружается в проект/удаляется из проекта. Используйте переменные @project и @attachment для доступа к соответствующим объектам из Ваших сценариев.
-  text_custom_workflow_wiki_content_code_note: Эти сценарии исполняются в контексте объекта Wiki содержания когда объект Wiki содержания изменяется (удаляется). Используйте методы и свойства объекта содержания Wiki (WikiContent) напрямую или через ключевое слово self.
-  text_custom_workflow_wiki_page_attachments_code_note: Эти сценарии выполняются когда файл загружается на Wiki страницу/удаляется с Wiki страницы. Используйте переменные @page и @attachment для доступа к соответствующим объектам из Ваших сценариев.
-  text_custom_workflow_time_entry_code_note: Эти сценарии исполняются в контексте объекта затраченного времени когда объект изменяется (удаляется). Используйте методы и свойства объекта затраченного времени (TimeEntry) напрямую или через ключевое слово self.
-  text_custom_workflow_version_code_note: Эти сценарии исполняются в контексте объекта версии когда объект изменяется (удаляется). Используйте методы и свойства объекта версии (Version) напрямую или через ключевое слово self.
+  text_custom_workflow_before_save_note: Здесь вы можете изменять свойства задачи. Не создавайте и не обновляйте
+    связанные задачи в этом сценарии. Чтобы завершить сценарий с произвольной ошибкой, используйте `raise WorkflowError, 'Message to user'`.
+  text_custom_workflow_after_save_note: Вы можете обновлять и создавать задачи (в том числе и связанные задачи) здесь.
+    Обратите внимание, что данный сценарий будет также выполняться и для вновь создаваемых задач. Поэтому используйте
+    дополнительные проверки, чтобы избежать бесконечной рекурсии.
+  text_custom_workflow_issue_code_note: Эти сценарии исполняются в контексте задачи, как и обычные обратные вызовы
+    before_save и after_save. Поэтому используйте методы и свойства задачи (Issue) напрямую или через ключевое слово
+    self.
+  text_custom_workflow_shared_code_note: Этот код будет исполняться перед любым другим процессом и может содержать общий
+    код, например, функции и классы, необходимые для работы других процессов.
+  text_custom_workflow_user_code_note: Эти сценарии исполняются в контексте объекта пользователя когда объект
+    пользователя изменяется (удаляется). Используйте методы и свойства объекта пользователя (User) напрямую или через ключевое слово `self`.
+  text_custom_workflow_group_code_note: Эти сценарии исполняются в контексте объекта группы когда объект группы
+    изменяется (удаляется). Используйте методы и свойства объекта группы (Group) напрямую или через ключевое слово `self`.
+  text_custom_workflow_group_users_code_note: Эти сценарии выполняются когда пользователь добавляется в группу/удаляется
+    из группы. Используйте переменные @user и @group для доступа к соответствующим объектам из Ваших сценариев.
+  text_custom_workflow_attachment_code_note: Эти сценарии исполняются в контексте объекта вложения когда объект вложения
+    изменяется (удаляется). Используйте методы и свойства объекта вложения (Attachment) напрямую или через ключевое
+    слово self. Обратите внимание на то, что данные сценарии выполняются при сохранении (удалении) вложения любого типа
+    (задача, документ, страница Wiki и т.д.), поэтому следует дополнительно проверять в коде поле container_type либо в качестве наблюдаемого объекта выбрать конкретный тип вложения.
+  text_custom_workflow_issue_attachments_code_note: Эти сценарии выполняются когда вложение прикладывается
+    к задаче/удаляется из задачи. Используйте переменные @issue и @attachment для доступа к соответствующим объектам из Ваших сценариев.
+  text_custom_workflow_project_code_note: Эти сценарии исполняются в контексте объекта проекта когда объект проекта
+    изменяется (удаляется). Используйте методы и свойства объекта группы (Project) напрямую или через ключевое слово `self`.
+  text_custom_workflow_project_attachments_code_note: Эти сценарии выполняются когда файл загружается в проект/удаляется
+    из проекта. Используйте переменные @project и @attachment для доступа к соответствующим объектам из Ваших сценариев.
+  text_custom_workflow_wiki_content_code_note: Эти сценарии исполняются в контексте объекта Wiki содержания когда объект
+    Wiki содержания изменяется (удаляется). Используйте методы и свойства объекта содержания Wiki (WikiContent) напрямую или через ключевое слово self.
+  text_custom_workflow_wiki_page_attachments_code_note: Эти сценарии выполняются когда файл загружается на Wiki
+    страницу/удаляется с Wiki страницы. Используйте переменные @page и @attachment для доступа к соответствующим объектам из Ваших сценариев.
+  text_custom_workflow_time_entry_code_note: Эти сценарии исполняются в контексте объекта затраченного времени когда
+    объект изменяется (удаляется). Используйте методы и свойства объекта затраченного времени (TimeEntry) напрямую или через ключевое слово self.
+  text_custom_workflow_version_code_note: Эти сценарии исполняются в контексте объекта версии когда объект изменяется
+    (удаляется). Используйте методы и свойства объекта версии (Version) напрямую или через ключевое слово `self`.
 
   text_no_enabled_projects: Нет проектов
   text_custom_workflow_author: Будет использован в XML файле при экспорте
   text_custom_workflow_disabled: отключен администратором
   text_custom_workflow_is_for_all: разрешен для всех проектов
 
-  custom_workflow_observable_shared: "<общий код>"
-  custom_workflow_observable_issue: "Задача"
-  custom_workflow_observable_issue_attachments: "Вложения задач"
-  custom_workflow_observable_group: "Группа"
-  custom_workflow_observable_user: "Пользователь"
-  custom_workflow_observable_attachment: "Вложение"
-  custom_workflow_observable_project: "Проект"
-  custom_workflow_observable_project_attachments: "Вложения проекта / Файлы"
-  custom_workflow_observable_wiki_content: "Содержание Wiki"
-  custom_workflow_observable_wiki_page_attachments: "Вложения страниц Wiki"
-  custom_workflow_observable_group_users: "Пользователи группы"
-  custom_workflow_observable_time_entry: "Затраченное время"
-  custom_workflow_observable_version: "Версия"
+  custom_workflow_observable_shared: <общий код>
+  custom_workflow_observable_issue: Задача
+  custom_workflow_observable_issue_attachments: Вложения задач
+  custom_workflow_observable_group: Группа
+  custom_workflow_observable_user: Пользователь
+  custom_workflow_observable_attachment: Вложение
+  custom_workflow_observable_project: Проект
+  custom_workflow_observable_project_attachments: Вложения проекта / Файлы
+  custom_workflow_observable_wiki_content: Содержание Wiki
+  custom_workflow_observable_wiki_page_attachments: Вложения страниц Wiki
+  custom_workflow_observable_group_users: Пользователи группы
+  custom_workflow_observable_time_entry: Затраченное время
+  custom_workflow_observable_version: Версия

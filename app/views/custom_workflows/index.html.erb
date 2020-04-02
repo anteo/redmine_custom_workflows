@@ -1,85 +1,94 @@
-<% html_title(l(:label_custom_workflow_plural)) -%>
+<%
+  # encoding: utf-8
+  #
+  # Redmine plugin for Custom Workflows
+  #
+  # Copyright © 2015-19 Anton Argirov
+  # Copyright © 2019-20 Karel Pičman <karel.picman@kontron.com>
+  #
+  # This program is free software; you can redistribute it and/or
+  # modify it under the terms of the GNU General Public License
+  # as published by the Free Software Foundation; either version 2
+  # of the License, or (at your option) any later version.
+  #
+  # This program is distributed in the hope that it will be useful,
+  # but WITHOUT ANY WARRANTY; without even the implied warranty of
+  # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  # GNU General Public License for more details.
+  #
+  # You should have received a copy of the GNU General Public License
+  # along with this program; if not, write to the Free Software
+  # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+%>
+
+<% html_title l(:label_custom_workflow_plural) %>
 <div class="contextual">
-  <%= link_to l(:label_custom_workflow_import), '#', :class => 'icon icon-import', :onclick => "showModal('import-dialog', '450px'); return false;" %>
-  <%= link_to l(:label_custom_workflow_new), new_custom_workflow_path, :class => 'icon icon-add' %>
+  <%= link_to l(:label_custom_workflow_new), new_custom_workflow_path, class: 'icon icon-add' %>
+  <%= actions_dropdown do %>
+    <%= link_to l(:label_custom_workflow_import), '#', class: 'icon icon-move',
+                onclick: "showModal('import-dialog', '450px'); return false;" %>
+    <% end %>
 </div>
 
-<h2><%=l(:label_custom_workflow_plural)%></h2>
+<h2><%= l(:label_custom_workflow_plural) %></h2>
 
 <div class="autoscroll">
   <% if @workflows.any? %>
-  <table class="custom-workflows list">
-    <thead>
-    <tr>
-      <th><%= l(:field_name) %></th>
-      <th><%= l(:field_description) %></th>
-      <th><%= l(:field_observable) %></th>
-      <th><%= l(:field_author) %></th>
-      <th><%= l(:label_project_plural) %></th>
-      <th><%= l(:button_sort) %></th>
-      <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <% @workflows.each do |workflow| %>
-    <tr class="<%= cycle("odd", "even") %> <%= 'disabled' unless workflow.active? %>">
-      <td class="name"><%= link_to(workflow.name, edit_custom_workflow_path(workflow)) %></td>
-      <td class="description"><%= textilizable(workflow.description) %></td>
-      <td class="observable"><%= l("custom_workflow_observable_#{workflow.observable}") %></td>
-      <td class="author"><%= mail_to workflow.author if workflow.author.present? %></td>
-      <td>
-        <% if not workflow.has_projects_association? %>
-          -
-        <% elsif workflow.is_for_all? %>
-          <%= l(:field_enabled_for_all_projects) %>
-        <% elsif workflow.projects.empty? %>
-          <%= l(:text_no_enabled_projects) %>
-        <% else %>
-          <%= workflow.projects.map(&:name).join(", ") %>
-        <% end %>
-      </td>
-      <td align="center" nowrap>
-        <%= reorder_handle(workflow, url: url_for(action: 'reorder', id: workflow) ) %>
-      </td>
-      <td class="buttons">
-        <div class="icon"></div>
-        <% if workflow.active? %>
-          <%= link_to(l(:button_custom_workflow_deactivate), custom_workflow_status_path(workflow, active: false), class: 'icon icon-lock', method: :post) %>
-        <% else %>
-          <%= link_to(l(:button_custom_workflow_activate), custom_workflow_status_path(workflow, active: true), class: 'icon icon-unlock', method: :post) %>
-        <% end %>
-        <br/>
-        <%= link_to(l(:label_custom_workflow_export), export_custom_workflow_path(workflow), class: 'icon icon-export', method: :get) %>
-        <br/>
-        <%= link_to(l(:button_delete), workflow, class: 'icon icon-del', data: { confirm: l(:text_are_you_sure) }, confirm: l(:text_are_you_sure), method: :delete) %>
-      </td>
-    </tr>
-    <% end %>
-    </tbody>
-  </table>
+    <table class="custom-workflows list" data-hascontextmenu="true">
+      <thead>
+      <tr>
+        <th><%= l(:field_name) %></th>
+        <th><%= l(:field_observable) %></th>
+        <th><%= l(:field_author) %></th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @workflows.each do |workflow| %>
+        <tr class="<%= cycle('odd', 'even') %> <%= 'disabled' unless workflow.active? %>">
+          <td class="name"><%= link_to workflow.name, edit_custom_workflow_path(workflow) %></td>
+          <td class="observable"><%= l("custom_workflow_observable_#{workflow.observable}") %></td>
+          <td class="author"><%= mail_to workflow.author if workflow.author.present? %></td>
+          <td class="buttons">
+            <%= reorder_handle workflow, url: url_for(action: 'reorder', id: workflow) %>
+            <% if workflow.active? %>
+              <%= link_to l(:button_custom_workflow_deactivate), custom_workflow_status_path(workflow, active: false),
+                          class: 'icon icon-lock', method: :post %>
+            <% else %>
+              <%= link_to l(:button_activate), custom_workflow_status_path(workflow, active: true),
+                          class: 'icon icon-unlock', method: :post %>
+            <% end %>
+            <%= link_to l(:label_custom_workflow_export), export_custom_workflow_path(workflow),
+                        class: 'icon icon-download', method: :get %>
+            <%= link_to l(:button_delete), workflow, class: 'icon icon-del', data: { confirm: l(:text_are_you_sure) },
+                        confirm: l(:text_are_you_sure), method: :delete %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
   <% else %>
     <p class="nodata"><%= l(:label_no_data) %></p>
   <% end %>
 </div>
-
-<div id="import-dialog" style="display: none">
+<div id="import-dialog" class="custom-workflow-hidden">
   <h3 class="title"><%= l(:label_custom_workflow_import) %></h3>
   <%= form_tag import_custom_workflow_path, :multipart => true do %>
     <p>
       <%= l(:field_custom_workflow_file) %>:
     </p>
-
     <p>
-      <%= file_field_tag 'file', :accept => 'application/xml' %>
+      <%= file_field_tag 'file', accept: 'application/xml' %>
     </p>
-
     <p class="buttons">
-      <%= submit_tag l(:button_import), :name => nil, :onclick => "hideModal(this);" %>
-      <%= submit_tag l(:button_cancel), :name => nil, :onclick => "hideModal(this);", :type => 'button' %>
+      <%= submit_tag l(:button_import), name: nil, onclick: 'hideModal(this);' %>
+      <%= submit_tag l(:button_cancel), name: nil, onclick: 'hideModal(this);', type: 'button' %>
     </p>
   <% end %>
 </div>
 
 <%= javascript_tag do %>
-  $(function() { $("table.custom-workflows tbody").positionedItems(); });
+  $(function() {
+      $("table.custom-workflows tbody").positionedItems();
+  });
 <% end %>

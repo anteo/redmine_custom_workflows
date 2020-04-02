@@ -45,15 +45,15 @@ module RedmineCustomWorkflows
       end
 
       def after_save_custom_workflows
-        CustomWorkflow.run_custom_workflows(:time_entry, self, :after_save)
+        CustomWorkflow.run_custom_workflows :time_entry, self, :after_save
       end
 
       def before_destroy_custom_workflows
-        CustomWorkflow.run_custom_workflows(:time_entry, self, :before_destroy)
+        CustomWorkflow.run_custom_workflows :time_entry, self, :before_destroy
       end
 
       def after_destroy_custom_workflows
-        CustomWorkflow.run_custom_workflows(:time_entry, self, :after_destroy)
+        CustomWorkflow.run_custom_workflows :time_entry, self, :after_destroy
       end
 
     end

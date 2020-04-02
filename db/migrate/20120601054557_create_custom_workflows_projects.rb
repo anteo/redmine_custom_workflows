@@ -22,7 +22,7 @@
 class CreateCustomWorkflowsProjects < ActiveRecord::Migration[4.2]
 
   def change
-    create_table :custom_workflows_projects, :force => true, :id => false do |t|
+    create_table :custom_workflows_projects, force: true, id: false do |t|
       t.references :project
       t.references :custom_workflow
     end

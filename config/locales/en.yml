@@ -20,87 +20,101 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 en:
-  project_module_custom_workflows_module: "Custom workflows"
-  permission_manage_project_workflow: "Manage project custom workflows"
+  project_module_custom_workflows_module: Custom workflows
+  permission_manage_project_workflow: Manage project custom workflows
 
-  label_custom_workflow: "Custom workflows"
-  label_custom_workflow_plural: "Custom workflows"
-  label_custom_workflow_new: "Create a custom workflow"
-  label_workflow_scripts: "Workflow scripts"
-  label_enabled_projects: "Enabled for project(s)"
-  label_custom_workflow_export: "Export"
-  label_custom_workflow_import: "Import workflow"
-  label_save_workflows: "Saving observable objects"
-  label_destroy_workflows: "Destroying observable objects"
-  label_add_workflows: "Adding observable objects to collection"
-  label_remove_workflows: "Removing observable objects from collection"
+  label_custom_workflow: Custom workflow
+  label_custom_workflow_plural: Custom workflows
+  label_custom_workflow_new: Create a custom workflow
+  label_workflow_scripts: Workflow scripts
+  label_custom_workflow_export: Export
+  label_custom_workflow_import: Import workflow
+  label_save_workflows: Saving observable objects
+  label_destroy_workflows: Destroying observable objects
+  label_add_workflows: Adding observable objects to collection
+  label_remove_workflows: Removing observable objects from collection
 
-  button_import: "Import"
-  button_custom_workflow_activate: "Activate"
-  button_custom_workflow_deactivate: "Deactivate"
+  button_custom_workflow_deactivate: Deactivate
 
-  field_after_save: "Workflow script executable after saving observable object"
-  field_before_save: "Workflow script executable before saving observable object"
-  field_after_destroy: "Workflow script executable after destroying observable object"
-  field_before_destroy: "Workflow script executable before destroying observable object"
-  field_after_add: "Workflow script executable after adding observable object to collection"
-  field_before_add: "Workflow script executable before adding observable object to collection"
-  field_after_remove: "Workflow script executable after removing observable object from collection"
-  field_before_remove: "Workflow script executable before removing observable object from collection"
-  field_shared_code: "Shared code"
-  field_observable: "Observable object"
-  field_is_enabled: "Enabled"
-  field_enabled_for_all_projects: "Enabled for all projects"
-  field_custom_workflow_author: "Author's e-mail"
-  field_custom_workflow_file: "Select the XML file previously exported process"
-  field_custom_workflow_active: "Active"
+  field_after_save: Workflow script executable after saving observable object
+  field_before_save: Workflow script executable before saving observable object
+  field_after_destroy: Workflow script executable after destroying observable object
+  field_before_destroy: Workflow script executable before destroying observable object
+  field_after_add: Workflow script executable after adding observable object to collection
+  field_before_add: Workflow script executable before adding observable object to collection
+  field_after_remove: Workflow script executable after removing observable object from collection
+  field_before_remove: Workflow script executable before removing observable object from collection
+  field_shared_code: Shared code
+  field_observable: Observable object
+  field_enabled_for_all_projects: Enabled for all projects
+  field_custom_workflow_author: Author's e-mail
+  field_custom_workflow_file: Select the XML file previously exported process
   field_custom_workflow:
-    script: "Workflow script"
+    script: Workflow script
 
-  notice_successful_import: "Custom workflow has successfully imported"
-  notice_successful_status_change: "Status has successfully changed"
-  error_failed_import: "Error importing custom workflow (unknown format? please see log)"
+  notice_successful_import: Custom workflow has successfully imported
+  notice_successful_status_change: Status has successfully changed
+  error_failed_import: Error importing custom workflow (unknown format? please see log)
 
   activerecord:
     errors:
       messages:
         invalid_script: "contains error: %{error}"
-        custom_workflow_error: "Custom workflow error (please contact administrator)"
+        custom_workflow_error: Custom workflow error (Please contact an administrator)
         new_status_invalid: "transition from '%{old_status}' to '%{new_status}' is prohibited"
-        scripts_absent: "At least one script should be defined"
+        scripts_absent: At least one script should be defined
 
   text_select_project_custom_workflows: Select project custom workflows
-  text_custom_workflow_before_save_note: You can change properties of the issues here. Do not create or update related issues in this script. To finish with error, use raise WorkflowError, "Message to user".
-  text_custom_workflow_after_save_note: You can update or create related issues here. Note that this script will be also executed for the newly created issues. So make appropriate checks to prevent infinite recursion.
-  text_custom_workflow_issue_code_note: Scripts are executed in the context of Issue object like ordinary before_save and after_save callbacks. So use methods and properties of the issue directly (or through "self"). Instance variables (@variable) are also allowed and may be used if needed.
-  text_custom_workflow_shared_code_note: This code will run before any other workflow and may contain shared code, e.g. functions and classes needed by other workflows
-  text_custom_workflow_user_code_note: Scripts are executed in the context of User object when user object changes (destroys). Use methods and properties of the user directly (or through "self")
-  text_custom_workflow_group_code_note: Scripts are executed in the context of Group object when group object changes (destroys). Use methods and properties of the group directly (or through "self")
-  text_custom_workflow_group_users_code_note: These scripts are executed when user being added to group/removed from group. Use variables @user and @group to access appropriate objects in your scripts.
-  text_custom_workflow_attachment_code_note: Scripts are executed in the context of Attachment object when attachment object changes (destroys). Use methods and properties of the attachment object directly (or through "self"). Note that these scripts will affect all attachment types (issue, document, wiki pages and etc), so you should check 'container_type' field additionally in your script or select specific "... Attachments" observable object.
-  text_custom_workflow_issue_attachments_code_note: These scripts are executed when attachment being added to issue/removed from issue. Use variables @issue and @attachment to access appropriate objects in your scripts.
-  text_custom_workflow_project_code_note: Scripts are executed in the context of Project object when project object changes (destroys). Use methods and properties of the project directly (or through "self")
-  text_custom_workflow_project_attachments_code_note: These scripts are executed when a file being added to project/removed from project. Use variables @project and @attachment to access appropriate objects in your scripts.
-  text_custom_workflow_wiki_content_code_note: Scripts are executed in the context of Wiki Content object when project object changes (destroys). Use methods and properties of the project directly (or through "self")
-  text_custom_workflow_wiki_page_attachments_code_note: These scripts are executed when a file being added to wiki page/removed from wiki page. Use variables @page and @attachment to access appropriate objects in your scripts.
-  text_custom_workflow_time_entry_code_note: Scripts are executed in the context of TimeEntry object when time enty object changes (destroys). Use methods and properties of the time entry directly (or through "self")
-  text_custom_workflow_version_code_note: Scripts are executed in the context of Version object when version object changes (destroys). Use methods and properties of the version directly (or through "self")
+  text_custom_workflow_before_save_note: You can change properties of the issues here. Do not create or update related
+    issues in this script. To finish with error, use `raise WorkflowError, 'Message to user'`.
+  text_custom_workflow_after_save_note: You can update or create related issues here. Note that this script will be
+    also executed for the newly created issues. So make appropriate checks to prevent infinite recursion.
+
+  text_custom_workflow_issue_code_note: Scripts are executed in the context of Issue object like ordinary
+    before_save and after_save callbacks. So use methods and properties of the issue directly (or through `self`).
+    Instance variables (@variable) are also allowed and may be used if needed.
+  text_custom_workflow_shared_code_note: This code will run before any other workflow and may contain shared code,
+    e.g. functions and classes needed by other workflows
+  text_custom_workflow_user_code_note: Scripts are executed in the context of User object when user object changes
+    (destroys). Use methods and properties of the user directly (or through `self`)
+  text_custom_workflow_group_code_note: Scripts are executed in the context of Group object when group object changes
+    (destroys). Use methods and properties of the group directly (or through `self`)
+  text_custom_workflow_group_users_code_note: These scripts are executed when user being added to group/removed from
+    group. Use variables @user and @group to access appropriate objects in your scripts.
+  text_custom_workflow_attachment_code_note: Scripts are executed in the context of Attachment object when attachment
+    object changes (destroys). Use methods and properties of the attachment object directly (or through `self`). Note that
+    these scripts will affect all attachment types (issue, document, wiki pages and etc), so you should check
+    'container_type' field additionally in your script or select specific '... Attachments' observable object.
+  text_custom_workflow_issue_attachments_code_note: These scripts are executed when attachment being added to
+    issue/removed from issue. Use variables @issue and @attachment to access appropriate objects in your scripts.
+  text_custom_workflow_project_code_note: Scripts are executed in the context of Project object when project object
+    changes (destroys). Use methods and properties of the project directly (or through `self`)
+  text_custom_workflow_project_attachments_code_note: These scripts are executed when a file being added to
+    project/removed from project. Use variables @project and @attachment to access appropriate objects in your scripts.
+  text_custom_workflow_wiki_content_code_note: Scripts are executed in the context of Wiki Content object when project
+    object changes (destroys). Use methods and properties of the project directly (or through `self`)
+  text_custom_workflow_wiki_page_attachments_code_note: These scripts are executed when a file being added to wiki
+    page/removed from wiki page. Use variables @page and @attachment to access appropriate objects in your scripts.
+  text_custom_workflow_time_entry_code_note: Scripts are executed in the context of TimeEntry object when time enty
+    object changes (destroys). Use methods and properties of the time entry directly (or through `self`)
+  text_custom_workflow_version_code_note: Scripts are executed in the context of Version object when version object
+    changes (destroys). Use methods and properties of the version directly (or through `self`)
 
   text_no_enabled_projects: No projects
   text_custom_workflow_author: Will be included in exported XML
   text_custom_workflow_disabled: disabled by admin
   text_custom_workflow_is_for_all: enabled for all projects
 
-  custom_workflow_observable_shared: "<shared code>"
-  custom_workflow_observable_issue: "Issue"
-  custom_workflow_observable_issue_attachments: "Issue Attachments"
-  custom_workflow_observable_group: "Group"
-  custom_workflow_observable_user: "User"
-  custom_workflow_observable_attachment: "Attachment"
-  custom_workflow_observable_project: "Project"
-  custom_workflow_observable_project_attachments: "Project Attachments / Files"
-  custom_workflow_observable_wiki_content: "Wiki Content"
-  custom_workflow_observable_wiki_page_attachments: "Wiki Page Attachments"
-  custom_workflow_observable_group_users: "Group Users"
-  custom_workflow_observable_time_entry: "Time Entry"
-  custom_workflow_observable_version: "Version"
+  custom_workflow_observable_shared: <shared code>
+  custom_workflow_observable_issue: Issue
+  custom_workflow_observable_issue_attachments: Issue Attachments
+  custom_workflow_observable_group: Group
+  custom_workflow_observable_user: User
+  custom_workflow_observable_attachment: Attachment
+  custom_workflow_observable_project: Project
+  custom_workflow_observable_project_attachments: Project Attachments / Files
+  custom_workflow_observable_wiki_content: Wiki Content
+  custom_workflow_observable_wiki_page_attachments: Wiki Page Attachments
+  custom_workflow_observable_group_users: Group Users
+  custom_workflow_observable_time_entry: Time Entry
+  custom_workflow_observable_version: Version

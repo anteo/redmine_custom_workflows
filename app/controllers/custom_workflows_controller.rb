@@ -99,23 +99,9 @@ class CustomWorkflowsController < ApplicationController
 
   def create
     @workflow = CustomWorkflow.new
-    @workflow.before_save = params[:custom_workflow][:before_save]
-    @workflow.after_save = params[:custom_workflow][:after_save]
-    @workflow.name = params[:custom_workflow][:name]
-    @workflow.description = params[:custom_workflow][:description]
     @workflow.position = CustomWorkflow.count + 1
-    @workflow.is_for_all = params[:custom_workflow][:is_for_all] == '1'
-    @workflow.author = params[:custom_workflow][:author]
-    @workflow.active = params[:custom_workflow][:active]
     @workflow.observable = params[:custom_workflow][:observable]
-    @workflow.shared_code = params[:custom_workflow][:shared_code]
-    @workflow.before_add = params[:custom_workflow][:before_add]
-    @workflow.after_add = params[:custom_workflow][:after_add]
-    @workflow.before_remove = params[:custom_workflow][:before_remove]
-    @workflow.after_remove = params[:custom_workflow][:after_remove]
-    @workflow.before_destroy = params[:custom_workflow][:before_destroy]
-    @workflow.after_destroy = params[:custom_workflow][:after_destroy]
-    @workflow.project_ids = params[:custom_workflow][:project_ids]
+    update_from_params
     respond_to do |format|
       if params.has_key?(:commit) && @workflow.save
         flash[:notice] = l(:notice_successful_create)
@@ -140,21 +126,7 @@ class CustomWorkflowsController < ApplicationController
 
   def update
     respond_to do |format|
-      @workflow.before_save = params[:custom_workflow][:before_save]
-      @workflow.after_save = params[:custom_workflow][:after_save]
-      @workflow.name = params[:custom_workflow][:name]
-      @workflow.description = params[:custom_workflow][:description]
-      @workflow.is_for_all = params[:custom_workflow][:is_for_all] == '1'
-      @workflow.author = params[:custom_workflow][:author]
-      @workflow.active = params[:custom_workflow][:active]
-      @workflow.shared_code = params[:custom_workflow][:shared_code]
-      @workflow.before_add = params[:custom_workflow][:before_add]
-      @workflow.after_add = params[:custom_workflow][:after_add]
-      @workflow.before_remove = params[:custom_workflow][:before_remove]
-      @workflow.after_remove = params[:custom_workflow][:after_remove]
-      @workflow.before_destroy = params[:custom_workflow][:before_destroy]
-      @workflow.after_destroy = params[:custom_workflow][:after_destroy]
-      @workflow.project_ids = params[:custom_workflow][:project_ids]
+      update_from_params
       if params.has_key?(:commit) && @workflow.save
         flash[:notice] = l(:notice_successful_update)
         format.html { redirect_to(custom_workflows_path) }
@@ -178,6 +150,24 @@ class CustomWorkflowsController < ApplicationController
     @workflow = CustomWorkflow.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     render_404
+  end
+
+  def update_from_params
+    @workflow.before_save = params[:custom_workflow][:before_save]
+    @workflow.after_save = params[:custom_workflow][:after_save]
+    @workflow.name = params[:custom_workflow][:name]
+    @workflow.description = params[:custom_workflow][:description]
+    @workflow.is_for_all = params[:custom_workflow][:is_for_all] == '1'
+    @workflow.author = params[:custom_workflow][:author]
+    @workflow.active = params[:custom_workflow][:active]
+    @workflow.shared_code = params[:custom_workflow][:shared_code]
+    @workflow.before_add = params[:custom_workflow][:before_add]
+    @workflow.after_add = params[:custom_workflow][:after_add]
+    @workflow.before_remove = params[:custom_workflow][:before_remove]
+    @workflow.after_remove = params[:custom_workflow][:after_remove]
+    @workflow.before_destroy = params[:custom_workflow][:before_destroy]
+    @workflow.after_destroy = params[:custom_workflow][:after_destroy]
+    @workflow.project_ids = params[:custom_workflow][:project_ids]
   end
 
 end

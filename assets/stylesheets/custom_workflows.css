@@ -23,32 +23,8 @@
     color: silver;
 }
 
-table.list.custom-workflows td {
-    vertical-align: middle;
-}
-
-table.list.custom-workflows td.description {
-    text-align: left;
-    width: 40%;
-}
-
-table.list.custom-workflows td.buttons {
-    white-space: normal;
-    width: 10%;
-    text-align: left;
-}
-
 table.list.custom-workflows tr.disabled {
     color: silver;
-}
-
-#custom_workflow_description, #custom_workflow_name {
-    width: 98%;
-}
-
-.custom_workflow_script {
-    width: 98%;
-    font-size: 11px;
 }
 
 #custom_workflow_enabled_projects ul.root {
@@ -56,11 +32,18 @@ table.list.custom-workflows tr.disabled {
     overflow-y: auto;
 }
 
-/* Icons */
-.icon-import {
-    background-image: url(../images/export.png);
+.custom-workflow-hidden {
+    display: none;
 }
 
-.icon-export {
-    background-image: url(../images/import.png);
+.custom-workflow-info {
+    text-align: justify;
+    margin-bottom: 1em;
+}
+
+div#custom_workflow_scripts label {
+    font-weight: normal;
+    text-align: left;
+    margin-left: 0;
+    width: auto;
 }

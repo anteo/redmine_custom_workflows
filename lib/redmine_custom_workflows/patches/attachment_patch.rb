@@ -36,8 +36,8 @@ module RedmineCustomWorkflows
       def before_save_custom_workflows
         @attachment = self
         @saved_attributes = attributes.dup
-        CustomWorkflow.run_shared_code(self)
-        CustomWorkflow.run_custom_workflows(:attachment, self, :before_save)
+        CustomWorkflow.run_shared_code self
+        CustomWorkflow.run_custom_workflows :attachment, self, :before_save
         throw :abort if errors.any?
         errors.empty? && (@saved_attributes == attributes || valid?)
       ensure
@@ -45,15 +45,15 @@ module RedmineCustomWorkflows
       end
 
       def after_save_custom_workflows
-        CustomWorkflow.run_custom_workflows(:attachment, self, :after_save)
+        CustomWorkflow.run_custom_workflows :attachment, self, :after_save
       end
 
       def before_destroy_custom_workflows
-        CustomWorkflow.run_custom_workflows(:attachment, self, :before_destroy)
+        CustomWorkflow.run_custom_workflows :attachment, self, :before_destroy
       end
 
       def after_destroy_custom_workflows
-        CustomWorkflow.run_custom_workflows(:attachment, self, :after_destroy)
+        CustomWorkflow.run_custom_workflows :attachment, self, :after_destroy
       end
 
     end

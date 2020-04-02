@@ -31,11 +31,11 @@ class CustomWorkflow < ActiveRecord::Base
   acts_as_list
 
   validates_presence_of :name
-  validates_uniqueness_of :name, :case_sensitive => false
-  validates_format_of :author, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, :allow_blank => true
-  validate :validate_syntax, :validate_scripts_presence, :if => Proc.new {|workflow| workflow.respond_to?(:observable) and workflow.active?}
+  validates_uniqueness_of :name, case_sensitive: false
+  validates_format_of :author, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, allow_blank: true
+  validate :validate_syntax, :validate_scripts_presence, if: Proc.new { |workflow| workflow.respond_to?(:observable) and workflow.active? }
 
-  scope :active, lambda { where(:active => true) }
+  scope :active, lambda { where(active: true) }
   scope :for_project, (lambda do |project|
     where("is_for_all=? OR EXISTS (SELECT * FROM #{reflect_on_association(:projects).join_table} WHERE project_id=? AND custom_workflow_id=id)",
           true, project.id)
@@ -43,11 +43,11 @@ class CustomWorkflow < ActiveRecord::Base
 
   def self.import_from_xml(xml)
     attributes = Hash.from_xml(xml).values.first
-    attributes.delete('exported_at')
-    attributes.delete('plugin_version')
-    attributes.delete('ruby_version')
-    attributes.delete('rails_version')
-    CustomWorkflow.new(attributes)
+    attributes.delete 'exported_at'
+    attributes.delete 'plugin_version'
+    attributes.delete 'ruby_version'
+    attributes.delete 'rails_version'
+    CustomWorkflow.new attributes
   end
 
   def self.log_message(str, object)

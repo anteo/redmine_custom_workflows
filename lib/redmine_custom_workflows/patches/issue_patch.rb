@@ -33,10 +33,10 @@ module RedmineCustomWorkflows
           validate :validate_status
 
           def self.attachments_callback(event, issue, attachment)
-            issue.instance_variable_set(:@issue, issue)
-            issue.instance_variable_set(:@attachment, attachment)
+            issue.instance_variable_set :@issue, issue
+            issue.instance_variable_set :@attachment, attachment
             CustomWorkflow.run_shared_code(issue) if event.to_s.starts_with? 'before_'
-            CustomWorkflow.run_custom_workflows(:issue_attachments, issue, event)
+            CustomWorkflow.run_custom_workflows :issue_attachments, issue, event
           end
 
           [:before_add, :before_remove, :after_add, :after_remove].each do |observable|
@@ -57,15 +57,15 @@ module RedmineCustomWorkflows
           status_new = IssueStatus.find_by_id(status_id)
 
           errors.add :status, :new_status_invalid,
-                     :old_status => status_was && status_was.name,
-                     :new_status => status_new && status_new.name
+                     old_status: status_was && status_was.name,
+                     new_status: status_new && status_new.name
         end
 
         def before_save_custom_workflows
           @issue = self
           @saved_attributes = attributes.dup
-          CustomWorkflow.run_shared_code(self)
-          CustomWorkflow.run_custom_workflows(:issue, self, :before_save)
+          CustomWorkflow.run_shared_code self
+          CustomWorkflow.run_custom_workflows :issue, self, :before_save
           throw :abort if errors.any?
           errors.empty? && (@saved_attributes == attributes || valid?)
         ensure
@@ -73,15 +73,15 @@ module RedmineCustomWorkflows
         end
 
         def after_save_custom_workflows
-          CustomWorkflow.run_custom_workflows(:issue, self, :after_save)
+          CustomWorkflow.run_custom_workflows :issue, self, :after_save
         end
 
         def before_destroy_custom_workflows
-          CustomWorkflow.run_custom_workflows(:issue, self, :before_destroy)
+          CustomWorkflow.run_custom_workflows :issue, self, :before_destroy
         end
 
         def after_destroy_custom_workflows
-          CustomWorkflow.run_custom_workflows(:issue, self, :after_destroy)
+          CustomWorkflow.run_custom_workflows :issue, self, :after_destroy
         end
 
     end

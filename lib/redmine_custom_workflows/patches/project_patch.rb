@@ -27,7 +27,7 @@ module RedmineCustomWorkflows
       def self.included(base)
         base.class_eval do
           has_and_belongs_to_many :custom_workflows
-          safe_attributes :custom_workflow_ids, :if =>
+          safe_attributes :custom_workflow_ids, if:
               lambda { |project, user| project.new_record? || user.allowed_to?(:manage_project_workflow, project) }
 
           before_save :before_save_custom_workflows
@@ -51,8 +51,8 @@ module RedmineCustomWorkflows
       def before_save_custom_workflows
         @project = self
         @saved_attributes = attributes.dup
-        CustomWorkflow.run_shared_code(self)
-        CustomWorkflow.run_custom_workflows(:project, self, :before_save)
+        CustomWorkflow.run_shared_code self
+        CustomWorkflow.run_custom_workflows :project, self, :before_save
         throw :abort if errors.any?
         errors.empty? && (@saved_attributes == attributes || valid?)
       ensure
@@ -60,15 +60,15 @@ module RedmineCustomWorkflows
       end
 
       def after_save_custom_workflows
-        CustomWorkflow.run_custom_workflows(:project, self, :after_save)
+        CustomWorkflow.run_custom_workflows :project, self, :after_save
       end
 
       def before_destroy_custom_workflows
-        CustomWorkflow.run_custom_workflows(:project, self, :before_destroy)
+        CustomWorkflow.run_custom_workflows :project, self, :before_destroy
       end
 
       def after_destroy_custom_workflows
-        CustomWorkflow.run_custom_workflows(:project, self, :after_destroy)
+        CustomWorkflow.run_custom_workflows :project, self, :after_destroy
       end
 
     end

@@ -36,7 +36,7 @@ Redmine::Plugin.register :redmine_custom_workflows do
 
   requires_redmine version_or_higher: '4.1.0'
 
-  permission :manage_project_workflow, {}, :require => :member
+  permission :manage_project_workflow, {}, require: :member
 end
 
 unless Redmine::Plugin.installed?(:easy_extensions)

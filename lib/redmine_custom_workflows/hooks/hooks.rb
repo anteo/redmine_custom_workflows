@@ -24,17 +24,9 @@ module RedmineCustomWorkflows
 
   class Hooks < Redmine::Hook::ViewListener
 
-    def view_layouts_base_html_head(context)
-      return if defined?(EasyExtensions)
+    def view_layouts_base_html_head(context={})
+      return unless context[:controller].class.name.match?(/^(CustomWorkflows|Projects)/)
       "\n".html_safe + stylesheet_link_tag('custom_workflows.css', plugin: :redmine_custom_workflows)
-    end
-
-    def easy_extensions_javascripts_hook(context={})
-      context[:template].require_asset('tab_override.js')
-    end
-
-    def easy_extensions_stylesheets_hook(context={})
-      context[:template].require_asset('custom_workflows.css')
     end
 
   end
