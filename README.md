@@ -51,8 +51,9 @@ From a GIT repository:
 
 After download:
 
-* Run <b>rake redmine:plugins:migrate</b>
-* Restart Redmine
+* Run <b>RAILS_ENV=production bundle exec rake db:migrate</b>
+* Run <b>RAILS_ENV=production bundle exec rake redmine:plugins:migrate NAME=redmine_custom_workflows</b>
+* Restart Redmine, e.g. <b>systemctl restart apache2<b>
 
 Configuration
 -------------
