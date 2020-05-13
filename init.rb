@@ -28,7 +28,7 @@ Redmine::Plugin.register :redmine_custom_workflows do
   else
     name 'Redmine Custom Workflow plugin'
     url 'https://www.redmine.org/plugins/custom-workflows-plug-in'
-    author_url 'https://github.com/danmunn/redmine_custom_workflows/graphs/contributors'
+    author_url 'https://github.com/anteo/redmine_custom_workflows/graphs/contributors'
   end
   author 'Anton Argirov/Karel Pičman'
   description 'Allows to create custom workflows for objects, defined in the plain Ruby language'
