@@ -27,7 +27,7 @@ Redmine::Plugin.register :redmine_custom_workflows do
     author_url 'https://www.easyredmine.com'
   else
     name 'Redmine Custom Workflow plugin'
-    url 'https://www.redmine.org/plugins/custom-workflows-plug-in'
+    url 'https://www.redmine.org/plugins/redmine_custom_workflows'
     author_url 'https://github.com/anteo/redmine_custom_workflows/graphs/contributors'
   end
   author 'Anton Argirov/Karel Pičman'
