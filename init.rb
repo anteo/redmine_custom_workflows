@@ -32,7 +32,7 @@ Redmine::Plugin.register :redmine_custom_workflows do
   end
   author 'Anton Argirov/Karel Pičman'
   description 'Allows to create custom workflows for objects, defined in the plain Ruby language'
-  version '1.0.3'
+  version '1.0.4 devel'
 
   requires_redmine version_or_higher: '4.1.0'
 
