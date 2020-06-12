@@ -1,6 +1,14 @@
 Changelog for Custom Workflows
 ==========================
 
+1.0.3 *2020-06-12*
+------------------
+
+    Maintenance release
+        
+* Bug: #168 - Check last version of plugin KO
+* Bug: #167 - Crash when delete project
+
 1.0.2 *2020-01-21*
 ------------------
 
