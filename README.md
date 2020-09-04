@@ -37,6 +37,10 @@ Check Wiki for examples and programming hints:
 
 https://github.com/anteo/redmine_custom_workflows/wiki
 
+Check this repo with some tested in work custom workflows:
+
+https://github.com/VoronyukM/custom-workwlows
+
 Installation
 ------------
 
