@@ -73,6 +73,9 @@ en:
   text_custom_workflow_issue_code_note: Scripts are executed in the context of Issue object like ordinary
     before_save and after_save callbacks. So use methods and properties of the issue directly (or through `self`).
     Instance variables (@variable) are also allowed and may be used if needed.
+  text_custom_workflow_issue_relation_code_note: Scripts are executed in the context of IssueRelation object like ordinary
+    before_save and after_save callbacks. So use methods and properties of the issue relation directly (or through `self`).
+    Instance variables (@variable) are also allowed and may be used if needed.
   text_custom_workflow_shared_code_note: This code will run before any other workflow and may contain shared code,
     e.g. functions and classes needed by other workflows
   text_custom_workflow_user_code_note: Scripts are executed in the context of User object when user object changes
@@ -107,6 +110,7 @@ en:
 
   custom_workflow_observable_shared: <shared code>
   custom_workflow_observable_issue: Issue
+  custom_workflow_observable_issue_relation: Issue Relation
   custom_workflow_observable_issue_attachments: Issue Attachments
   custom_workflow_observable_group: Group
   custom_workflow_observable_user: User
