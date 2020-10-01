@@ -7,7 +7,7 @@ Changelog for Custom Workflows
 1.0.3 *2020-06-12*
 ------------------
 
-    Maintenance release
+    Redmine's look&feel
         
 * Bug: #168 - Check last version of plugin KO
 * Bug: #167 - Crash when delete project

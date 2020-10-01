@@ -73,6 +73,9 @@ cs:
   text_custom_workflow_issue_code_note: Skripty jsou vykonávány v rámci objektu úkolu stejně jako volání `before_save`
     a `after_save` funkcí. Takže lze použít přímo vlastností úkolů. Proměnné (@variable) jsou rovněž dostupné a lze jich
     použít.
+  text_custom_workflow_issue_relation_code_note: Skripty jsou vykonávány v rámci objektu vazby mezi úkoly stejně jako
+    volání `before_save` a `after_save` funkcí. Takže lze použít přímo vlastností vazby mezi úkoly. Proměnné (@variable)
+    jsou rovněž dostupné a lze jich použít.
   text_custom_workflow_shared_code_note: Tento kód bude spuštěn pře jakýmkoli jiným procesem a může obsahovat sdílený
     kód, např. funkce a třídy, které jsou potřeba v jiných procesech
   text_custom_workflow_user_code_note: Skripty jsou vykonávány v rámci objektu uživatel, když se objekt mění (maže).

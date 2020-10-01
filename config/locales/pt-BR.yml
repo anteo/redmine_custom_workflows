@@ -73,6 +73,9 @@ pt-BR:
   text_custom_workflow_issue_code_note: Ambos os scripts são executados no contexto da tarefa pelas chamadas before_save
     com retornos para a chamada after_save. Portanto, use métodos e propriedades da tarefa diretamente
     (ou através de "self"). Variáveis de instância (@variable) também são permitidos e podem ser utilizados, se necessário.
+  text_custom_workflow_issue_relation_code_note: Scripts are executed in the context of IssueRelation object like ordinary
+    before_save and after_save callbacks. So use methods and properties of the issue relation directly (or through `self`).
+    Instance variables (@variable) are also allowed and may be used if needed.
   text_custom_workflow_shared_code_note: This code will run before any other workflow and may contain shared code,
     e.g. functions and classes needed by other workflows.
   text_custom_workflow_user_code_note: Both scripts are executed in the context of the user object when user object

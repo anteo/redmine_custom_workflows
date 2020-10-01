@@ -73,6 +73,9 @@ ru:
   text_custom_workflow_issue_code_note: Эти сценарии исполняются в контексте задачи, как и обычные обратные вызовы
     before_save и after_save. Поэтому используйте методы и свойства задачи (Issue) напрямую или через ключевое слово
     self.
+  text_custom_workflow_issue_relation_code_note: Scripts are executed in the context of IssueRelation object like ordinary
+    before_save and after_save callbacks. So use methods and properties of the issue relation directly (or through `self`).
+    Instance variables (@variable) are also allowed and may be used if needed.
   text_custom_workflow_shared_code_note: Этот код будет исполняться перед любым другим процессом и может содержать общий
     код, например, функции и классы, необходимые для работы других процессов.
   text_custom_workflow_user_code_note: Эти сценарии исполняются в контексте объекта пользователя когда объект
