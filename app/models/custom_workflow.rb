@@ -21,11 +21,11 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class CustomWorkflow < ActiveRecord::Base
-  OBSERVABLES = [:issue, :issue_attachments, :user, :attachment, :group, :group_users, :project, :project_attachments,
+  OBSERVABLES = [:issue, :issue_relation, :issue_attachments, :user, :attachment, :group, :group_users, :project, :project_attachments,
                  :wiki_content, :wiki_page_attachments, :time_entry, :version, :shared]
   PROJECT_OBSERVABLES = [:issue, :issue_attachments, :project, :project_attachments, :wiki_content, :wiki_page_attachments, :time_entry, :version]
   COLLECTION_OBSERVABLES = [:group_users, :issue_attachments, :project_attachments, :wiki_page_attachments]
-  SINGLE_OBSERVABLES = [:issue, :user, :group, :attachment, :project, :wiki_content, :time_entry, :version]
+  SINGLE_OBSERVABLES = [:issue, :issue_relation, :user, :group, :attachment, :project, :wiki_content, :time_entry, :version]
 
   has_and_belongs_to_many :projects
   acts_as_list
