@@ -36,6 +36,7 @@ class CustomWorkflow < ActiveRecord::Base
   validate :validate_syntax, :validate_scripts_presence, if: Proc.new { |workflow| workflow.respond_to?(:observable) and workflow.active? }
 
   scope :active, lambda { where(active: true) }
+  scope :sorted, lambda { order(:position) }
   scope :for_project, (lambda do |project|
     where("is_for_all=? OR EXISTS (SELECT * FROM #{reflect_on_association(:projects).join_table} WHERE project_id=? AND custom_workflow_id=id)",
           true, project.id)
@@ -57,7 +58,7 @@ class CustomWorkflow < ActiveRecord::Base
   def self.run_shared_code(object)
     log_message '= Running shared code', object
     if CustomWorkflow.table_exists? # Due to DB migration
-      CustomWorkflow.active.where(observable: :shared).find_each do |workflow|
+      CustomWorkflow.active.where(observable: :shared).sorted.each do |workflow|
         unless workflow.run(object, :shared_code)
           log_message '= Abort running shared code', object
           return false
@@ -77,7 +78,7 @@ class CustomWorkflow < ActiveRecord::Base
       end
       return true unless workflows.any?
       log_message "= Running #{event} custom workflows", object
-      workflows.each do |workflow|
+      workflows.sorted.each do |workflow|
         unless workflow.run(object, event)
           log_message "= Abort running #{event} custom workflows", object
           return false
