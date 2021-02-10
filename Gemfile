@@ -19,10 +19,12 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-gem 'acts_as_list'
-gem 'activemodel-serializers-xml'
+source 'https://rubygems.org' do
+  gem 'acts_as_list'
+  gem 'activemodel-serializers-xml'
 
-# Redmine extensions
-unless %w(easyproject easy_gantt).any? { |plugin| Dir.exist?(File.expand_path("../../#{plugin}", __FILE__)) }
-  gem 'redmine_extensions', '~> 0.3.9'
+  # Redmine extensions
+  unless %w(easyproject easy_gantt).any? { |plugin| Dir.exist?(File.expand_path("../../#{plugin}", __FILE__)) }
+    gem 'redmine_extensions', '~> 0.3.9'
+  end
 end
