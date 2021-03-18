@@ -30,7 +30,6 @@ module RedmineCustomWorkflows
       def self.fixtures(*table_names)
         dir = File.join( File.dirname(__FILE__), '../../../test/fixtures')
         table_names.each do |x|
-          Rails.logger.info ">>> #{dir}/#{x}.yml"
           ActiveRecord::FixtureSet.create_fixtures(dir, x) if File.exist?("#{dir}/#{x}.yml")
         end
         super(table_names)
