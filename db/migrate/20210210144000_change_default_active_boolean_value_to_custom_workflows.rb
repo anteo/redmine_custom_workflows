@@ -1,0 +1,39 @@
+# encoding: utf-8
+#
+# Redmine plugin for Custom Workflows
+#
+# Copyright © 2015-19 Anton Argirov
+# Copyright © 2019-20 Karel Pičman <karel.picman@kontron.com>
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+class ChangeDefaultActiveBooleanValueToCustomWorkflows < ActiveRecord::Migration[4.2]
+  def up
+    if ActiveRecord::Base.connection.adapter_name =~ /sqlite/i
+      change_column_default :custom_workflows, :active, from: true, to: 1
+      CustomWorkflow.where("active = 't'").update_all(active: 1)
+      CustomWorkflow.where("active = 'f'").update_all(active: 0)
+    end
+  end
+
+  def down
+    if ActiveRecord::Base.connection.adapter_name =~ /sqlite/i
+      change_column_default :custom_workflows, :active, from: 1, to: true
+      CustomWorkflow.where("active = 1").update_all(active: 't')
+      CustomWorkflow.where("active = 0").update_all(active: 'f')
+    end
+  end
+
+end
