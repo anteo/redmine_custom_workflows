@@ -1,0 +1,124 @@
+# encoding: utf-8
+#
+# Redmine plugin for Custom Workflows
+#
+# Copyright © 2015-19 Anton Argirov
+# Copyright © 2019-21 Karel Pičman <karel.picman@kontron.com>
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+es:
+  project_module_custom_workflows_module: Workflows personalizados
+  permission_manage_project_workflow: Gestionar workflows personalizados del proyecto
+
+  label_custom_workflow: Workflow personalizado
+  label_custom_workflow_plural: Workflows personalizados
+  label_custom_workflow_new: Crear un workflow personalizado
+  label_workflow_scripts: Scripts de workflows
+  label_custom_workflow_export: Exportar
+  label_custom_workflow_import: Importar workflow
+  label_save_workflows: Guardar objetos observables
+  label_destroy_workflows: Destruir objetos observables
+  label_add_workflows: Añadir objetos observables a la colección
+  label_remove_workflows: Eliminar objetos observables a la colección
+
+  button_custom_workflow_deactivate: Desactivar
+
+  field_after_save: Script de workflow ejecutable después de guardar el objeto observable
+  field_before_save: Script de workflow ejecutable antes de guardar el objeto observable
+  field_after_destroy: Script de workflow ejecutable después de destruir el objeto observable
+  field_before_destroy: Script de workflow ejecutable antes de destruir el objeto observable
+  field_after_add: Script de workflow ejecutable después de añadir el objeto observable a la colección
+  field_before_add: Script de workflow ejecutable antes de añadir el objeto observable a la colección
+  field_after_remove: Script de workflow ejecutable después de eliminar el objeto observable a la colección
+  field_before_remove: Script de workflow ejecutable antes de eliminar el objeto observable de la colección
+  field_shared_code: Código compartido
+  field_observable: Objeto observable
+  field_enabled_for_all_projects: Habilitado para todos los proyectos
+  field_custom_workflow_author: E-mail del autor
+  field_custom_workflow_file: Seleccione el archivo XML previamente exportado
+  field_custom_workflow:
+    script: Script de workflow
+
+  notice_successful_import: El workflow personalizado se ha importado correctamente
+  notice_successful_status_change: El estado se ha cambiado correctamente
+  error_failed_import: Ha habido un error al importar el workflow personalizado (¿formato desconocido? por favor, vea los logs)
+
+  activerecord:
+    errors:
+      messages:
+        invalid_script: "contiene error: %{error}"
+        custom_workflow_error: Error de workflow personalizado (Por favor, contacte con el administrador)
+        new_status_invalid: "transición desde '%{old_status}' a '%{new_status}' está prohibida"
+        scripts_absent: Al menos debería definirse un script
+
+  text_select_project_custom_workflows: Seleccione un workflow personalizado de proyecto
+  text_custom_workflow_before_save_note: Aquí puede cambiar propiedades de las peticiones. No cree ni actualice peticiones
+    relacionadas en este script. Para acabar con error, use `raise WorkflowError, 'Message to user'`.
+  text_custom_workflow_after_save_note: Puede actualizar o crear peticiones relacionadas aquí. Tenga en cuenta que este script
+    también se ejecutará para las peticiones recién creadas. Así que haga las comprobaciones oportunas para evitar la recursión infinita.
+
+  text_custom_workflow_issue_code_note: Los scripts se ejecutan en el contexto del objeto Issue como las llamadas ordinarias
+    before_save y after_save. Por lo tanto, utilice los métodos y propiedades del objeto Issue directamente (o a través de `self`).
+    Las variables de instancia (@variable) también están permitidas y pueden utilizarse si es necesario.
+  text_custom_workflow_issue_relation_code_note: Los scripts se ejecutan en el contexto del objeto IssueRelation como las llamadas ordinarias
+    before_save y after_save. Por lo tanto, utiliza los métodos y propiedades de la relación de emisión directamente (o a través de `self`).
+    Las variables de instancia (@variable) también están permitidas y pueden utilizarse si es necesario.
+  text_custom_workflow_shared_code_note: Este código se ejecutará antes que cualquier otro workflow y puede contener código compartido,
+    por ejemplo, funciones y clases necesarias para otros flujos de trabajo
+  text_custom_workflow_user_code_note: Los scripts se ejecutan en el contexto del objeto User cuando el usuario cambia
+    (destruye). Utilice ​métodos y propiedades del usuario directamente (o a través de `self`)
+  text_custom_workflow_group_code_note: Los scripts se ejecutan en el contexto del objeto Group cuando el grupo cambia
+    (destruye). Utilice métodos y propiedades del grupo directamente (o a través de `self`)
+  text_custom_workflow_group_users_code_note: Estos scripts se ejecutan cuando el usuario se añade al grupo/se elimina del
+    grupo. Utilice las variables @user y @group para acceder a los objetos apropiados en sus scripts.
+  text_custom_workflow_attachment_code_note: Los scripts se ejecutan en el contexto del objeto Attachment cuando el fichero adjunto
+    cambia (destruye). Utilice los métodos y propiedades del objeto fichero adjunto directamente (o a través de `self`). Tenga en cuenta que
+    estos scripts afectarán a todos los tipos de adjuntos (petición, documento, páginas wiki, etc.), por lo que debe comprobar
+    el campo 'container_type' adicionalmente en su script o seleccionar el objeto observable específico '... Adjuntos'.
+  text_custom_workflow_issue_attachments_code_note: Estos scripts se ejecutan cuando un fichero se añade o elimina
+    de la tarea. Use variables @issue and @attachment para acceder al objeto apropiado en sus scripts.
+  text_custom_workflow_project_code_note: Los scripts se ejecutan en el contexto del objeto Project cuando el Proyecto
+    cambia (se destruye). Utilice métodos y propiedades del proyecto directamente (o a través de `self`)
+  text_custom_workflow_project_attachments_code_note: Estos scripts se ejecutan cuando un fichero se añade o elimina
+    del proyecto. Use variables @project and @attachment para acceder a los objetos apropiados en sus scripts.
+  text_custom_workflow_wiki_content_code_note: Los scripts se ejecutan en el contexto del objeto Wiki Content object cuando el objeto
+    project cambia (destruye). Use methods and properties del proyecto directamente (o mediante `self`)
+  text_custom_workflow_wiki_page_attachments_code_note: Estos scripts se ejecutan cuando se añade un archivo a la página wiki
+    o se retira de la página wiki. Utilice las variables @page y @attachment para acceder a los objetos adecuados en sus scripts.
+  text_custom_workflow_time_entry_code_note: Los scripts se ejecutan en el contexto del objeto TimeEntry cuando el objeto
+    cambia (destruye). Utilice los métodos y propiedades de la entrada de tiempo directamente (o a través de `self`)
+  text_custom_workflow_version_code_note: Los scripts se ejecutan en el contexto del objeto Version cuando la versión
+    cambia (destruye). Utilizar métodos y propiedades de la versión directamente (o a través de `self`)
+
+  text_no_enabled_projects: Sin proyectos
+  text_custom_workflow_author: Se incluirá en el XML exportado
+  text_custom_workflow_disabled: deshabilitado por el administrador
+  text_custom_workflow_is_for_all: habilitado para todos los proyectos
+
+  custom_workflow_observable_shared: <código compartido>
+  custom_workflow_observable_issue: Petición
+  custom_workflow_observable_issue_relation: Relación de petición
+  custom_workflow_observable_issue_attachments: Ficheros de petición
+  custom_workflow_observable_group: Grupo
+  custom_workflow_observable_user: Usuario
+  custom_workflow_observable_attachment: Ficheros
+  custom_workflow_observable_project: Proyecto
+  custom_workflow_observable_project_attachments: Adjuntos de proyecto / Ficheros
+  custom_workflow_observable_wiki_content: Contenido de wiki
+  custom_workflow_observable_wiki_page_attachments: Adjuntos de página de wiki
+  custom_workflow_observable_group_users: Usuarios de grupo
+  custom_workflow_observable_time_entry: Registro de tiempo
+  custom_workflow_observable_version: Versión
