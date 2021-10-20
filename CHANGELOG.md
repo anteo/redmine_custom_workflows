@@ -1,10 +1,10 @@
 Changelog for Custom Workflows
 ==============================
 
-1.0.7 *????-??-??*
+1.0.7 *2021-10-20*
 ------------------
 
-    Maintenance release
+    Spanish localisation
 
 1.0.6 *2021-10-08*
 ------------------
