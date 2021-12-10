@@ -17,11 +17,10 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
-# PosgreSQL file definition for GitLab Continous Integration
+# The Docker file definition for GitLab Continous Integration
 
-test:
-  adapter: postgresql
-  database: test
-  username: redmine
-  password: redmine
-  host: localhost
+FROM debian:latest
+RUN apt-get update
+RUN apt-get -qq install mariadb-server postgresql sqlite3 libsqlite3-dev ruby ruby-dev build-essential libmariadb-dev libpq-dev subversion git
+COPY . /app
+WORKDIR /app

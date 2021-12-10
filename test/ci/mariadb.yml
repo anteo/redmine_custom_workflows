@@ -17,11 +17,12 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
-# PosgreSQL file definition for GitLab Continous Integration
+# MariDb file definition for GitLab Continous Integration
 
 test:
-  adapter: postgresql
+  adapter: mysql2
   database: test
   username: redmine
-  password: redmine
-  host: localhost
+  password: "redmine"
+  encoding: utf8mb4
+  collation: utf8mb4_unicode_ci
