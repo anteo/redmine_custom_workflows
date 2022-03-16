@@ -35,6 +35,7 @@ module RedmineCustomWorkflows
   end
 end
 
+# Apply the patch
 if Redmine::Plugin.installed?(:easy_extensions)
   RedmineExtensions::PatchManager.register_helper_patch 'ProjectsHelper',
     'RedmineCustomWorkflows::Patches::ProjectsHelperPatch', prepend: true

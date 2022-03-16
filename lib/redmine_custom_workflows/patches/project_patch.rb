@@ -24,7 +24,7 @@ module RedmineCustomWorkflows
   module Patches
     module ProjectPatch
 
-      def self.included(base)
+      def self.prepended(base)
         base.class_eval do
           has_and_belongs_to_many :custom_workflows
           safe_attributes :custom_workflow_ids, if:
@@ -75,6 +75,9 @@ module RedmineCustomWorkflows
   end
 end
 
-# Apply patch
-RedmineExtensions::PatchManager.register_model_patch 'Project',
-  'RedmineCustomWorkflows::Patches::ProjectPatch'
+# Apply the patch
+if Redmine::Plugin.installed?(:easy_extensions)
+  RedmineExtensions::PatchManager.register_model_patch 'Project', 'RedmineCustomWorkflows::Patches::ProjectPatch'
+else
+  Project.prepend RedmineCustomWorkflows::Patches::ProjectPatch
+end

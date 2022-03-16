@@ -24,7 +24,7 @@ module RedmineCustomWorkflows
   module Patches
     module GroupPatch
 
-      def self.included(base)
+      def self.prepended(base)
         base.class_eval do
           before_save :before_save_custom_workflows
           after_save :after_save_custom_workflows
@@ -74,6 +74,10 @@ module RedmineCustomWorkflows
   end
 end
 
-# Apply patch
-RedmineExtensions::PatchManager.register_model_patch 'Group',
-  'RedmineCustomWorkflows::Patches::GroupPatch'
+# Apply the patch
+if Redmine::Plugin.installed?(:easy_extensions)
+  RedmineExtensions::PatchManager.register_model_patch 'Group',
+   'RedmineCustomWorkflows::Patches::GroupPatch'
+else
+  Group.prepend RedmineCustomWorkflows::Patches::GroupPatch
+end

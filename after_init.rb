@@ -22,8 +22,6 @@
 
 require_dependency File.dirname(__FILE__) + '/lib/redmine_custom_workflows.rb'
 
-ActiveSupport::Dependencies.autoload_paths << File.join(File.dirname(__FILE__), 'app')
-
 def custom_workflows_init
   # Administration menu extension
   Redmine::MenuManager.map :admin_menu do |menu|

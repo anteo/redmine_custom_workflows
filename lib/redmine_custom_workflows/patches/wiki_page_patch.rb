@@ -24,7 +24,7 @@ module RedmineCustomWorkflows
   module Patches
     module WikiPagePatch
 
-      def self.included(base)
+      def self.prepended(base)
         base.class_eval do
           def self.attachments_callback(event, page, attachment)
             page.instance_variable_set :@page, page
@@ -43,6 +43,9 @@ module RedmineCustomWorkflows
   end
 end
 
-# Apply patch
-RedmineExtensions::PatchManager.register_model_patch 'WikiPage',
-  'RedmineCustomWorkflows::Patches::WikiPagePatch'
+# Apply the patch
+if Redmine::Plugin.installed?(:easy_extensions)
+  RedmineExtensions::PatchManager.register_model_patch 'WikiPage', 'RedmineCustomWorkflows::Patches::WikiPagePatch'
+else
+  WikiPage.prepend RedmineCustomWorkflows::Patches::WikiPagePatch
+end
