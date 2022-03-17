@@ -21,5 +21,4 @@
 
 source 'https://rubygems.org' do
   gem 'acts_as_list'
-  gem 'activemodel-serializers-xml'
 end
