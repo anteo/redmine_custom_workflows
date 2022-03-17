@@ -20,11 +20,16 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-class WorkflowError < StandardError
-  attr_accessor :error
+module RedmineCustomWorkflows
+  module Errors
 
-  def initialize(message)
-    @error = message
-    super message
+    class WorkflowError < StandardError
+      attr_accessor :error
+
+      def initialize(message)
+        @error = message
+        super message
+      end
+    end
   end
 end

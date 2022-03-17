@@ -51,5 +51,9 @@ module RedmineCustomWorkflows
   end
 end
 
-RedmineExtensions::PatchManager.register_model_patch 'Mailer',
-  'RedmineCustomWorkflows::Patches::MailerPatch'
+# Apply the patch
+if Redmine::Plugin.installed?(:easy_extensions)
+  RedmineExtensions::PatchManager.register_model_patch 'Mailer', 'RedmineCustomWorkflows::Patches::MailerPatch'
+else
+  Mailer.prepend RedmineCustomWorkflows::Patches::MailerPatch
+end

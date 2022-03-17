@@ -24,7 +24,7 @@ module RedmineCustomWorkflows
   module Patches
     module UserPatch
 
-      def self.included(base)
+      def self.prepended(base)
         base.class_eval do
           before_save :before_save_custom_workflows
           after_save :after_save_custom_workflows
@@ -60,6 +60,9 @@ module RedmineCustomWorkflows
   end
 end
 
-# Apply patch
-RedmineExtensions::PatchManager.register_model_patch 'User',
-  'RedmineCustomWorkflows::Patches::UserPatch'
+# Apply the patch
+if Redmine::Plugin.installed?(:easy_extensions)
+  RedmineExtensions::PatchManager.register_model_patch 'User', 'RedmineCustomWorkflows::Patches::UserPatch'
+else
+  User.prepend RedmineCustomWorkflows::Patches::UserPatch
+end
