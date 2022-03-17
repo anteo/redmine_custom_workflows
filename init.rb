@@ -4,7 +4,7 @@
 # Redmine plugin for Custom Workflows
 #
 # Copyright © 2015-19 Anton Argirov
-# Copyright © 2019-21 Karel Pičman <karel.picman@kontron.com>
+# Copyright © 2019-22 Karel Pičman <karel.picman@kontron.com>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -32,7 +32,7 @@ Redmine::Plugin.register :redmine_custom_workflows do
   end
   author 'Anton Argirov/Karel Pičman'
   description 'It allows to create custom workflows for objects, defined in a plain Ruby language'
-  version '1.0.7'
+  version '1.0.8 devel'
 
   requires_redmine version_or_higher: '4.1.0'
 
