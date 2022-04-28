@@ -4,6 +4,7 @@ Custom Workflows plug-in
 The current version of Redmine CustomWorkflows is **2.0.0**
 
 [![pipeline status](https://gitlab.kontron.com/redmine-plugins/redmine_custom_workflows/badges/master/pipeline.svg)](https://gitlab.kontron.com/redmine-plugins/redmine_custom_workflows/-/commits/master)
+[![Support Ukraine Badge](https://bit.ly/support-ukraine-now)](https://github.com/support-ukraine/support-ukraine)
 
 This plug-in provides a great functionality for those who is familiar with the Ruby language.
 It allows to customize workflow by defining own rules for issues processing. It's possible:
