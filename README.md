@@ -1,7 +1,7 @@
 Custom Workflows plug-in
 ========================
 
-The current version of Redmine CustomWorkflows is **1.0.7**
+The current version of Redmine CustomWorkflows is **2.0.0**
 
 [![pipeline status](https://gitlab.kontron.com/redmine-plugins/redmine_custom_workflows/badges/master/pipeline.svg)](https://gitlab.kontron.com/redmine-plugins/redmine_custom_workflows/-/commits/master)
 

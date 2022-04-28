@@ -4,7 +4,7 @@
 # Redmine plugin for Custom Workflows
 #
 # Copyright © 2015-19 Anton Argirov
-# Copyright © 2019-21 Karel Pičman <karel.picman@kontron.com>
+# Copyright © 2019-22 Karel Pičman <karel.picman@kontron.com>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -24,7 +24,7 @@ module RedmineCustomWorkflows
   module Patches
     module TimeEntryPatch
 
-      def self.included(base)
+      def self.prepended(base)
         base.class_eval do
           before_save :before_save_custom_workflows
           after_save :after_save_custom_workflows
@@ -60,6 +60,9 @@ module RedmineCustomWorkflows
   end
 end
 
-# Apply patch
-RedmineExtensions::PatchManager.register_model_patch 'TimeEntry',
-  'RedmineCustomWorkflows::Patches::TimeEntryPatch'
+# Apply the patch
+if Redmine::Plugin.installed?(:easy_extensions)
+  RedmineExtensions::PatchManager.register_model_patch 'TimeEntry', 'RedmineCustomWorkflows::Patches::TimeEntryPatch'
+else
+  TimeEntry.prepend RedmineCustomWorkflows::Patches::TimeEntryPatch
+end

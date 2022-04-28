@@ -1,6 +1,17 @@
 Changelog for Custom Workflows
 ==============================
 
+2.0.0 *2022-04-27*
+------------------
+
+    Redmine 5.0
+
+* New: #255 - Can you update it to Redmine 5.0.0
+* New: #252 - Rails 6
+* Bug: #248 - Redmine 4.2.3 doesn't start after installing custom workflow plugin
+* New: #239 - Gitlab CI enhancement
+
+
 1.0.7 *2021-10-20*
 ------------------
 

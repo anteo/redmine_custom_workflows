@@ -4,7 +4,7 @@
 # Redmine plugin for Custom Workflows
 #
 # Copyright © 2015-19 Anton Argirov
-# Copyright © 2019-21 Karel Pičman <karel.picman@kontron.com>
+# Copyright © 2019-22 Karel Pičman <karel.picman@kontron.com>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -21,8 +21,6 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 require_dependency File.dirname(__FILE__) + '/lib/redmine_custom_workflows.rb'
-
-ActiveSupport::Dependencies.autoload_paths << File.join(File.dirname(__FILE__), 'app')
 
 def custom_workflows_init
   # Administration menu extension

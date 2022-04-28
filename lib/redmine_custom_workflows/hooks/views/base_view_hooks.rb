@@ -4,7 +4,7 @@
 # Redmine plugin for Custom Workflows
 #
 # Copyright © 2015-19 Anton Argirov
-# Copyright © 2019-21 Karel Pičman <karel.picman@kontron.com>
+# Copyright © 2019-22 Karel Pičman <karel.picman@kontron.com>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -21,14 +21,18 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 module RedmineCustomWorkflows
+  module Hooks
+    module Views
 
-  class Hooks < Redmine::Hook::ViewListener
+      class BaseViewHooks < Redmine::Hook::ViewListener
 
-    def view_layouts_base_html_head(context={})
-      return unless /^(CustomWorkflows|Projects)/.match?(context[:controller].class.name)
-      "\n".html_safe + stylesheet_link_tag('custom_workflows.css', plugin: :redmine_custom_workflows)
+        def view_layouts_base_html_head(context={})
+          return unless /^(CustomWorkflows|Projects)/.match?(context[:controller].class.name)
+          "\n".html_safe + stylesheet_link_tag('custom_workflows.css', plugin: :redmine_custom_workflows)
+        end
+
+      end
+
     end
-
   end
-
 end

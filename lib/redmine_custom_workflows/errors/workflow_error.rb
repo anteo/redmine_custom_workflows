@@ -4,7 +4,7 @@
 # Redmine plugin for Custom Workflows
 #
 # Copyright © 2015-19 Anton Argirov
-# Copyright © 2019-21 Karel Pičman <karel.picman@kontron.com>
+# Copyright © 2019-22 Karel Pičman <karel.picman@kontron.com>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -20,11 +20,16 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-class WorkflowError < StandardError
-  attr_accessor :error
+module RedmineCustomWorkflows
+  module Errors
 
-  def initialize(message)
-    @error = message
-    super message
+    class WorkflowError < StandardError
+      attr_accessor :error
+
+      def initialize(message)
+        @error = message
+        super message
+      end
+    end
   end
 end
