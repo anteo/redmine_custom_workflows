@@ -36,7 +36,15 @@ module RedmineCustomWorkflows
           alias_method :old_to_s, :to_s
     
           def to_s(issue=nil)
-            block_given? ? old_to_s(issue, &Proc.new {}) : old_to_s(issue)
+            if block_given?
+              if Gem.ruby_version < Gem::Version.new('3.0')
+                old_to_s issue, &Proc.new
+              else
+                old_to_s issue, &Proc.new {}
+              end
+            else
+              old_to_s issue
+            end
           rescue NoMethodError => e
             if issue_from.present? || issue_to.present?
               raise e
