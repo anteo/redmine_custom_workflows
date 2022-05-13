@@ -1,6 +1,14 @@
 Changelog for Custom Workflows
 ==============================
 
+2.0.1 *2022-05-13*
+------------------
+
+    Ruby 2.7 backward compatibility
+
+* Bug: #257 - IssueRelation.to_s is broken after #257 bug
+* Bug: #258 - Tried to create Proc object without a block 
+
 2.0.0 *2022-04-27*
 ------------------
 
