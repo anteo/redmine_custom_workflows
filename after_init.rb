@@ -20,7 +20,10 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-require_dependency File.dirname(__FILE__) + '/lib/redmine_custom_workflows.rb'
+# All files in lib sub-folder are already loaded by Zeitwerk
+if RedmineApp::Application.config.autoloader != :zeitwerk
+  require_dependency File.dirname(__FILE__) + '/lib/redmine_custom_workflows.rb'
+end
 
 def custom_workflows_init
   # Administration menu extension
