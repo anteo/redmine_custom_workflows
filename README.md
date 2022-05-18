@@ -1,7 +1,7 @@
 Custom Workflows plug-in
 ========================
 
-The current version of Redmine CustomWorkflows is **2.0.2 devel**
+The current version of Redmine CustomWorkflows is **2.0.2**
 
 [![pipeline status](https://gitlab.kontron.com/redmine-plugins/redmine_custom_workflows/badges/master/pipeline.svg)](https://gitlab.kontron.com/redmine-plugins/redmine_custom_workflows/-/commits/master)
 [![Support Ukraine Badge](https://bit.ly/support-ukraine-now)](https://github.com/support-ukraine/support-ukraine)
@@ -20,14 +20,14 @@ Starting with version 0.1.2 you can specify observable object for workflow. Supp
 * Group users (before_add, after_add, before_remove, after_remove)
 * \<Shared code\>
 
-\<Shared code\> - special type for workflows that running before all other workflows and can provide libraries of additional functions or classes.
+`<Shared code>` - special type for workflows that running before all other workflows and can provide libraries of additional functions or classes.
 
 Thanks to
 ---------
 
-Plugin development was supported by DOM Digital Online Media GmbH
+Plugin development was supported by DOM Digital Online Media GmbH.
 
-http://www.dom.de
+https://www.dom.de
 
 Getting help
 ------------
@@ -141,4 +141,4 @@ Do not forget to check whether issue is just created. Here we create the new iss
 Compatibility
 -------------
 
-This plug-in is compatible with Redmine 4.1.x., 4.2.x.
+This plug-in is compatible with Redmine 4.1.x., 4.2.x. and 5.0.x.

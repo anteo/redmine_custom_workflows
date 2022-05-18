@@ -1,8 +1,12 @@
 Changelog for Custom Workflows
 ==============================
 
-2.0.2 *????-??-??*
+2.0.2 *2022-05-18*
 ------------------
+
+    Ruby 3.0 compatibility
+
+* Bug: #258 - Tried to create Proc object without a block (again and better)
 
 2.0.1 *2022-05-13*
 ------------------
