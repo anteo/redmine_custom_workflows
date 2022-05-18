@@ -30,51 +30,53 @@ module RedmineCustomWorkflows
           after_save :after_save_custom_workflows
           before_destroy :before_destroy_custom_workflows
           after_destroy :after_destroy_custom_workflows
+        end
 
-          # override IssueRelation.to_s to rescue NoMethodError during CustomWorkflow.validate_syntax due to
-          # logging of temporarily instatiated IssueRelation with no related issues set
-          alias_method :old_to_s, :to_s
-    
-          def to_s(issue=nil)
-            if block_given?
-              if Gem.ruby_version < Gem::Version.new('3.0')
-                old_to_s issue, &Proc.new
-              else
-                old_to_s issue, &Proc.new {}
-              end
-            else
-              old_to_s issue
-            end
-          rescue NoMethodError => e
-            if issue_from.present? || issue_to.present?
-              raise e
-            end
-            self.class.to_s
+        base.prepend InstanceMethods
+
+      end
+
+      module InstanceMethods
+
+        ################################################################################################################
+        # Overriden methods
+
+        # Override IssueRelation.to_s to rescue NoMethodError during CustomWorkflow.validate_syntax due to
+        # logging of temporarily instatiated IssueRelation with no related issues set.
+        def to_s(issue=nil)
+          super
+        rescue NoMethodError => e
+          if issue_from.present? || issue_to.present?
+            raise e
           end
         end
-      end
 
-      def before_save_custom_workflows
-        @issue_relation = self
-        @saved_attributes = attributes.dup
-        CustomWorkflow.run_shared_code self
-        CustomWorkflow.run_custom_workflows :issue_relation, self, :before_save
-        throw :abort if errors.any?
-        errors.empty? && (@saved_attributes == attributes || valid?)
-      ensure
-        @saved_attributes = nil
-      end
+        ################################################################################################################
+        # New methods
 
-      def after_save_custom_workflows
-        CustomWorkflow.run_custom_workflows :issue_relation, self, :after_save
-      end
+        def before_save_custom_workflows
+          @issue_relation = self
+          @saved_attributes = attributes.dup
+          CustomWorkflow.run_shared_code self
+          CustomWorkflow.run_custom_workflows :issue_relation, self, :before_save
+          throw :abort if errors.any?
+          errors.empty? && (@saved_attributes == attributes || valid?)
+        ensure
+          @saved_attributes = nil
+        end
 
-      def before_destroy_custom_workflows
-        CustomWorkflow.run_custom_workflows :issue_relation, self, :before_destroy
-      end
+        def after_save_custom_workflows
+          CustomWorkflow.run_custom_workflows :issue_relation, self, :after_save
+        end
 
-      def after_destroy_custom_workflows
-        CustomWorkflow.run_custom_workflows :issue_relation, self, :after_destroy
+        def before_destroy_custom_workflows
+          CustomWorkflow.run_custom_workflows :issue_relation, self, :before_destroy
+        end
+
+        def after_destroy_custom_workflows
+          CustomWorkflow.run_custom_workflows :issue_relation, self, :after_destroy
+        end
+
       end
 
     end
