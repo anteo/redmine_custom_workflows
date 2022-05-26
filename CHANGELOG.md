@@ -1,6 +1,13 @@
 Changelog for Custom Workflows
 ==============================
 
+2.0.3 *2022-05-26*
+------------------
+
+    Redmine 4.2 compatibility
+
+* Bug: #260 - Upgrade from 1.0.4 to 2.0.2, has an error, redmine 4.2.3 to 4.2.6
+
 2.0.2 *2022-05-18*
 ------------------
 
