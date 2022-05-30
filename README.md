@@ -79,7 +79,7 @@ Go to the *Administration* section, then select <b>Custom workflows</b>. A list 
 
 Then click the <b>Create a custom workflow</b> button. Enter a short name and full description. Below you will see two textareas. Fill one or both textareas by Ruby-language scripts that will be executed before and after saving the issue (on before_save and after_save callbacks respectively).
 
-Both scripts are executed in the context of the issue. So access properties and methods of the issue directly (or through keyword "self"). You can also raise exceptions by <b>raise WorkflowError, "Your message"</b>. If you change some properties of the issue before saving it, it will be revalidated then and additional validation errors can appear.
+Both scripts are executed in the context of the issue. So access properties and methods of the issue directly (or through keyword "self"). You can also raise exceptions by <b>raise RedmineCustomWorkflows::Errors::WorkflowError, "Your message"</b>. If you change some properties of the issue before saving it, it will be revalidated then and additional validation errors can appear.
 
 Enabling custom workflows for projects
 -------------------------------
