@@ -1,6 +1,13 @@
 Changelog for Custom Workflows
 ==============================
 
+2.0.4 *2022-06-24*
+------------------
+
+    Maintenance release
+
+* Bug: #261 - Uninitialized constant CustomWorkflow::WorkflowError
+
 2.0.3 *2022-05-26*
 ------------------
 
