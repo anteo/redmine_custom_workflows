@@ -1,19 +1,17 @@
-Custom Workflows plug-in
-========================
+Custom Workflows plug-in 2.0.5 devel
+====================================
 
-The current version of Redmine CustomWorkflows is **2.0.5 devel**
-
-[![pipeline status](https://gitlab.kontron.com/redmine-plugins/redmine_custom_workflows/badges/devel/pipeline.svg)](https://gitlab.kontron.com/redmine-plugins/redmine_custom_workflows/-/commits/devel)
+![GitHub Action](https://github.com/antoneo/redmine_custom_workflows/actions/workflows/rubyonrails.yml/badge.svg?branch=devel)
 [![Support Ukraine Badge](https://bit.ly/support-ukraine-now)](https://github.com/support-ukraine/support-ukraine)
 
 This plug-in provides a great functionality for those who is familiar with the Ruby language.
 It allows to customize workflow by defining own rules for issues processing. It's possible:
-* To change issue properties if some conditions are met;
-* To create new issues programmatically if the conditions are met (for example you can create an issue in another project if the status of source issue is changed to specific value);
-* To raise custom errors which will display to user, if he does something wrong;
-* To do anything that conforms to your needs;
+* To change issue properties if some conditions are met.
+* To create new issues programmatically, if the conditions are met (for example you can create an issue in another project if the status of source issue is changed to specific value).
+* To raise custom errors which will be displayed to the user, if he does something wrong.
+* To do anything that conforms to your needs.
 
-Starting with version 0.1.2 you can specify observable object for workflow. Supported observable objects for now:
+Supported observable objects:
 * Issue (before_save, after_save)
 * Group (before_save, after_save)
 * User (before_save, after_save)
@@ -25,9 +23,7 @@ Starting with version 0.1.2 you can specify observable object for workflow. Supp
 Thanks to
 ---------
 
-Plugin development was supported by DOM Digital Online Media GmbH.
-
-https://www.dom.de
+The initial development was supported by [DOM Digital Online Media GmbH](https://www.dom.de). The present development is supported by [Kontron](https://www.kontorn.com)
 
 Getting help
 ------------
@@ -52,11 +48,12 @@ From a ZIP file:
 * Download the latest version of the plugin.
 * Unzip it to /plugins.
 
-From a GIT repository:
+From the Git repository:
 
 * Clone  the repository:
 
-```
+```shell
+cd redmine/plugins
 git clone https://github.com/anteo/redmine_custom_workflows.git
 ```
 
@@ -64,8 +61,9 @@ After download:
 
 * Run migrations and restart the application:
 
-```
-RAILS_ENV=production bundle exec rake db:migrate
+```shell
+cd redmine
+bundle install
 RAILS_ENV=production bundle exec rake redmine:plugins:migrate NAME=redmine_custom_workflows
 systemctl restart apache2
 ```

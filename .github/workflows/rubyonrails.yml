@@ -1,0 +1,133 @@
+# Redmine plugin for Custom Workflows
+#
+# Copyright © 2011-22 Karel Pičman <karel.picman@kontron.com>
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+#
+# GitHub CI script
+
+name: "GitHub CI"
+on:
+  push:
+    branches: ["devel"]
+  pull_request:
+    branches: ["devel"]
+jobs:
+  plugin_tests:
+    strategy:
+      matrix:
+        engine: [mysql, postgresql, sqlite]
+        include:
+          - engine: mysql
+            # Database configuration for Redmine
+            database_configuration: >
+              test:
+                adapter: mysql2
+                database: test
+                username: redmine
+                password: redmine
+                encoding: utf8mb4
+                collation: utf8mb4_unicode_ci
+            # SQL commands to create a database for Redmine
+            sql1: CREATE DATABASE IF NOT EXISTS test CHARACTER SET utf8mb4;
+            sql2: CREATE USER 'redmine'@'localhost' IDENTIFIED BY 'redmine';
+            sql3: GRANT ALL PRIVILEGES ON test.* TO 'redmine'@'localhost';
+            # SQL client command
+            database_command: mysql -uroot -proot -e
+            # SQl service
+            database_service: mysql
+          - engine: postgresql
+            # Database configuration for Redmine
+            database_configuration: >
+              test:
+                adapter: postgresql
+                database: test
+                username: redmine
+                password: redmine
+                host: localhost
+            # SQL commands to create a database for Redmine
+            sql1: CREATE ROLE redmine LOGIN ENCRYPTED PASSWORD 'redmine' NOINHERIT VALID UNTIL 'infinity';
+            sql2: CREATE DATABASE test WITH ENCODING='UTF8' OWNER=redmine;
+            sql3: ALTER USER redmine CREATEDB;
+            # SQL client command
+            database_command:  sudo -u postgres psql -c
+            # SQL service
+            database_service: postgresql
+          - engine: sqlite
+            # Database configuration for Redmine
+            database_configuration: >
+              test:
+                adapter: sqlite3
+                database: db/redmine.sqlite3
+            # No database needed here. It's just a file.
+    runs-on: ubuntu-latest
+    env:
+      RAILS_ENV: test
+      NAME: redmine_custom_workflows
+    steps:
+      - name: Clone Redmine
+        # Get the latest stable Redmine
+        run: svn export http://svn.redmine.org/redmine/branches/5.0-stable/ /opt/redmine
+      - name: Checkout code
+        uses: actions/checkout@v3        
+      - name: Link the plugin
+        # Link the plugin to the redmine folder
+        run: | 
+          ln -s $(pwd) /opt/redmine/plugins/redmine_custom_workflows
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@0a29871fe2b0200a17a4497bae54fe5df0d973aa # v1.115.3
+        with:
+          bundler-cache: true
+          ruby-version: '3.0'
+      - name: Setup database
+        # Create the database
+        run: | 
+          echo "${{matrix.database_configuration}}" > /opt/redmine/config/database.yml      
+          if [[ "${{matrix.database_service}}" ]]; then
+            sudo systemctl start ${{matrix.engine}}
+          fi
+          if [[ "${{matrix.database_command}}" ]]; then
+            ${{matrix.database_command}} "${{matrix.sql1}}"
+            ${{matrix.database_command}} "${{matrix.sql2}}"
+            ${{matrix.database_command}} "${{matrix.sql3}}"
+          fi
+      - name: Install Redmine
+        # Install Redmine
+        run: |
+          cd /opt/redmine                    
+          bundle config set --local without 'rmagick development'
+          bundle install
+          bundle exec rake generate_secret_token
+          bundle exec rake db:migrate
+          ls -l plugins/
+          bundle exec rake redmine:plugins:migrate
+          bundle exec rake redmine:load_default_data
+        env:
+          REDMINE_LANG: en
+      - name: Standard tests
+        # Run the tests
+        run: |
+          cd /opt/redmine
+          bundle exec rake redmine:plugins:test:units
+          bundle exec rake redmine:plugins:test:functionals
+      - name: Cleanup
+        # Rollback plugin's changes to the database
+        # Stop the database engine
+        run: |
+          cd /opt/redmine
+          bundle exec rake redmine:plugins:migrate VERSION=0
+          if [[ "${{matrix.database_service}}" ]]; then
+            sudo systemctl stop ${{matrix.engine}}
+          fi
