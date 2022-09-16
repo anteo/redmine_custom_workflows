@@ -1,7 +1,7 @@
 Custom Workflows plug-in 2.0.5 devel
 ====================================
 
-![GitHub Action](https://github.com/antoneo/redmine_custom_workflows/actions/workflows/rubyonrails.yml/badge.svg?branch=devel)
+[![GitHub CI](https://github.com/anteo/redmine_custom_workflows/actions/workflows/rubyonrails.yml/badge.svg?branch=devel)](https://github.com/anteo/redmine_custom_workflows/actions/workflows/rubyonrails.yml)
 [![Support Ukraine Badge](https://bit.ly/support-ukraine-now)](https://github.com/support-ukraine/support-ukraine)
 
 This plug-in provides a great functionality for those who is familiar with the Ruby language.
