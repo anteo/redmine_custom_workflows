@@ -98,7 +98,7 @@ class CustomWorkflow < ActiveRecord::Base
     Rails.logger.info "== User workflow error: #{e.message}"
     object.errors.add :base, e.error
     false
-  rescue => e
+  rescue Exception => e
     Rails.logger.error "== Custom workflow exception: #{e.message}\n #{e.backtrace.join("\n ")}"
     object.errors.add :base, :custom_workflow_error
     false
@@ -111,7 +111,7 @@ class CustomWorkflow < ActiveRecord::Base
   def validate_syntax_for(object, event)
     object.instance_eval(read_attribute(event)) if respond_to?(event) && read_attribute(event)
   rescue RedmineCustomWorkflows::Errors::WorkflowError => _
-  rescue => e
+  rescue Exception => e
     errors.add event, :invalid_script, error: e
   end
 
