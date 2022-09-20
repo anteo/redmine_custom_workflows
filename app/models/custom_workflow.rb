@@ -96,7 +96,7 @@ class CustomWorkflow < ActiveRecord::Base
     true
   rescue RedmineCustomWorkflows::Errors::WorkflowError => e
     Rails.logger.info "== User workflow error: #{e.message}"
-    object.errors.add :base, e.error
+    object.errors.add :base, e.message
     false
   rescue Exception => e
     Rails.logger.error "== Custom workflow exception: #{e.message}\n #{e.backtrace.join("\n ")}"

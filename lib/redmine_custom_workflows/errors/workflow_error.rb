@@ -24,12 +24,8 @@ module RedmineCustomWorkflows
   module Errors
 
     class WorkflowError < StandardError
-      attr_accessor :error
 
-      def initialize(message)
-        @error = message
-        super message
-      end
     end
+
   end
 end
