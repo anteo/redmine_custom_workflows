@@ -25,7 +25,7 @@ class IssueRelationsControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
 
   fixtures :user_preferences, :issues, :versions, :trackers, :projects_trackers, :issue_statuses,
            :enabled_modules, :enumerations, :issue_categories, :custom_workflows, :custom_workflows_projects,
-           :issue_relations, :roles, :members, :member_roles
+           :issue_relations, :roles, :members, :member_roles, :attachments
 
   def setup
     super
