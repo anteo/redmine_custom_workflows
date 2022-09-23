@@ -1,10 +1,9 @@
 # encoding: utf-8
 # frozen_string_literal: true
 #
-# Redmine plugin for Custom Workflows
+# Redmine plugin for Document Management System "Features"
 #
-# Copyright © 2015-19 Anton Argirov
-# Copyright © 2019-22 Karel Pičman <karel.picman@kontron.com>
+# Copyright © 2011-22 Karel Pičman <karel.picman@kontron.com>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -22,30 +21,21 @@
 
 require File.expand_path('../../test_helper', __FILE__)
 
-class CustomWorkflowsControllerTest < RedmineCustomWorkflows::Test::TestCase
+class VersionsControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
 
-  fixtures :custom_workflows
+  fixtures :versions, :custom_workflows, :custom_workflows_projects, :roles, :members, :member_roles
 
   def setup
     super
-    @cw1 = CustomWorkflow.find 1
-    User.current = nil
-    @request.session[:user_id] = @admin.id
-  end
-
-  def test_truth
-    assert_kind_of CustomWorkflow, @cw1
-  end
-
-  def test_index_admin
-    get :index
-    assert_response :success
-  end
-
-  def test_index_non_admin
+    @version1 = Version.find 1
     @request.session[:user_id] = @jsmith.id
-    get :index
-    assert_response :forbidden
+    @controller = VersionsController.new
+  end
+
+  def test_update_with_cw
+    put :update, params: { id: @version1.id, version: { name: 'Updated version' } }
+    assert_redirected_to settings_project_path(id: @project1, tab: 'versions')
+    assert_equal 'Custom workflow', @controller.flash[:notice]
   end
 
 end

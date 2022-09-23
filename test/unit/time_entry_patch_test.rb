@@ -20,20 +20,22 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-module RedmineCustomWorkflows
-  module Test
-    class UnitTest < ActiveSupport::TestCase
+require File.expand_path('../../test_helper', __FILE__)
 
-      # Allow us to override the fixtures method to implement fixtures for our plugin.
-      # Ultimately it allows for better integration without blowing redmine fixtures up,
-      # and allowing us to suppliment redmine fixtures if we need to.
-      def self.fixtures(*table_names)
-        dir = File.join( File.dirname(__FILE__), '../../../test/fixtures')
-        table_names.each do |x|
-          ActiveRecord::FixtureSet.create_fixtures(dir, x) if File.exist?("#{dir}/#{x}.yml")
-        end
-        super(table_names)
-      end      
-    end
+class TimeEntryPatchTest < RedmineCustomWorkflows::Test::UnitTest
+  fixtures :time_entries
+
+  def setup
+    @time_entry1 = TimeEntry.find 1
   end
+
+  def test_truth
+    assert_kind_of TimeEntry, @time_entry1
+  end
+
+  def test_custom_workflow_messages
+    @time_entry1.custom_workflow_messages[:notice] = 'Okay'
+    assert_equal 'Okay', @time_entry1.custom_workflow_messages[:notice]
+  end
+
 end

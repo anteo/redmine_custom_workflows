@@ -1,10 +1,9 @@
 # encoding: utf-8
 # frozen_string_literal: true
 #
-# Redmine plugin for Custom Workflows
+# Redmine plugin for Document Management System "Features"
 #
-# Copyright © 2015-19 Anton Argirov
-# Copyright © 2019-22 Karel Pičman <karel.picman@kontron.com>
+# Copyright © 2011-22 Karel Pičman <karel.picman@kontron.com>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -22,30 +21,23 @@
 
 require File.expand_path('../../test_helper', __FILE__)
 
-class CustomWorkflowsControllerTest < RedmineCustomWorkflows::Test::TestCase
+class TimelogControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
 
-  fixtures :custom_workflows
+  fixtures :user_preferences, :issues, :versions, :trackers, :projects_trackers, :issue_statuses,
+           :enabled_modules, :enumerations, :issue_categories, :custom_workflows, :custom_workflows_projects,
+           :time_entries, :roles, :members, :member_roles
 
   def setup
     super
-    @cw1 = CustomWorkflow.find 1
-    User.current = nil
-    @request.session[:user_id] = @admin.id
-  end
-
-  def test_truth
-    assert_kind_of CustomWorkflow, @cw1
-  end
-
-  def test_index_admin
-    get :index
-    assert_response :success
-  end
-
-  def test_index_non_admin
+    @te1 = TimeEntry.find 1
     @request.session[:user_id] = @jsmith.id
-    get :index
-    assert_response :forbidden
+    @controller = TimelogController.new
+  end
+
+  def test_delete_with_cw
+    delete :destroy, params: { id: @te1 }
+    assert_response :redirect
+    assert_equal 'Custom workflow', @controller.flash[:notice]
   end
 
 end

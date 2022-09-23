@@ -20,25 +20,22 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-module RedmineCustomWorkflows
-  module Patches
-    module ProjectsHelperPatch
+require File.expand_path('../../test_helper', __FILE__)
 
-      def project_settings_tabs
-        tabs = super
-        tabs << { name: 'custom_workflows', action: :manage_project_workflow, partial: 'projects/settings/custom_workflow',
-                 label: :label_custom_workflow_plural } if User.current.allowed_to?(:manage_project_workflow, @project)
-        tabs
-      end
+class WikiContentPatchTest < RedmineCustomWorkflows::Test::UnitTest
+  fixtures :wiki_contents
 
-    end
+  def setup
+    @wiki_content1 = WikiContent.find 1
   end
-end
 
-# Apply the patch
-if Redmine::Plugin.installed?(:easy_extensions)
-  RedmineExtensions::PatchManager.register_helper_patch 'ProjectsHelper',
-    'RedmineCustomWorkflows::Patches::ProjectsHelperPatch', prepend: true
-else
-  ProjectsController.send :helper, RedmineCustomWorkflows::Patches::ProjectsHelperPatch
+  def test_truth
+    assert_kind_of WikiContent, @wiki_content1
+  end
+
+  def test_custom_workflow_messages
+    @wiki_content1.custom_workflow_messages[:notice] = 'Okay'
+    assert_equal 'Okay', @wiki_content1.custom_workflow_messages[:notice]
+  end
+
 end

@@ -20,8 +20,22 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-# Load the normal Rails helper
-require File.expand_path('../../../../test/test_helper', __FILE__)
+require File.expand_path('../../test_helper', __FILE__)
 
-require_relative 'unit_test'
-require_relative 'test_case'
+class WikiPagePatchTest < RedmineCustomWorkflows::Test::UnitTest
+  fixtures :wiki_pages
+
+  def setup
+    @wiki_page1 = WikiPage.find 1
+  end
+
+  def test_truth
+    assert_kind_of WikiPage, @wiki_page1
+  end
+
+  def test_custom_workflow_messages
+    @wiki_page1.custom_workflow_messages[:notice] = 'Okay'
+    assert_equal 'Okay', @wiki_page1.custom_workflow_messages[:notice]
+  end
+
+end

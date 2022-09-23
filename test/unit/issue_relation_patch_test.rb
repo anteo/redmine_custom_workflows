@@ -20,8 +20,22 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-# Load the normal Rails helper
-require File.expand_path('../../../../test/test_helper', __FILE__)
+require File.expand_path('../../test_helper', __FILE__)
 
-require_relative 'unit_test'
-require_relative 'test_case'
+class IssueRelationPatchTest < RedmineCustomWorkflows::Test::UnitTest
+  fixtures :issue_relations
+
+  def setup
+    @issue_relation1 = IssueRelation.find 1
+  end
+
+  def test_truth
+    assert_kind_of IssueRelation, @issue_relation1
+  end
+
+  def test_custom_workflow_messages
+    @issue_relation1.custom_workflow_messages[:notice] = 'Okay'
+    assert_equal 'Okay', @issue_relation1.custom_workflow_messages[:notice]
+  end
+
+end

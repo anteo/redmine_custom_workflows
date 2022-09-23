@@ -1,4 +1,20 @@
 ---
 custom_workflows_projects_001:
   project_id:         1
-  custom_workflow_id: 1
+  custom_workflow_id: 1 # Issue
+
+custom_workflows_projects_002:
+  project_id:         1
+  custom_workflow_id: 2 # Version
+
+custom_workflows_projects_003:
+  project_id:         1
+  custom_workflow_id: 4 # Project
+
+custom_workflows_projects_004:
+  project_id:         1
+  custom_workflow_id: 8 # Time entry
+
+custom_workflows_projects_005:
+  project_id:         1
+  custom_workflow_id: 9 # Wiki content

@@ -22,37 +22,43 @@
 
 module RedmineCustomWorkflows
   module Patches
-    module IssuePatch
+    module Models
+      module IssuePatch
 
-      def self.prepended(base)
-        base.class_eval do
-          before_save :before_save_custom_workflows
-          after_save :after_save_custom_workflows
-          before_destroy :before_destroy_custom_workflows
-          after_destroy :after_destroy_custom_workflows
-          validate :validate_status
+        attr_accessor 'custom_workflow_messages'
 
-          def self.attachments_callback(event, issue, attachment)
-            issue.instance_variable_set :@issue, issue
-            issue.instance_variable_set :@attachment, attachment
-            CustomWorkflow.run_shared_code(issue) if event.to_s.starts_with? 'before_'
-            CustomWorkflow.run_custom_workflows :issue_attachments, issue, event
-          end
+        def custom_workflow_messages
+          @custom_workflow_messages ||= {}
+        end
 
-          [:before_add, :before_remove, :after_add, :after_remove].each do |observable|
-            send("#{observable}_for_attachments") << if Rails::VERSION::MAJOR >= 4
-                                                       lambda { |event, issue, attachment| Issue.attachments_callback(event, issue, attachment) }
-                                                     else
-                                                       lambda { |issue, attachment| Issue.attachments_callback(observable, issue, attachment) }
-                                                     end
+        def self.prepended(base)
+          base.class_eval do
+            before_save :before_save_custom_workflows
+            after_save :after_save_custom_workflows
+            before_destroy :before_destroy_custom_workflows
+            after_destroy :after_destroy_custom_workflows
+            validate :validate_status
+
+            def self.attachments_callback(event, issue, attachment)
+              issue.instance_variable_set :@issue, issue
+              issue.instance_variable_set :@attachment, attachment
+              CustomWorkflow.run_shared_code(issue) if event.to_s.starts_with? 'before_'
+              CustomWorkflow.run_custom_workflows :issue_attachments, issue, event
+            end
+
+            [:before_add, :before_remove, :after_add, :after_remove].each do |observable|
+              send("#{observable}_for_attachments") << if Rails::VERSION::MAJOR >= 4
+                                                         lambda { |event, issue, attachment| Issue.attachments_callback(event, issue, attachment) }
+                                                       else
+                                                         lambda { |issue, attachment| Issue.attachments_callback(observable, issue, attachment) }
+                                                       end
+            end
           end
         end
-      end
 
         def validate_status
           return true unless @saved_attributes && @saved_attributes['status_id'] != status_id &&
               !new_statuses_allowed_to(User.current, new_record?).collect(&:id).include?(status_id)
-
           status_was = IssueStatus.find_by_id(status_id_was)
           status_new = IssueStatus.find_by_id(status_id)
 
@@ -77,20 +83,24 @@ module RedmineCustomWorkflows
         end
 
         def before_destroy_custom_workflows
-          CustomWorkflow.run_custom_workflows :issue, self, :before_destroy
+          res = CustomWorkflow.run_custom_workflows(:issue, self, :before_destroy)
+          if res === false
+            throw :abort
+          end
         end
 
         def after_destroy_custom_workflows
           CustomWorkflow.run_custom_workflows :issue, self, :after_destroy
         end
 
+      end
     end
   end
 end
 
 # Apply the patch
 if Redmine::Plugin.installed?(:easy_extensions)
-  RedmineExtensions::PatchManager.register_model_patch 'Issue', 'RedmineCustomWorkflows::Patches::IssuePatch'
+  RedmineExtensions::PatchManager.register_model_patch 'Issue', 'RedmineCustomWorkflows::Patches::Models::IssuePatch'
 else
-  Issue.prepend RedmineCustomWorkflows::Patches::IssuePatch
+  Issue.prepend RedmineCustomWorkflows::Patches::Models::IssuePatch
 end

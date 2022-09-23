@@ -22,30 +22,25 @@
 
 module RedmineCustomWorkflows
   module Patches
-    module WikiPagePatch
+    module Helpers
+      module ProjectsHelperPatch
 
-      def self.prepended(base)
-        base.class_eval do
-          def self.attachments_callback(event, page, attachment)
-            page.instance_variable_set :@page, page
-            page.instance_variable_set :@attachment, attachment
-            CustomWorkflow.run_shared_code(page) if event.to_s.starts_with? 'before_'
-            CustomWorkflow.run_custom_workflows :wiki_page_attachments, page, event
-          end
-
-          [:before_add, :before_remove, :after_add, :after_remove].each do |observable|
-            send("#{observable}_for_attachments") << lambda { |event, page, attachment| WikiPage.attachments_callback(event, page, attachment) }
-          end
+        def project_settings_tabs
+          tabs = super
+          tabs << { name: 'custom_workflows', action: :manage_project_workflow, partial: 'projects/settings/custom_workflow',
+                   label: :label_custom_workflow_plural } if User.current.allowed_to?(:manage_project_workflow, @project)
+          tabs
         end
-      end
 
+      end
     end
   end
 end
 
 # Apply the patch
 if Redmine::Plugin.installed?(:easy_extensions)
-  RedmineExtensions::PatchManager.register_model_patch 'WikiPage', 'RedmineCustomWorkflows::Patches::WikiPagePatch'
+  RedmineExtensions::PatchManager.register_helper_patch 'ProjectsHelper',
+    'RedmineCustomWorkflows::Patches::Helpers::ProjectsHelperPatch', prepend: true
 else
-  WikiPage.prepend RedmineCustomWorkflows::Patches::WikiPagePatch
+  ProjectsController.send :helper, RedmineCustomWorkflows::Patches::Helpers::ProjectsHelperPatch
 end

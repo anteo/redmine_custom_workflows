@@ -27,14 +27,29 @@ require File.dirname(__FILE__) + '/redmine_custom_workflows/hooks/views/base_vie
 require File.dirname(__FILE__) + '/redmine_custom_workflows/errors/workflow_error'
 
 # Patches
-require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/attachment_patch'
-require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/group_patch'
-require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/issue_patch'
-require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/issue_relation_patch'
-require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/project_patch'
-require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/projects_helper_patch'
-require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/time_entry_patch'
-require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/user_patch'
-require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/version_patch'
-require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/wiki_content_patch'
-require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/wiki_page_patch'
+
+# Models
+require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/models/attachment_patch'
+require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/models/group_patch'
+require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/models/issue_patch'
+require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/models/issue_relation_patch'
+require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/models/project_patch'
+require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/models/time_entry_patch'
+require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/models/user_patch'
+require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/models/version_patch'
+require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/models/wiki_content_patch'
+require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/models/wiki_page_patch'
+
+# Controllers
+require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/controllers/issues_controller_patch'
+require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/controllers/attachments_controller_patch'
+require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/controllers/groups_controller_patch'
+require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/controllers/issue_relations_controller_patch'
+require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/controllers/projects_controller_patch'
+require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/controllers/timelog_controller_patch'
+require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/controllers/users_controller_patch'
+require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/controllers/versions_controller_patch'
+require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/controllers/wiki_controller_patch'
+
+# Helpers
+require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/helpers/projects_helper_patch'

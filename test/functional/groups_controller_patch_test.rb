@@ -1,10 +1,9 @@
 # encoding: utf-8
 # frozen_string_literal: true
 #
-# Redmine plugin for Custom Workflows
+# Redmine plugin for Document Management System "Features"
 #
-# Copyright © 2015-19 Anton Argirov
-# Copyright © 2019-22 Karel Pičman <karel.picman@kontron.com>
+# Copyright © 2011-22 Karel Pičman <karel.picman@kontron.com>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -22,30 +21,24 @@
 
 require File.expand_path('../../test_helper', __FILE__)
 
-class CustomWorkflowsControllerTest < RedmineCustomWorkflows::Test::TestCase
+class GroupControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
+  include Rails.application.routes.url_helpers
 
-  fixtures :custom_workflows
+  fixtures :custom_workflows, :custom_workflows_projects
 
   def setup
     super
-    @cw1 = CustomWorkflow.find 1
-    User.current = nil
+    @group10 = Group.find 10
     @request.session[:user_id] = @admin.id
+    @controller = GroupsController.new
+    default_url_options[:host] = 'test.host'
   end
 
-  def test_truth
-    assert_kind_of CustomWorkflow, @cw1
-  end
-
-  def test_index_admin
-    get :index
-    assert_response :success
-  end
-
-  def test_index_non_admin
-    @request.session[:user_id] = @jsmith.id
-    get :index
-    assert_response :forbidden
+  def test_update_with_cw
+    @request.headers['Referer'] = edit_group_path(id: @group10.id)
+    put :update, params: { id: @group10.id, group: { name: 'Updated name' } }
+    assert_redirected_to edit_group_path(id: @group10.id)
+    assert_equal 'Custom workflow', @controller.flash[:notice]
   end
 
 end

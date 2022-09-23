@@ -1,10 +1,9 @@
 # encoding: utf-8
 # frozen_string_literal: true
 #
-# Redmine plugin for Custom Workflows
+# Redmine plugin for Document Management System "Features"
 #
-# Copyright © 2015-19 Anton Argirov
-# Copyright © 2019-22 Karel Pičman <karel.picman@kontron.com>
+# Copyright © 2011-22 Karel Pičman <karel.picman@kontron.com>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -20,8 +19,22 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-# Load the normal Rails helper
-require File.expand_path('../../../../test/test_helper', __FILE__)
+require File.expand_path('../../test_helper', __FILE__)
 
-require_relative 'unit_test'
-require_relative 'test_case'
+class UsersControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
+
+  fixtures :custom_workflows, :custom_workflows_projects
+
+  def setup
+    super
+    @request.session[:user_id] = @admin.id
+    @controller = UsersController.new
+  end
+
+  def test_update_with_cw
+    put :update, params: { id: @jsmith.id, user: { lastname: 'updated_lastname' }}
+    assert_redirected_to edit_user_path(id: @jsmith.id)
+    assert_equal 'Custom workflow', @controller.flash[:notice]
+  end
+
+end

@@ -38,9 +38,11 @@ class CustomWorkflow < ActiveRecord::Base
   scope :active, lambda { where(active: true) }
   scope :sorted, lambda { order(:position) }
   scope :for_project, (lambda do |project|
-    where("is_for_all=? OR EXISTS (SELECT * FROM #{reflect_on_association(:projects).join_table} WHERE project_id=? AND custom_workflow_id=id)",
-          true, project.id)
-  end)
+     where("is_for_all=? OR EXISTS (SELECT * FROM #{reflect_on_association(:projects).join_table} WHERE project_id=? AND custom_workflow_id=id)",
+           true, project.id)
+   end)
+  #scope :for_project, (lambda { |project| where(is_for_all: true).or(where(
+  #  'SELECT * FROM custom_workflow_projects WHERE project_id = ? AND custom_workflow_id = id', project.id).exists?) })
 
   def self.import_from_xml(xml)
     attributes = Hash.from_xml(xml).values.first
@@ -162,20 +164,17 @@ class CustomWorkflow < ActiveRecord::Base
             object.send :instance_variable_set, :@page, object
         end
         CustomWorkflow.run_shared_code object
-        [:before_add, :after_add, :before_remove, :after_remove].each {|field| validate_syntax_for object, field}
+        [:before_add, :after_add, :before_remove, :after_remove].each { |field| validate_syntax_for object, field }
     end
   end
 
   def export_as_xml
-    only = [:author, :name, :description, :before_save, :after_save, :shared_code, :observable,
-            :before_add, :after_add, :before_remove, :after_remove, :before_destroy, :after_destroy, :created_at]
-    only = only.select { |p| self[p] }
-    to_xml :only => only  do |xml|
-      xml.tag! 'exported-at', Time.current.xmlschema
-      xml.tag! 'plugin-version', Redmine::Plugin.find(:redmine_custom_workflows).version
-      xml.tag! 'ruby-version', "#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}"
-      xml.tag! 'rails-version', Rails::VERSION::STRING
-    end
+    attrs = self.attributes.dup
+    attrs['exported-at'] = Time.current.xmlschema
+    attrs['plugin-version'] = Redmine::Plugin.find(:redmine_custom_workflows).version
+    attrs['ruby-version'] = "#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}"
+    attrs['rails-version'] = Rails::VERSION::STRING
+    attrs.to_xml
   end
 
   def <=>(other)
@@ -185,4 +184,5 @@ class CustomWorkflow < ActiveRecord::Base
   def to_s
     name
   end
+
 end

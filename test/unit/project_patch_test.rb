@@ -20,8 +20,22 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-# Load the normal Rails helper
-require File.expand_path('../../../../test/test_helper', __FILE__)
+require File.expand_path('../../test_helper', __FILE__)
 
-require_relative 'unit_test'
-require_relative 'test_case'
+class ProjectPatchTest < RedmineCustomWorkflows::Test::UnitTest
+  fixtures :projects
+
+  def setup
+    @project1 = Project.find 1
+  end
+
+  def test_truth
+    assert_kind_of Project, @project1
+  end
+
+  def test_custom_workflow_messages
+    @project1.custom_workflow_messages[:notice] = 'Okay'
+    assert_equal 'Okay', @project1.custom_workflow_messages[:notice]
+  end
+
+end
