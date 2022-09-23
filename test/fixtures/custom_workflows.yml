@@ -17,7 +17,8 @@ custom_workflows_001:
   after_add:      NULL
   before_remove:  NULL
   after_remove:   NULL
-  before_destroy: ''
+  before_destroy: "self.custom_workflow_messages[:error] = 'Issue cannot be deleted'\n
+                   return false"
   after_destroy : ''
 
 custom_workflows_002:

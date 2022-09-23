@@ -40,4 +40,11 @@ class IssuesControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
     assert_equal 'Custom workflow', @controller.flash[:notice]
   end
 
+  def test_delete_with_cw
+    delete :destroy, params: { id: @issue1.id, todo: 'destroy' }
+    assert_response :redirect
+    assert_equal 'Issue cannot be deleted', @controller.flash[:error]
+    assert Issue.find_by(id: @issue1.id)
+  end
+
 end

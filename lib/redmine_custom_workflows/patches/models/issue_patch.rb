@@ -84,7 +84,7 @@ module RedmineCustomWorkflows
 
         def before_destroy_custom_workflows
           res = CustomWorkflow.run_custom_workflows(:issue, self, :before_destroy)
-          if res === false
+          if res == false
             throw :abort
           end
         end
