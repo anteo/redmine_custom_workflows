@@ -40,4 +40,10 @@ class TimelogControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
     assert_equal 'Custom workflow', @controller.flash[:notice]
   end
 
+  def test_cw_env
+    delete :destroy, params: { id: @te1 }
+    assert_response :redirect
+    assert_equal request.remote_ip, @controller.flash[:warning]
+  end
+
 end

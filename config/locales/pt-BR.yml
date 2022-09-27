@@ -66,7 +66,7 @@ pt-BR:
 
   text_select_project_custom_workflows: Selecione o projeto para os fluxos de trabalho
   text_custom_workflow_before_save_note: Você pode alterar as propriedades das tarefas aqui. Não crie ou atualize
-    tarefas relacionadas neste script. Para terminar com o erro, utilize a `raise WorkflowError, 'Mensagem para o usuário'`.
+    tarefas relacionadas neste script. Para terminar com o erro, utilize a `raise RedmineCustomWorkflows::Errors::WorkflowError, 'Mensagem para o usuário'`.
   text_custom_workflow_after_save_note: Você pode atualizar ou criar tarefas relacionadas aqui. Note que esse script
     também será executado para as tarefas criadas recentemente. Então, faça as verificações adequadas para evitar que
     entre em recursividade infinita.
@@ -102,6 +102,7 @@ pt-BR:
     object changes (destroys). Use methods and properties of the time entry directly (or through `self`)
   text_custom_workflow_version_code_note: Scripts are executed in the context of Version object when version object
     changes (destroys). Use methods and properties of the version directly (or through `self`)
+  text_custom_workflow_before_destroy_note: To prevent destroying of the object use `return false`.
 
   text_no_enabled_projects: Não há projeto
   text_custom_workflow_author: Será incluído no XML exportado

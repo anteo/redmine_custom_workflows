@@ -66,7 +66,7 @@ cs:
 
   text_select_project_custom_workflows: Vyberte uživatelský skript projektu
   text_custom_workflow_before_save_note: Zde můžete měnit vlastnosti úkolu. Ve skriptu nevytvářejte ani neměňte
-    související úkoly. Pro ukončení skriptu chybou použijte `raise WorkflowError, 'Zpráva uživateli'`.
+    související úkoly. Pro ukončení skriptu chybou použijte `raise RedmineCustomWorkflows::Errors::WorkflowError, 'Zpráva uživateli'`.
   text_custom_workflow_after_save_note: Zde můžete aktualizovat nebo vytvářet souvissející úkoly. Mějte na paměti, že
     tento skript bude také vykonán pro nově vytvořené úkoly. Takže nezapomeňte udělat vhodné kontroly pro zabránění
     rekurzivnímu volání.
@@ -102,6 +102,7 @@ cs:
     se maže. Můžete přímo použít metody a vlastnosti objektu.
   text_custom_workflow_version_code_note: Skripty jsou vykonávány v rámci objektu verze, když se mění nebo se maže.
     Můžete přímo použít metody a vlastnosti objektu.
+  text_custom_workflow_before_destroy_note: Zabránit smazání objektu lze pomocí `return false`.
 
   text_no_enabled_projects: Žádné projekty
   text_custom_workflow_author: Bude zahrnuto do exportovaného XML

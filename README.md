@@ -112,6 +112,14 @@ E.g.:
   self.custom_workflow_messages[:error] = 'Custom workflow error'
 ```
 
+Some environmental variables are available in observable objects.
+
+E.g.:
+
+```ruby
+self.custom_workflow_env[:remote_ip]
+```
+
 Enabling custom workflows for projects
 --------------------------------------
 

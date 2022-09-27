@@ -38,4 +38,9 @@ class IssuePatchTest < RedmineCustomWorkflows::Test::UnitTest
     assert_equal 'Okay', @issue1.custom_workflow_messages[:notice]
   end
 
+  def test_custom_workflow_env
+    @issue1.custom_workflow_env[:remote_ip] = '127.0.0.1'
+    assert_equal '127.0.0.1', @issue1.custom_workflow_env[:remote_ip]
+  end
+
 end

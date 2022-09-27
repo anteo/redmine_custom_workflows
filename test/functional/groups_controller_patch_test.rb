@@ -41,4 +41,11 @@ class GroupControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
     assert_equal 'Custom workflow', @controller.flash[:notice]
   end
 
+  def test_cw_env
+    @request.headers['Referer'] = edit_group_path(id: @group10.id)
+    put :update, params: { id: @group10.id, group: { name: 'Updated name' } }
+    assert_redirected_to edit_group_path(id: @group10.id)
+    assert_equal request.remote_ip, @controller.flash[:warning]
+  end
+
 end

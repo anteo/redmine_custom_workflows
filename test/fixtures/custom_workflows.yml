@@ -1,7 +1,8 @@
 ---
 custom_workflows_001:
   id:             1
-  before_save:    "self.custom_workflow_messages[:notice] = 'Custom workflow'"
+  before_save:    "self.custom_workflow_messages[:notice] = 'Custom workflow'\n
+                   self.custom_workflow_messages[:warning] = self.custom_workflow_env[:remote_ip]"
   after_save:     ''
   name:           'Issue CW test'
   description:    'Testing workflow'
@@ -23,7 +24,8 @@ custom_workflows_001:
 
 custom_workflows_002:
   id:             2
-  before_save:    "self.custom_workflow_messages[:notice] = 'Custom workflow'"
+  before_save:    "self.custom_workflow_messages[:notice] = 'Custom workflow'\n
+                   self.custom_workflow_messages[:warning] = self.custom_workflow_env[:remote_ip]"
   after_save:     ''
   name:           'Version CW test'
   description:    'Testing workflow'
@@ -44,7 +46,8 @@ custom_workflows_002:
 
 custom_workflows_003:
   id:             3
-  before_save:    "self.custom_workflow_messages[:notice] = 'Custom workflow'"
+  before_save:    "self.custom_workflow_messages[:notice] = 'Custom workflow'\n
+                   self.custom_workflow_messages[:warning] = self.custom_workflow_env[:remote_ip]"
   after_save:     ''
   name:           'User CW test'
   description:    'Testing workflow'
@@ -65,7 +68,8 @@ custom_workflows_003:
 
 custom_workflows_004:
   id:             4
-  before_save:    "self.custom_workflow_messages[:notice] = 'Custom workflow'"
+  before_save:    "self.custom_workflow_messages[:notice] = 'Custom workflow'\n
+                   self.custom_workflow_messages[:warning] = self.custom_workflow_env[:remote_ip]"
   after_save:     ''
   name:           'Project CW test'
   description:    'Testing workflow'
@@ -86,7 +90,8 @@ custom_workflows_004:
 
 custom_workflows_005:
   id:             5
-  before_save:    "self.custom_workflow_messages[:notice] = 'Custom workflow'"
+  before_save:    "self.custom_workflow_messages[:notice] = 'Custom workflow'\n
+                   self.custom_workflow_messages[:warning] = self.custom_workflow_env[:remote_ip]"
   after_save:     ''
   name:           'Group CW test'
   description:    'Testing workflow'
@@ -123,7 +128,8 @@ custom_workflows_006:
   after_add:      NULL
   before_remove:  NULL
   after_remove:   NULL
-  before_destroy: "self.custom_workflow_messages[:notice] = 'Custom workflow'"
+  before_destroy: "self.custom_workflow_messages[:notice] = 'Custom workflow'\n
+                   self.custom_workflow_messages[:warning] = self.custom_workflow_env[:remote_ip]"
   after_destroy : ''
 
 custom_workflows_007:
@@ -144,7 +150,8 @@ custom_workflows_007:
   after_add:      NULL
   before_remove:  NULL
   after_remove:   NULL
-  before_destroy: "self.custom_workflow_messages[:notice] = 'Custom workflow'"
+  before_destroy: "self.custom_workflow_messages[:notice] = 'Custom workflow'\n
+                   self.custom_workflow_messages[:warning] = self.custom_workflow_env[:remote_ip]"
   after_destroy : ''
 
 custom_workflows_008:
@@ -165,14 +172,17 @@ custom_workflows_008:
   after_add:      NULL
   before_remove:  NULL
   after_remove:   NULL
-  before_destroy: "self.custom_workflow_messages[:notice] = 'Custom workflow'"
+  before_destroy: "self.custom_workflow_messages[:notice] = 'Custom workflow'\n
+                   self.custom_workflow_messages[:warning] = self.custom_workflow_env[:remote_ip]"
   after_destroy : ''
 
 custom_workflows_009:
   id:             9
-  before_save:    "self.custom_workflow_messages[:notice] = 'Custom workflow'"
+  before_save:    "self.custom_workflow_messages[:notice] = 'Custom workflow'\n
+                   self.custom_workflow_messages[:warning] = self.custom_workflow_env[:remote_ip]\n
+                   Rails.logger.info \">>> #{self.class.name} #{self.id }#{self.custom_workflow_env[:remote_ip]}\""
   after_save:     ''
-  name:           'Wiki CW test'
+  name:           'Wiki content CW test'
   description:    'Testing workflow'
   position:       9
   is_for_all:     0
@@ -186,5 +196,28 @@ custom_workflows_009:
   after_add:      NULL
   before_remove:  NULL
   after_remove:   NULL
-  before_destroy: ''
+  before_destroy: "self.custom_workflow_messages[:warning] = self.custom_workflow_env[:remote_ip]\n
+                   Rails.logger.info \">>> #{self.class.name} #{self.id }#{self.custom_workflow_env[:remote_ip]}\""
   after_destroy : ''
+
+custom_workflows_010:
+  id: 10
+  before_save: "self.custom_workflow_messages[:notice] = 'Custom workflow'"
+  after_save: ''
+  name: 'Wiki page CW test'
+  description: 'Testing workflow'
+  position: 10
+  is_for_all: 0
+  author: 'karel.picman@kontron.com'
+  created_at: 2018-12-20 14:01:27 +02:00
+  updated_at: 2018-12-20 14:01:27 +02:00
+  active: 1
+  observable: 'wiki_page'
+  shared_code: NULL
+  before_add: NULL
+  after_add: NULL
+  before_remove: NULL
+  after_remove: NULL
+  before_destroy: "self.custom_workflow_messages[:warning] = self.custom_workflow_env[:remote_ip]\n
+                   Rails.logger.info \">>> #{self.class.name} #{self.id }#{self.custom_workflow_env[:remote_ip]}\""
+  after_destroy:  ''

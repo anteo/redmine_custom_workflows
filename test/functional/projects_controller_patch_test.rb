@@ -38,4 +38,10 @@ class ProjectsControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
     assert_equal 'Custom workflow', @controller.flash[:notice]
   end
 
+  def test_cw_env
+    post :update, params: { id: @project1.id, project: { name: 'Updated name' } }
+    assert_redirected_to settings_project_path(@project1)
+    assert_equal request.remote_ip, @controller.flash[:warning]
+  end
+
 end

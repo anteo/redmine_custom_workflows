@@ -66,7 +66,7 @@ es:
 
   text_select_project_custom_workflows: Seleccione un workflow personalizado de proyecto
   text_custom_workflow_before_save_note: Aquí puede cambiar propiedades de las peticiones. No cree ni actualice peticiones
-    relacionadas en este script. Para acabar con error, use `raise WorkflowError, 'Message to user'`.
+    relacionadas en este script. Para acabar con error, use `raise RedmineCustomWorkflows::Errors::WorkflowError, 'Message to user'`.
   text_custom_workflow_after_save_note: Puede actualizar o crear peticiones relacionadas aquí. Tenga en cuenta que este script
     también se ejecutará para las peticiones recién creadas. Así que haga las comprobaciones oportunas para evitar la recursión infinita.
 
@@ -102,6 +102,7 @@ es:
     cambia (destruye). Utilice los métodos y propiedades de la entrada de tiempo directamente (o a través de `self`)
   text_custom_workflow_version_code_note: Los scripts se ejecutan en el contexto del objeto Version cuando la versión
     cambia (destruye). Utilizar métodos y propiedades de la versión directamente (o a través de `self`)
+  text_custom_workflow_before_destroy_note: To prevent destroying of the object use `return false`.
 
   text_no_enabled_projects: Sin proyectos
   text_custom_workflow_author: Se incluirá en el XML exportado

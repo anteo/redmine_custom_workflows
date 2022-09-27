@@ -26,9 +26,14 @@ module RedmineCustomWorkflows
       module TimeEntryPatch
 
         attr_accessor 'custom_workflow_messages'
+        attr_accessor 'custom_workflow_env'
 
         def custom_workflow_messages
           @custom_workflow_messages ||= {}
+        end
+
+        def custom_workflow_env
+          @custom_workflow_env ||= {}
         end
 
         def self.prepended(base)

@@ -130,6 +130,7 @@
           <div class="splitcontent">
             <div class="splitcontentleft">
               <%= f.text_area :before_destroy, cols: 40, rows: 20, wrap: 'off', class: 'custom_workflow_script' %>
+              <em class="info"><%= l(:text_custom_workflow_before_destroy_note) %></em>
             </div>
             <div class="splitcontentright">
               <%= f.text_area :after_destroy, cols: 40, rows: 20, wrap: 'off', class: 'custom_workflow_script' %>

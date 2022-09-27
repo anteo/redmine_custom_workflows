@@ -18,3 +18,7 @@ custom_workflows_projects_004:
 custom_workflows_projects_005:
   project_id:         1
   custom_workflow_id: 9 # Wiki content
+
+custom_workflows_projects_006:
+  project_id:         1
+  custom_workflow_id: 10 # Wiki page

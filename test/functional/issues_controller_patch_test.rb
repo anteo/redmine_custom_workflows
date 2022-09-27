@@ -47,4 +47,10 @@ class IssuesControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
     assert Issue.find_by(id: @issue1.id)
   end
 
+  def test_cw_env
+    put :update, params: { id: @issue1.id, issue: { subject: 'Updated subject' } }
+    assert_redirected_to action: 'show', id: @issue1.id
+    assert_equal request.remote_ip, @controller.flash[:warning]
+  end
+
 end

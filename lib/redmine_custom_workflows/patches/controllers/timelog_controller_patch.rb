@@ -31,21 +31,27 @@ module RedmineCustomWorkflows
 
         def self.prepended(base)
           base.class_eval do
+            before_action :set_env
             after_action :display_custom_workflow_messages
           end
         end
 
-        def display_custom_workflow_messages
-          if @time_entries
-            objects = @time_entries
-          elsif @time_entry
-            objects = [@time_entry]
+        def set_env
+          objects = get_model_objects
+          if objects&.any?
+            objects.each do |o|
+              o.custom_workflow_env[:remote_ip] = request.remote_ip
+            end
           end
+        end
+
+        def display_custom_workflow_messages
+          objects = get_model_objects
           if objects&.any?
             objects.each do |o|
               if o&.custom_workflow_messages&.any?
                 o.custom_workflow_messages.each do |key, value|
-                  if value.empty?
+                  unless value&.present?
                     flash.delete key
                   else
                     flash[key] = value
@@ -55,6 +61,17 @@ module RedmineCustomWorkflows
               end
             end
           end
+        end
+
+        private
+
+        def get_model_objects
+          if @time_entries
+            objects = @time_entries
+          elsif @time_entry
+            objects = [@time_entry]
+          end
+          objects
         end
 
       end

@@ -37,4 +37,10 @@ class UsersControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
     assert_equal 'Custom workflow', @controller.flash[:notice]
   end
 
+  def test_cw_env
+    put :update, params: { id: @jsmith.id, user: { lastname: 'updated_lastname' }}
+    assert_redirected_to edit_user_path(id: @jsmith.id)
+    assert_equal request.remote_ip, @controller.flash[:warning]
+  end
+
 end

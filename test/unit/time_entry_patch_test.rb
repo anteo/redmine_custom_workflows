@@ -38,4 +38,9 @@ class TimeEntryPatchTest < RedmineCustomWorkflows::Test::UnitTest
     assert_equal 'Okay', @time_entry1.custom_workflow_messages[:notice]
   end
 
+  def test_custom_workflow_env
+    @time_entry1.custom_workflow_env[:remote_ip] = '127.0.0.1'
+    assert_equal '127.0.0.1', @time_entry1.custom_workflow_env[:remote_ip]
+  end
+
 end
