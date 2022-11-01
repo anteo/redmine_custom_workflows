@@ -21,18 +21,12 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 Redmine::Plugin.register :redmine_custom_workflows do
-  if Redmine::Plugin.installed?(:easy_extensions)
-    name 'Easy Custom Workflow plugin'
-    url 'https://www.easyredmine.com'
-    author_url 'https://www.easyredmine.com'
-  else
-    name 'Redmine Custom Workflow plugin'
-    url 'https://www.redmine.org/plugins/redmine_custom_workflows'
-    author_url 'https://github.com/anteo/redmine_custom_workflows/graphs/contributors'
-  end
+  name 'Redmine Custom Workflow plugin'
+  url 'https://www.redmine.org/plugins/redmine_custom_workflows'
+  author_url 'https://github.com/anteo/redmine_custom_workflows/graphs/contributors'
   author 'Anton Argirov/Karel Pičman'
   description 'It allows to create custom workflows for objects, defined in a plain Ruby language'
-  version '2.0.6 devel'
+  version '2.0.6'
 
   requires_redmine version_or_higher: '4.1.0'
 

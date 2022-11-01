@@ -1,15 +1,21 @@
 Changelog for Custom Workflows
 ==============================
 
-2.0.6 *????-??-??*
+2.0.6 *2022-11-01*
 ------------------
 
+    Flash messages
+
+* Bug: #281 - Internal error 500
+* New: #280 - Q: check for REST API access (user impersonation or remote IP) in workflow
+* New: #275 - When using Before Destruction on issues, no error gets displayed
+* New: #85  - Preventing issue attachments to be deleted
+* New: #39  - Ability to raise a warning or info (similar to raise WorkflowError, “Your message”)
 
 2.0.5 *2022-09-20*
 ------------------
 
     GitHub CI
-
 
 2.0.4 *2022-06-24*
 ------------------
