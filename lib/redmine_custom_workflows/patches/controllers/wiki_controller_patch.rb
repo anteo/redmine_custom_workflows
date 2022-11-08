@@ -73,7 +73,9 @@ module RedmineCustomWorkflows
           elsif @page
             objects = [@page]
           end
-          if @content
+          # @content either WikiContent or WikiContentVersion
+          # but plugin does not patch nor work with WikiContentVersion
+          if @content.is_a? WikiContent
             objects ||= []
             objects << @content
           end
