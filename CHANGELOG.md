@@ -1,8 +1,12 @@
 Changelog for Custom Workflows
 ==============================
 
-2.0.7 *????-??-??*
+2.0.7 *2022-11-09*
 ------------------
+
+    Bug fix
+
+* Bug: #285 - Viewing wiki version raises a error
 
 2.0.6 *2022-11-01*
 ------------------
