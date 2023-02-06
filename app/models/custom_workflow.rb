@@ -101,7 +101,7 @@ class CustomWorkflow < ActiveRecord::Base
     object.errors.add :base, e.message
     false
   rescue Exception => e
-    Rails.logger.error "== Custom workflow exception: #{e.message}\n #{e.backtrace.join("\n ")}"
+    Rails.logger.error "== Custom workflow #{name}, ##{id} exception: #{e.message}\n #{e.backtrace.join("\n ")}"
     object.errors.add :base, :custom_workflow_error
     false
   end
