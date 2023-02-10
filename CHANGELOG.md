@@ -1,8 +1,12 @@
 Changelog for Custom Workflows
 ==============================
 
-2.0.8 *????-??-??*
+2.0.8 *2023-02-10*
 ------------------
+
+    Better error log messages
+
+* New: #295 - production.log 
 
 2.0.7 *2022-11-09*
 ------------------
