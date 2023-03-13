@@ -32,7 +32,7 @@ class CustomWorkflowMailer < Mailer
   def custom_email(user, subject, text)
     set_language_if_valid user.language
     @text = text
-    mail to: user.mail, subject: subject
+    mail to: user, subject: subject
   end
 
 end
