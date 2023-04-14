@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: true
 #
 # Redmine plugin for Custom Workflows
@@ -23,8 +22,8 @@
 module RedmineCustomWorkflows
   module Patches
     module Controllers
+      # Issue relations controller patch
       module IssueRelationsControllerPatch
-
         ################################################################################################################
         # New methods
         #
@@ -37,46 +36,44 @@ module RedmineCustomWorkflows
         end
 
         def set_env
-          objects = get_model_objects
-          if objects&.any?
-            objects.each do |o|
-              o.custom_workflow_env[:remote_ip] = request.remote_ip
-            end
+          objects = model_objects
+          return unless objects&.any?
+
+          objects.each do |o|
+            o.custom_workflow_env[:remote_ip] = request.remote_ip
           end
         end
 
         def display_custom_workflow_messages
-          objects = get_model_objects
-          if objects&.any?
-            objects.each do |o|
-              if o&.custom_workflow_messages&.any?
-                o.custom_workflow_messages.each do |key, value|
-                  unless value&.present?
-                    flash.delete key
-                  else
-                    flash[key] = value
-                  end
-                end
-                o.custom_workflow_messages = {}
+          objects = model_objects
+          return unless objects&.any?
+
+          objects.each do |o|
+            next if o&.custom_workflow_messages&.empty?
+
+            o.custom_workflow_messages.each do |key, value|
+              if value&.present?
+                flash[key] = value
+              else
+                flash.delete key
               end
             end
+            o.custom_workflow_messages.clear
           end
         end
 
         private
 
-        def get_model_objects
+        def model_objects
           if @relations
-            objects = @relations
+            @relations
           elsif @relation
-            objects = [@relation]
+            [@relation]
           end
-          objects
         end
-
       end
     end
   end
 end
 
-IssueRelationsController.send :prepend, RedmineCustomWorkflows::Patches::Controllers::IssueRelationsControllerPatch
+IssueRelationsController.prepend RedmineCustomWorkflows::Patches::Controllers::IssueRelationsControllerPatch

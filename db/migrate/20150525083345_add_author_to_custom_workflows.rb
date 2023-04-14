@@ -19,27 +19,11 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-require File.expand_path('../test_helper', __dir__)
-
-# Attachment patch test class
-class AttachmentPatchTest < RedmineCustomWorkflows::Test::UnitTest
-  fixtures :attachments
-
-  def setup
-    @attachment1 = Attachment.find 1
-  end
-
-  def test_truth
-    assert_kind_of Attachment, @attachment1
-  end
-
-  def test_custom_workflow_messages
-    @attachment1.custom_workflow_messages[:notice] = 'Okay'
-    assert_equal 'Okay', @attachment1.custom_workflow_messages[:notice]
-  end
-
-  def test_custom_workflow_env
-    @attachment1.custom_workflow_env[:remote_ip] = '127.0.0.1'
-    assert_equal '127.0.0.1', @attachment1.custom_workflow_env[:remote_ip]
+# Add timestamp
+class AddAuthorToCustomWorkflows < ActiveRecord::Migration[4.2]
+  def change
+    change_table(:custom_workflows, bulk: true) do |t|
+      t.string :author, null: true
+    end
   end
 end

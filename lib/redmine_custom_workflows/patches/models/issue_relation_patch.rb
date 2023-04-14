@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: true
 #
 # Redmine plugin for Custom Workflows
@@ -23,11 +22,8 @@
 module RedmineCustomWorkflows
   module Patches
     module Models
+      # Issue relation model patch
       module IssueRelationPatch
-
-        attr_accessor 'custom_workflow_messages'
-        attr_accessor 'custom_workflow_env'
-
         def custom_workflow_messages
           @custom_workflow_messages ||= {}
         end
@@ -45,27 +41,24 @@ module RedmineCustomWorkflows
           end
 
           base.prepend InstanceMethods
-
         end
 
+        # Instance methods module
         module InstanceMethods
-
-          ################################################################################################################
-          # Overriden methods
+          ##############################################################################################################
+          # Overridden methods
 
           # Override IssueRelation.to_s to rescue NoMethodError during CustomWorkflow.validate_syntax due to
           # logging of temporarily instatiated IssueRelation with no related issues set.
-          def to_s(issue=nil)
+          def to_s(issue = nil)
             super
           rescue NoMethodError => e
-            if issue_from.present? || issue_to.present?
-              raise e
-            end
+            raise e if issue_from.present? || issue_to.present?
           end
 
-          ################################################################################################################
+          ##############################################################################################################
           # New methods
-
+          #
           def before_save_custom_workflows
             @issue_relation = self
             @saved_attributes = attributes.dup
@@ -83,26 +76,22 @@ module RedmineCustomWorkflows
 
           def before_destroy_custom_workflows
             res = CustomWorkflow.run_custom_workflows :issue_relation, self, :before_destroy
-            if res == false
-              throw :abort
-            end
+            throw :abort if res == false
           end
 
           def after_destroy_custom_workflows
             CustomWorkflow.run_custom_workflows :issue_relation, self, :after_destroy
           end
-
         end
-
       end
     end
   end
 end
-  
+
 # Apply the patch
-if Redmine::Plugin.installed?(:easy_extensions)
+if Redmine::Plugin.installed?('easy_extensions')
   RedmineExtensions::PatchManager.register_model_patch 'IssueRelation',
-    'RedmineCustomWorkflows::Patches::Models::IssueRelationPatch'
+                                                       'RedmineCustomWorkflows::Patches::Models::IssueRelationPatch'
 else
   IssueRelation.prepend RedmineCustomWorkflows::Patches::Models::IssueRelationPatch
 end

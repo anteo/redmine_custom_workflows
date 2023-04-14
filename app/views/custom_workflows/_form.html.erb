@@ -1,6 +1,4 @@
 <%
-  # encoding: utf-8
-  #
   # Redmine plugin for Custom Workflows
   #
   # Copyright © 2015-19 Anton Argirov
@@ -33,7 +31,7 @@
                       onchange: 'this.form.submit()',
                       disabled: !@workflow.new_record? %></p>
       <p><%= f.text_area :description, class: 'wiki-edit' %></p>
-      <% if @workflow.has_projects_association? %>
+      <% if @workflow.projects_association? %>
         <p>
           <%= f.check_box :is_for_all, onclick: "checkAndDisable('custom_workflow_enabled_projects', this.checked);",
                 label: :field_enabled_for_all_projects %>
@@ -42,7 +40,7 @@
       <p><%= f.check_box :active, label: l(:field_active) %></p>
     </div>
   </div>
-  <% if @workflow.has_projects_association? %>
+  <% if @workflow.projects_association? %>
     <div class="splitcontentright">
       <div class="box tabular">
         <%= content_tag 'fieldset', id: 'custom_workflow_enabled_projects' do %>

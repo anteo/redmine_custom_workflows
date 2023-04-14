@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: true
 #
 # Redmine plugin for Custom Workflows
@@ -22,10 +21,9 @@
 
 module RedmineCustomWorkflows
   module Test
-
+    # Test case base class
     class TestCase < ActionController::TestCase
-
-      self.fixtures :users, :email_addresses, :projects
+      fixtures :users, :email_addresses, :projects
 
       # Allow us to override the fixtures method to implement fixtures for our plugin.
       # Ultimately it allows for better integration without blowing redmine fixtures up,
@@ -49,8 +47,6 @@ module RedmineCustomWorkflows
         @project1 = Project.find 1
         User.current = nil
       end
-
     end
-
   end
 end

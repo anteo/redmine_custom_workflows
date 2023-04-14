@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: true
 #
 # Redmine plugin for Document Management System "Features"
@@ -19,10 +18,10 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-require File.expand_path('../../test_helper', __FILE__)
+require File.expand_path('../test_helper', __dir__)
 
+# Project controller patch test
 class ProjectsControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
-
   fixtures :user_preferences, :issues, :versions, :trackers, :projects_trackers, :enabled_modules,
            :enumerations, :custom_workflows, :custom_workflows_projects, :roles, :members, :member_roles
 
@@ -43,5 +42,4 @@ class ProjectsControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
     assert_redirected_to settings_project_path(@project1)
     assert_equal request.remote_ip, @controller.flash[:warning]
   end
-
 end

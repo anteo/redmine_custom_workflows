@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: true
 #
 # Redmine plugin for Custom Workflows
@@ -23,11 +22,8 @@
 module RedmineCustomWorkflows
   module Patches
     module Models
+      # Group model patch
       module GroupPatch
-
-        attr_accessor 'custom_workflow_messages'
-        attr_accessor 'custom_workflow_env'
-
         def custom_workflow_messages
           @custom_workflow_messages ||= {}
         end
@@ -49,11 +45,15 @@ module RedmineCustomWorkflows
               CustomWorkflow.run_shared_code(group) if event.to_s.starts_with? 'before_'
               CustomWorkflow.run_custom_workflows :group_users, group, event
             end
-            [:before_add, :before_remove, :after_add, :after_remove].each do |observable|
+            %i[before_add before_remove after_add after_remove].each do |observable|
               send("#{observable}_for_users") << if Rails::VERSION::MAJOR >= 4
-                                                   lambda { |event, group, user| Group.users_callback(event, group, user) }
+                                                   lambda { |event, group, user|
+                                                     Group.users_callback(event, group, user)
+                                                   }
                                                  else
-                                                   lambda { |group, user| Group.users_callback(observable, group, user) }
+                                                   lambda { |group, user|
+                                                     Group.users_callback(observable, group, user)
+                                                   }
                                                  end
             end
           end
@@ -65,6 +65,7 @@ module RedmineCustomWorkflows
           CustomWorkflow.run_shared_code self
           CustomWorkflow.run_custom_workflows :group, self, :before_save
           throw :abort if errors.any?
+
           errors.empty? && (@saved_attributes == attributes || valid?)
         ensure
           @saved_attributes = nil
@@ -76,24 +77,20 @@ module RedmineCustomWorkflows
 
         def before_destroy_custom_workflows
           res = CustomWorkflow.run_custom_workflows :group, self, :before_destroy
-          if res == false
-            throw :abort
-          end
+          throw :abort if res == false
         end
 
         def after_destroy_custom_workflows
           CustomWorkflow.run_custom_workflows :group, self, :after_destroy
         end
-
       end
     end
   end
 end
 
 # Apply the patch
-if Redmine::Plugin.installed?(:easy_extensions)
-  RedmineExtensions::PatchManager.register_model_patch 'Group',
-   'RedmineCustomWorkflows::Patches::Models::GroupPatch'
+if Redmine::Plugin.installed?('easy_extensions')
+  RedmineExtensions::PatchManager.register_model_patch 'Group', 'RedmineCustomWorkflows::Patches::Models::GroupPatch'
 else
   Group.prepend RedmineCustomWorkflows::Patches::Models::GroupPatch
 end

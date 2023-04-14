@@ -1,4 +1,4 @@
-# encoding: utf-8
+# frozen_string_literal: true
 #
 # Redmine plugin for Custom Workflows
 #
@@ -19,27 +19,29 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+# Add an example
 class CreateExampleWorkflow < ActiveRecord::Migration[4.2]
-
   def up
     CustomWorkflow.reset_column_information
     name = 'Duration/Done Ratio/Status correlation'
     old = CustomWorkflow.where(name: name).first
-    old.destroy if old
+    old&.destroy
     cw = CustomWorkflow.new
     cw.name = name
     cw.author = 'anton.argirov@gmail.com'
-    cw.description = %{
+    cw.description = %(
       Set up a correlation between the start date, due date, done ratio and status of issues.
 
       * If done ratio is changed to 100% and status is "In Process", status changes to "Resolved"
-      * If status is "New", "Resolved" or "Feedback" and done ratio is changed to value less than 100%, status changes to "In process"
+      * If status is "New", "Resolved" or "Feedback" and done ratio is changed to value less than 100%, status changes
+to "In process"
       * If status is changed to "In process" and start date is not set, then it sets to current date
       * If status is changed to "Resolved" and end date is not set, then it set to due date
 
-      To use this script properly, turn off "Use current date as start date for new issues" option in the settings as this script already do it own way.
-    }
-    cw.before_save = %{
+      To use this script properly, turn off "Use current date as start date for new issues" option in the settings as
+this script already do it own way.
+    )
+    cw.before_save = %(
       if @issue.done_ratio_changed?
         if (@issue.done_ratio == 100) && (@issue.status_id == 2)
           @issue.status_id = 3
@@ -58,8 +60,7 @@ class CreateExampleWorkflow < ActiveRecord::Migration[4.2]
           @issue.due_date ||= Time.now
         end
       end
-    }
+    )
     cw.save!
   end
-
 end

@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: true
 #
 # Redmine plugin for Custom Workflows
@@ -19,12 +18,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-#
-class CustomWorkflowsController < ApplicationController
 
+# Custom workflows controller
+class CustomWorkflowsController < ApplicationController
   layout 'admin'
   before_action :require_admin
-  before_action :find_workflow, only: [:show, :edit, :update, :destroy, :export, :change_status, :reorder]
+  before_action :find_workflow, only: %i[show edit update destroy export change_status reorder]
 
   def reorder
     from = @workflow.position
@@ -32,21 +31,20 @@ class CustomWorkflowsController < ApplicationController
     CustomWorkflow.transaction do
       CustomWorkflow.find_each do |wf|
         if wf.position == from
-          wf.update_attribute :position, to
+          wf.position = to
         elsif wf.position >= to && wf.position < from
           # Move up
-          wf.update_attribute :position, wf.position + 1
+          wf.position = wf.position + 1
         elsif wf.position <= to && wf.position > from
           # Move down
-          wf.update_attribute :position, wf.position - 1
+          wf.position = wf.position - 1
         end
+        wf.save
       end
     end
     respond_to do |format|
       format.html
-      format.js {
-        render inline: "location.replace('#{custom_workflows_path}');"
-      }
+      format.js
     end
   end
 
@@ -67,8 +65,7 @@ class CustomWorkflowsController < ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def new
     @workflow = CustomWorkflow.new
@@ -88,8 +85,8 @@ class CustomWorkflowsController < ApplicationController
       else
         flash[:error] = @workflow.errors.full_messages.to_sentence
       end
-    rescue Exception => e
-      Rails.logger.warn "Workflow import error: #{e.message}\n #{e.backtrace.join("\n ")}"
+    rescue StandardError => e
+      Rails.logger.warn { "Workflow import error: #{e.message}\n #{e.backtrace.join("\n ")}" }
       flash[:error] = l(:error_failed_import)
     end
     respond_to do |format|
@@ -103,7 +100,7 @@ class CustomWorkflowsController < ApplicationController
     @workflow.observable = params[:custom_workflow][:observable]
     update_from_params
     respond_to do |format|
-      if params.has_key?(:commit) && @workflow.save
+      if params.key?(:commit) && @workflow.save
         flash[:notice] = l(:notice_successful_create)
         cookies[:custom_workflows_author] = @workflow.author
         format.html { redirect_to(custom_workflows_path) }
@@ -127,7 +124,7 @@ class CustomWorkflowsController < ApplicationController
   def update
     respond_to do |format|
       update_from_params
-      if params.has_key?(:commit) && @workflow.save
+      if params.key?(:commit) && @workflow.save
         flash[:notice] = l(:notice_successful_update)
         format.html { redirect_to(custom_workflows_path) }
       else
@@ -169,5 +166,4 @@ class CustomWorkflowsController < ApplicationController
     @workflow.after_destroy = params[:custom_workflow][:after_destroy]
     @workflow.project_ids = params[:custom_workflow][:project_ids]
   end
-
 end

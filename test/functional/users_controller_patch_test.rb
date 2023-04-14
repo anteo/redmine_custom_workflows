@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: true
 #
 # Redmine plugin for Document Management System "Features"
@@ -19,10 +18,10 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-require File.expand_path('../../test_helper', __FILE__)
+require File.expand_path('../test_helper', __dir__)
 
+# Users controller patch test
 class UsersControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
-
   fixtures :custom_workflows, :custom_workflows_projects
 
   def setup
@@ -32,15 +31,14 @@ class UsersControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
   end
 
   def test_update_with_cw
-    put :update, params: { id: @jsmith.id, user: { lastname: 'updated_lastname' }}
+    put :update, params: { id: @jsmith.id, user: { lastname: 'updated_lastname' } }
     assert_redirected_to edit_user_path(id: @jsmith.id)
     assert_equal 'Custom workflow', @controller.flash[:notice]
   end
 
   def test_cw_env
-    put :update, params: { id: @jsmith.id, user: { lastname: 'updated_lastname' }}
+    put :update, params: { id: @jsmith.id, user: { lastname: 'updated_lastname' } }
     assert_redirected_to edit_user_path(id: @jsmith.id)
     assert_equal request.remote_ip, @controller.flash[:warning]
   end
-
 end

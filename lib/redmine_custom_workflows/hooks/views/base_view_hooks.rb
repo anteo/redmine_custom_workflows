@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: true
 #
 # Redmine plugin for Custom Workflows
@@ -23,16 +22,14 @@
 module RedmineCustomWorkflows
   module Hooks
     module Views
-
+      # Base view hooks
       class BaseViewHooks < Redmine::Hook::ViewListener
-
-        def view_layouts_base_html_head(context={})
+        def view_layouts_base_html_head(context = {})
           return unless /^(CustomWorkflows|Projects)/.match?(context[:controller].class.name)
+
           "\n".html_safe + stylesheet_link_tag('custom_workflows.css', plugin: :redmine_custom_workflows)
         end
-
       end
-
     end
   end
 end

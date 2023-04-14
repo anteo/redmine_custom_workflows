@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: true
 #
 # Redmine plugin for Custom Workflows
@@ -20,8 +19,9 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-require File.expand_path('../../test_helper', __FILE__)
+require File.expand_path('../test_helper', __dir__)
 
+# Issue relation patch test class
 class IssueRelationPatchTest < RedmineCustomWorkflows::Test::UnitTest
   fixtures :issue_relations
 
@@ -42,5 +42,4 @@ class IssueRelationPatchTest < RedmineCustomWorkflows::Test::UnitTest
     @issue_relation1.custom_workflow_env[:remote_ip] = '127.0.0.1'
     assert_equal '127.0.0.1', @issue_relation1.custom_workflow_env[:remote_ip]
   end
-
 end

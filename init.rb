@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: true
 #
 # Redmine plugin for Custom Workflows
@@ -33,6 +32,4 @@ Redmine::Plugin.register :redmine_custom_workflows do
   permission :manage_project_workflow, {}, require: :member
 end
 
-unless Redmine::Plugin.installed?(:easy_extensions)
-  require_relative 'after_init'
-end
+require_relative 'after_init' unless Redmine::Plugin.installed?('easy_extensions')

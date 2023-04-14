@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: true
 #
 # Redmine plugin for Custom Workflows
@@ -23,9 +22,9 @@
 module RedmineCustomWorkflows
   module Patches
     module Models
+      # Mailer model patch
       module MailerPatch
-
-        def self.deliver_custom_email(headers={})
+        def self.deliver_custom_email(headers = {})
           user = headers.delete :user
           headers[:to] = user.mail if user
           text_body = headers.delete :text_body
@@ -38,23 +37,22 @@ module RedmineCustomWorkflows
               format.html { render text: html_body } if html_body
             end
           elsif template_name
-            template_params.each { |k,v| instance_variable_set("@#{k}", v) }
+            template_params.each { |k, v| instance_variable_set("@#{k}", v) }
             mail headers do |format|
               format.text { render template_name }
               format.html { render template_name } unless Setting.plain_text_mail?
             end
           else
-            raise StandardError.new('Not :text_body, :html_body or :template_name specified')
+            raise StandardError, 'Not :text_body, :html_body or :template_name specified'
           end
         end
-
       end
     end
   end
 end
 
 # Apply the patch
-if Redmine::Plugin.installed?(:easy_extensions)
+if Redmine::Plugin.installed?('easy_extensions')
   RedmineExtensions::PatchManager.register_model_patch 'Mailer', 'RedmineCustomWorkflows::Patches::Models::MailerPatch'
 else
   Mailer.prepend RedmineCustomWorkflows::Patches::Models::MailerPatch

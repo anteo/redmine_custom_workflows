@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: true
 #
 # Redmine plugin for Custom Workflows
@@ -23,11 +22,8 @@
 module RedmineCustomWorkflows
   module Patches
     module Models
+      # Project model patch
       module ProjectPatch
-
-        attr_accessor 'custom_workflow_messages'
-        attr_accessor 'custom_workflow_env'
-
         def custom_workflow_messages
           @custom_workflow_messages ||= {}
         end
@@ -39,8 +35,11 @@ module RedmineCustomWorkflows
         def self.prepended(base)
           base.class_eval do
             has_and_belongs_to_many :custom_workflows
-            safe_attributes :custom_workflow_ids, if:
-                lambda { |project, user| project.new_record? || user.allowed_to?(:manage_project_workflow, project) }
+
+            safe_attributes :custom_workflow_ids,
+                            if: lambda { |project, user|
+                              project.new_record? || user.allowed_to?(:manage_project_workflow, project)
+                            }
 
             before_save :before_save_custom_workflows
             after_save :after_save_custom_workflows
@@ -54,8 +53,10 @@ module RedmineCustomWorkflows
               CustomWorkflow.run_custom_workflows(:project_attachments, project, event)
             end
 
-            [:before_add, :before_remove, :after_add, :after_remove].each do |observable|
-              send("#{observable}_for_attachments") << lambda { |event, project, attachment| Project.attachments_callback(event, project, attachment) }
+            %i[before_add before_remove after_add after_remove].each do |observable|
+              send("#{observable}_for_attachments") << lambda { |event, project, attachment|
+                Project.attachments_callback event, project, attachment
+              }
             end
           end
         end
@@ -66,6 +67,7 @@ module RedmineCustomWorkflows
           CustomWorkflow.run_shared_code self
           CustomWorkflow.run_custom_workflows :project, self, :before_save
           throw :abort if errors.any?
+
           errors.empty? && (@saved_attributes == attributes || valid?)
         ensure
           @saved_attributes = nil
@@ -77,23 +79,21 @@ module RedmineCustomWorkflows
 
         def before_destroy_custom_workflows
           res = CustomWorkflow.run_custom_workflows :project, self, :before_destroy
-          if res == false
-            throw :abort
-          end
+          throw :abort if res == false
         end
 
         def after_destroy_custom_workflows
           CustomWorkflow.run_custom_workflows :project, self, :after_destroy
         end
-
       end
     end
   end
 end
 
 # Apply the patch
-if Redmine::Plugin.installed?(:easy_extensions)
-  RedmineExtensions::PatchManager.register_model_patch 'Project', 'RedmineCustomWorkflows::Patches::Models::ProjectPatch'
+if Redmine::Plugin.installed?('easy_extensions')
+  RedmineExtensions::PatchManager.register_model_patch 'Project',
+                                                       'RedmineCustomWorkflows::Patches::Models::ProjectPatch'
 else
   Project.prepend RedmineCustomWorkflows::Patches::Models::ProjectPatch
 end

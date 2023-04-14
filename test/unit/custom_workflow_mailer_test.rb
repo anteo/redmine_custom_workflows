@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: true
 #
 # Redmine plugin for Custom Workflows
@@ -20,11 +19,11 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-require File.expand_path('../../test_helper', __FILE__)
+require File.expand_path('../test_helper', __dir__)
 
+# Custom mailer test class
 class CustomWorkflowMailerTest < RedmineCustomWorkflows::Test::UnitTest
   include Redmine::I18n
-
   fixtures :users, :email_addresses
 
   def setup
@@ -62,5 +61,4 @@ class CustomWorkflowMailerTest < RedmineCustomWorkflows::Test::UnitTest
   def html_part(email)
     email.parts.detect { |part| part.content_type.include?('text/html') }
   end
-
 end

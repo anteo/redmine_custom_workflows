@@ -1,4 +1,4 @@
-# encoding: utf-8
+# frozen_string_literal: true
 #
 # Redmine plugin for Custom Workflows
 #
@@ -19,14 +19,15 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+# Extend custom workflows table
 class AddAdditionalScriptFieldsToCustomWorkflows < ActiveRecord::Migration[4.2]
-
   def change
-    add_column :custom_workflows, :shared_code, :text, null: true
-    add_column :custom_workflows, :before_add, :text, null: true
-    add_column :custom_workflows, :after_add, :text, null: true
-    add_column :custom_workflows, :before_remove, :text, null: true
-    add_column :custom_workflows, :after_remove, :text, null: true
+    change_table(:custom_workflows, bulk: true) do |t|
+      t.text :shared_code, null: true
+      t.text :before_add, null: true
+      t.text :after_add, null: true
+      t.text :before_remove, null: true
+      t.text :after_remove, null: true
+    end
   end
-
 end

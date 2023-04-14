@@ -1,4 +1,4 @@
-# encoding: utf-8
+# frozen_string_literal: true
 #
 # Redmine plugin for Custom Workflows
 #
@@ -19,21 +19,21 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+# SQLite boolean migration
 class ChangeDefaultActiveBooleanValueToCustomWorkflows < ActiveRecord::Migration[4.2]
   def up
-    if ActiveRecord::Base.connection.adapter_name =~ /sqlite/i
-      change_column_default :custom_workflows, :active, from: true, to: 1
-      CustomWorkflow.where("active = 't'").update_all(active: 1)
-      CustomWorkflow.where("active = 'f'").update_all(active: 0)
-    end
+    return unless ActiveRecord::Base.connection.adapter_name.match?(/sqlite/i)
+
+    change_column_default :custom_workflows, :active, from: true, to: 1
+    CustomWorkflow.where(active: 't').each { |w| w.update(active: 1) }
+    CustomWorkflow.where(active: 'f').each { |w| w.update(active: 0) }
   end
 
   def down
-    if ActiveRecord::Base.connection.adapter_name =~ /sqlite/i
-      change_column_default :custom_workflows, :active, from: 1, to: true
-      CustomWorkflow.where("active = 1").update_all(active: 't')
-      CustomWorkflow.where("active = 0").update_all(active: 'f')
-    end
-  end
+    return unless ActiveRecord::Base.connection.adapter_name.match?(/sqlite/i)
 
+    change_column_default :custom_workflows, :active, from: 1, to: true
+    CustomWorkflow.where(active: 1).each { |w| w.update(active: 't') }
+    CustomWorkflow.where(active: 0).each { |w| w.update(active: 'f') }
+  end
 end

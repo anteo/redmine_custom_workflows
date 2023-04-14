@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: true
 #
 # Redmine plugin for Custom Workflows
@@ -20,29 +19,37 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-class CustomWorkflow < ActiveRecord::Base
-  OBSERVABLES = [:issue, :issue_relation, :issue_attachments, :user, :attachment, :group, :group_users, :project, :project_attachments,
-                 :wiki_content, :wiki_page_attachments, :time_entry, :version, :shared]
-  PROJECT_OBSERVABLES = [:issue, :issue_attachments, :project, :project_attachments, :wiki_content, :wiki_page_attachments, :time_entry, :version]
-  COLLECTION_OBSERVABLES = [:group_users, :issue_attachments, :project_attachments, :wiki_page_attachments]
-  SINGLE_OBSERVABLES = [:issue, :issue_relation, :user, :group, :attachment, :project, :wiki_content, :time_entry, :version]
+# Custom workflow model
+class CustomWorkflow < ApplicationRecord
+  OBSERVABLES = %i[issue issue_relation issue_attachments user attachment group group_users project project_attachments
+                   wiki_content wiki_page_attachments time_entry version shared].freeze
+  PROJECT_OBSERVABLES = %i[issue issue_attachments project project_attachments wiki_content wiki_page_attachments
+                           time_entry version].freeze
+  COLLECTION_OBSERVABLES = %i[group_users issue_attachments project_attachments wiki_page_attachments].freeze
+  SINGLE_OBSERVABLES = %i[issue issue_relation user group attachment project wiki_content time_entry version].freeze
 
-  has_and_belongs_to_many :projects
   acts_as_list
 
-  validates_presence_of :name
-  validates_uniqueness_of :name, case_sensitive: false
-  validates_format_of :author, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, allow_blank: true
-  validate :validate_syntax, :validate_scripts_presence, if: Proc.new { |workflow| workflow.respond_to?(:observable) and workflow.active? }
+  has_and_belongs_to_many :projects
 
-  scope :active, lambda { where(active: true) }
-  scope :sorted, lambda { order(:position) }
+  validates :name, uniqueness: true
+  validates :author, format: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, allow_blank: true
+  validate :validate_syntax, :validate_scripts_presence,
+           if: proc { |workflow| workflow.respond_to?(:observable) and workflow.active? }
+
+  scope :active, -> { where(active: true) }
+  scope :sorted, -> { order(:position) }
   scope :for_project, (lambda do |project|
-     where("is_for_all=? OR EXISTS (SELECT * FROM #{reflect_on_association(:projects).join_table} WHERE project_id=? AND custom_workflow_id=id)",
-           true, project.id)
-   end)
-  #scope :for_project, (lambda { |project| where(is_for_all: true).or(where(
-  #  'SELECT * FROM custom_workflow_projects WHERE project_id = ? AND custom_workflow_id = id', project.id).exists?) })
+    where(
+      %{
+        is_for_all = ? OR
+        EXISTS (SELECT * FROM #{reflect_on_association(:projects).join_table}
+        WHERE project_id = ? AND custom_workflow_id = id)
+      },
+      true,
+      project.id
+    )
+  end)
 
   def self.import_from_xml(xml)
     attributes = Hash.from_xml(xml).values.first
@@ -76,9 +83,11 @@ class CustomWorkflow < ActiveRecord::Base
       workflows = CustomWorkflow.active.where(observable: observable)
       if PROJECT_OBSERVABLES.include? observable
         return true unless object.project
+
         workflows = workflows.for_project(object.project)
       end
       return true unless workflows.any?
+
       log_message "= Running #{event} custom workflows", object
       workflows.sorted.each do |workflow|
         unless workflow.run(object, event)
@@ -93,83 +102,83 @@ class CustomWorkflow < ActiveRecord::Base
 
   def run(object, event)
     return true unless attribute_present?(event)
-    Rails.logger.info "== Running #{event} custom workflow \"#{name}\""
-    object.instance_eval(read_attribute(event))
+
+    Rails.logger.info { "== Running #{event} custom workflow \"#{name}\"" }
+    object.instance_eval self[event]
     true
   rescue RedmineCustomWorkflows::Errors::WorkflowError => e
-    Rails.logger.info "== User workflow error: #{e.message}"
+    Rails.logger.info { "== User workflow error: #{e.message}" }
     object.errors.add :base, e.message
     false
-  rescue Exception => e
-    Rails.logger.error "== Custom workflow #{name}, ##{id} exception: #{e.message}\n #{e.backtrace.join("\n ")}"
+  rescue StandardError => e
+    Rails.logger.error { "== Custom workflow #{name}, ##{id} exception: #{e.message}\n #{e.backtrace.join("\n ")}" }
     object.errors.add :base, :custom_workflow_error
     false
   end
 
-  def has_projects_association?
+  def projects_association?
     PROJECT_OBSERVABLES.include? observable.to_sym
   end
 
   def validate_syntax_for(object, event)
-    object.instance_eval(read_attribute(event)) if respond_to?(event) && read_attribute(event)
-  rescue RedmineCustomWorkflows::Errors::WorkflowError => _
-  rescue Exception => e
+    object.instance_eval(self[event]) if respond_to?(event) && self[event]
+  rescue RedmineCustomWorkflows::Errors::WorkflowError => _e
+    # Do nothing
+  rescue StandardError => e
     errors.add event, :invalid_script, error: e
   end
 
   def validate_scripts_presence
-    case observable.to_sym
-      when :shared
-        fields = [shared_code]
-      when *SINGLE_OBSERVABLES
-        fields = [before_save, after_save, before_destroy, after_destroy]
-      when *COLLECTION_OBSERVABLES
-        fields = [before_add, after_add, before_remove, after_remove]
-      else
-        fields = []
-    end
-    unless fields.any? {|field| field.present?}
-      errors.add :base, :scripts_absent
-    end
+    fields = case observable.to_sym
+             when :shared
+               [shared_code]
+             when *SINGLE_OBSERVABLES
+               [before_save, after_save, before_destroy, after_destroy]
+             when *COLLECTION_OBSERVABLES
+               [before_add, after_add, before_remove, after_remove]
+             else
+               []
+             end
+    errors.add(:base, :scripts_absent) unless fields.any?(&:present?)
   end
 
   def validate_syntax
     case observable.to_sym
-      when :shared
-        CustomWorkflow.run_shared_code self
-        validate_syntax_for self, :shared_code
-      when *SINGLE_OBSERVABLES
-        object = observable.camelize.constantize.new
-        object.send :instance_variable_set, "@#{observable}", object # compatibility with 0.0.1
-        CustomWorkflow.run_shared_code object
-        [:before_save, :after_save, :before_destroy, :after_destroy].each {|field| validate_syntax_for object, field}
-      when *COLLECTION_OBSERVABLES
-        object = nil
-        case observable.to_sym
-          when :group_users
-            object = Group.new
-            object.send :instance_variable_set, :@user, User.new
-            object.send :instance_variable_set, :@group, object
-          when :issue_attachments
-            object = Issue.new
-            object.send :instance_variable_set, :@attachment, Attachment.new
-            object.send :instance_variable_set, :@issue, object
-          when :project_attachments
-            object = Project.new
-            object.send :instance_variable_set, :@attachment, Attachment.new
-            object.send :instance_variable_set, :@project, object
-          when :wiki_page_attachments
-            object = WikiPage.new
-            object.send :instance_variable_set, :@attachment, Attachment.new
-            object.send :instance_variable_set, :@page, object
-        end
-        CustomWorkflow.run_shared_code object
-        [:before_add, :after_add, :before_remove, :after_remove].each { |field| validate_syntax_for object, field }
+    when :shared
+      CustomWorkflow.run_shared_code self
+      validate_syntax_for self, :shared_code
+    when *SINGLE_OBSERVABLES
+      object = observable.camelize.constantize.new
+      object.send :instance_variable_set, "@#{observable}", object # compatibility with 0.0.1
+      CustomWorkflow.run_shared_code object
+      %i[before_save after_save before_destroy after_destroy].each { |field| validate_syntax_for object, field }
+    when *COLLECTION_OBSERVABLES
+      object = nil
+      case observable.to_sym
+      when :group_users
+        object = Group.new
+        object.send :instance_variable_set, :@user, User.new
+        object.send :instance_variable_set, :@group, object
+      when :issue_attachments
+        object = Issue.new
+        object.send :instance_variable_set, :@attachment, Attachment.new
+        object.send :instance_variable_set, :@issue, object
+      when :project_attachments
+        object = Project.new
+        object.send :instance_variable_set, :@attachment, Attachment.new
+        object.send :instance_variable_set, :@project, object
+      when :wiki_page_attachments
+        object = WikiPage.new
+        object.send :instance_variable_set, :@attachment, Attachment.new
+        object.send :instance_variable_set, :@page, object
+      end
+      CustomWorkflow.run_shared_code object
+      %i[before_add after_add before_remove after_remove].each { |field| validate_syntax_for object, field }
     end
   end
 
   def export_as_xml
-    attrs = self.attributes.dup
+    attrs = attributes.dup
     attrs['exported-at'] = Time.current.xmlschema
     attrs['plugin-version'] = Redmine::Plugin.find(:redmine_custom_workflows).version
     attrs['ruby-version'] = "#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}"
@@ -178,11 +187,10 @@ class CustomWorkflow < ActiveRecord::Base
   end
 
   def <=>(other)
-    self.position <=> other.position
+    position <=> other.position
   end
 
   def to_s
     name
   end
-
 end

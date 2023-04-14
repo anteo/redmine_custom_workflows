@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-#
 # Redmine plugin for Custom Workflows
 #
 # Copyright © 2015-19 Anton Argirov
@@ -19,27 +17,44 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-require File.expand_path('../test_helper', __dir__)
+AllCops:
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 6.1
 
-# Attachment patch test class
-class AttachmentPatchTest < RedmineCustomWorkflows::Test::UnitTest
-  fixtures :attachments
+  NewCops: enable
 
-  def setup
-    @attachment1 = Attachment.find 1
-  end
+  Exclude:
+    - '**/vendor/**/*'
 
-  def test_truth
-    assert_kind_of Attachment, @attachment1
-  end
+# Enable extensions
+require:
+  - rubocop-performance
+  - rubocop-rails
 
-  def test_custom_workflow_messages
-    @attachment1.custom_workflow_messages[:notice] = 'Okay'
-    assert_equal 'Okay', @attachment1.custom_workflow_messages[:notice]
-  end
+# Rules for CustomWorkflows
+Layout/EmptyLineAfterMagicComment:
+  Enabled: false
 
-  def test_custom_workflow_env
-    @attachment1.custom_workflow_env[:remote_ip] = '127.0.0.1'
-    assert_equal '127.0.0.1', @attachment1.custom_workflow_env[:remote_ip]
-  end
-end
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Rails/HasAndBelongsToMany:
+  Enabled: false
+
+Style/ExpandPathArguments:
+  Enabled: false

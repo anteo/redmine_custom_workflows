@@ -1,4 +1,4 @@
-# encoding: utf-8
+# frozen_string_literal: true
 #
 # Redmine plugin for Custom Workflows
 #
@@ -19,10 +19,10 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+# Extend custom_workflows table
 class AddObservableFieldToCustomWorkflows < ActiveRecord::Migration[4.2]
-
   def change
-    add_column :custom_workflows, :observable, :string, null: false, default: 'issue'
+    add_column :custom_workflows, :observable, :string,
+               null: false, default: 'issue'
   end
-
 end

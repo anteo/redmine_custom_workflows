@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: true
 #
 # Redmine plugin for Custom Workflows
@@ -22,6 +21,7 @@
 
 require 'mailer'
 
+# Custom workflow mailer model
 class CustomWorkflowMailer < Mailer
   layout 'mailer'
 
@@ -34,5 +34,4 @@ class CustomWorkflowMailer < Mailer
     @text = text
     mail to: user, subject: subject
   end
-
 end

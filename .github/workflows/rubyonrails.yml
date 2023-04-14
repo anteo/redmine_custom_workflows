@@ -122,6 +122,11 @@ jobs:
           cd /opt/redmine
           bundle exec rake redmine:plugins:test:units
           bundle exec rake redmine:plugins:test:functionals
+      - name: Rubocop
+        # Run the Rubocop tests
+        run: |
+          cd /opt/redmine                    
+          bundle exec rubocop -c plugins/redmine_custom_workflows/.rubocop.yml plugins/redmine_custom_workflows/
       - name: Cleanup
         # Rollback plugin's changes to the database
         # Stop the database engine

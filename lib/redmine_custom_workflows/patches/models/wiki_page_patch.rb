@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: true
 #
 # Redmine plugin for Custom Workflows
@@ -23,11 +22,8 @@
 module RedmineCustomWorkflows
   module Patches
     module Models
+      # Wiki page model patch
       module WikiPagePatch
-
-        attr_accessor 'custom_workflow_messages'
-        attr_accessor 'custom_workflow_env'
-
         def custom_workflow_messages
           @custom_workflow_messages ||= {}
         end
@@ -45,21 +41,22 @@ module RedmineCustomWorkflows
               CustomWorkflow.run_custom_workflows :wiki_page_attachments, page, event
             end
 
-            [:before_add, :before_remove, :after_add, :after_remove].each do |observable|
-              send("#{observable}_for_attachments") << lambda { |event, page, attachment| WikiPage.attachments_callback(event, page, attachment) }
+            %i[before_add before_remove after_add after_remove].each do |observable|
+              send("#{observable}_for_attachments") << lambda { |event, page, attachment|
+                WikiPage.attachments_callback(event, page, attachment)
+              }
             end
           end
         end
-
       end
     end
   end
 end
 
 # Apply the patch
-if Redmine::Plugin.installed?(:easy_extensions)
+if Redmine::Plugin.installed?('easy_extensions')
   RedmineExtensions::PatchManager.register_model_patch 'WikiPage',
-   'RedmineCustomWorkflows::Patches::Models::WikiPagePatch'
+                                                       'RedmineCustomWorkflows::Patches::Models::WikiPagePatch'
 else
   WikiPage.prepend RedmineCustomWorkflows::Patches::Models::WikiPagePatch
 end

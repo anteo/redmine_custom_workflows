@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: true
 #
 # Redmine plugin for Custom Workflows
@@ -21,35 +20,35 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 # Hooks
-require File.dirname(__FILE__) + '/redmine_custom_workflows/hooks/views/base_view_hooks'
+require "#{File.dirname(__FILE__)}/redmine_custom_workflows/hooks/views/base_view_hooks"
 
 # Errors
-require File.dirname(__FILE__) + '/redmine_custom_workflows/errors/workflow_error'
+require "#{File.dirname(__FILE__)}/redmine_custom_workflows/errors/workflow_error"
 
 # Patches
 
 # Models
-require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/models/attachment_patch'
-require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/models/group_patch'
-require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/models/issue_patch'
-require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/models/issue_relation_patch'
-require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/models/project_patch'
-require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/models/time_entry_patch'
-require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/models/user_patch'
-require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/models/version_patch'
-require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/models/wiki_content_patch'
-require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/models/wiki_page_patch'
+require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/models/attachment_patch"
+require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/models/group_patch"
+require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/models/issue_patch"
+require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/models/issue_relation_patch"
+require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/models/project_patch"
+require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/models/time_entry_patch"
+require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/models/user_patch"
+require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/models/version_patch"
+require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/models/wiki_content_patch"
+require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/models/wiki_page_patch"
 
 # Controllers
-require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/controllers/issues_controller_patch'
-require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/controllers/attachments_controller_patch'
-require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/controllers/groups_controller_patch'
-require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/controllers/issue_relations_controller_patch'
-require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/controllers/projects_controller_patch'
-require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/controllers/timelog_controller_patch'
-require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/controllers/users_controller_patch'
-require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/controllers/versions_controller_patch'
-require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/controllers/wiki_controller_patch'
+require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/controllers/issues_controller_patch"
+require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/controllers/attachments_controller_patch"
+require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/controllers/groups_controller_patch"
+require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/controllers/issue_relations_controller_patch"
+require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/controllers/projects_controller_patch"
+require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/controllers/timelog_controller_patch"
+require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/controllers/users_controller_patch"
+require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/controllers/versions_controller_patch"
+require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/controllers/wiki_controller_patch"
 
 # Helpers
-require File.dirname(__FILE__) + '/redmine_custom_workflows/patches/helpers/projects_helper_patch'
+require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/helpers/projects_helper_patch"

@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: true
 #
 # Redmine plugin for Custom Workflows
@@ -23,11 +22,8 @@
 module RedmineCustomWorkflows
   module Patches
     module Models
+      # Attachment model patch
       module AttachmentPatch
-
-        attr_accessor 'custom_workflow_messages'
-        attr_accessor 'custom_workflow_env'
-
         def custom_workflow_messages
           @custom_workflow_messages ||= {}
         end
@@ -51,6 +47,7 @@ module RedmineCustomWorkflows
           CustomWorkflow.run_shared_code self
           CustomWorkflow.run_custom_workflows :attachment, self, :before_save
           throw :abort if errors.any?
+
           errors.empty? && (@saved_attributes == attributes || valid?)
         ensure
           @saved_attributes = nil
@@ -62,24 +59,21 @@ module RedmineCustomWorkflows
 
         def before_destroy_custom_workflows
           res = CustomWorkflow.run_custom_workflows :attachment, self, :before_destroy
-          if res == false
-            throw :abort
-          end
+          throw :abort if res == false
         end
 
         def after_destroy_custom_workflows
           CustomWorkflow.run_custom_workflows :attachment, self, :after_destroy
         end
-
       end
     end
   end
 end
 
 # Apply the patch
-if Redmine::Plugin.installed?(:easy_extensions)
+if Redmine::Plugin.installed?('easy_extensions')
   RedmineExtensions::PatchManager.register_model_patch 'Attachment',
-    'RedmineCustomWorkflows::Patches::Models::AttachmentPatch'
+                                                       'RedmineCustomWorkflows::Patches::Models::AttachmentPatch'
 else
   Attachment.prepend RedmineCustomWorkflows::Patches::Models::AttachmentPatch
 end

@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: true
 #
 # Redmine plugin for Custom Workflows
@@ -22,10 +21,7 @@
 
 module RedmineCustomWorkflows
   module Errors
-
     class WorkflowError < StandardError
-
     end
-
   end
 end

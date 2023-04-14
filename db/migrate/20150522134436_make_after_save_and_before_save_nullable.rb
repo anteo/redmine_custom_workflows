@@ -1,4 +1,4 @@
-# encoding: utf-8
+# frozen_string_literal: true
 #
 # Redmine plugin for Custom Workflows
 #
@@ -19,11 +19,12 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+# Modify columns
 class MakeAfterSaveAndBeforeSaveNullable < ActiveRecord::Migration[4.2]
-
   def up
-    change_column :custom_workflows, :before_save, :text, null: true, default: nil
-    change_column :custom_workflows, :after_save, :text, null: true, default: nil
+    change_table(:custom_workflows, bulk: true) do |t|
+      t.change :before_save, :text, null: true, default: nil
+      t.change :after_save, :text, null: true, default: nil
+    end
   end
-
 end

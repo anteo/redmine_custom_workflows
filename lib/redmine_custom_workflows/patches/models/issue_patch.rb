@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: true
 #
 # Redmine plugin for Custom Workflows
@@ -23,11 +22,8 @@
 module RedmineCustomWorkflows
   module Patches
     module Models
+      # Issue model patch
       module IssuePatch
-
-        attr_accessor 'custom_workflow_messages'
-        attr_accessor 'custom_workflow_env'
-
         def custom_workflow_messages
           @custom_workflow_messages ||= {}
         end
@@ -51,25 +47,33 @@ module RedmineCustomWorkflows
               CustomWorkflow.run_custom_workflows :issue_attachments, issue, event
             end
 
-            [:before_add, :before_remove, :after_add, :after_remove].each do |observable|
+            %i[before_add before_remove after_add after_remove].each do |observable|
               send("#{observable}_for_attachments") << if Rails::VERSION::MAJOR >= 4
-                                                         lambda { |event, issue, attachment| Issue.attachments_callback(event, issue, attachment) }
+                                                         lambda { |event, issue, attachment|
+                                                           Issue.attachments_callback event, issue, attachment
+                                                         }
                                                        else
-                                                         lambda { |issue, attachment| Issue.attachments_callback(observable, issue, attachment) }
+                                                         lambda { |issue, attachment|
+                                                           Issue.attachments_callback observable, issue, attachment
+                                                         }
                                                        end
             end
           end
         end
 
         def validate_status
-          return true unless @saved_attributes && @saved_attributes['status_id'] != status_id &&
-              !new_statuses_allowed_to(User.current, new_record?).collect(&:id).include?(status_id)
-          status_was = IssueStatus.find_by_id(status_id_was)
-          status_new = IssueStatus.find_by_id(status_id)
+          unless @saved_attributes && (@saved_attributes['status_id'] != status_id) && new_statuses_allowed_to(
+            User.current, new_record?
+          ).collect(&:id).exclude?(status_id)
+            return true
+          end
 
-          errors.add :status, :new_status_invalid,
-                     old_status: status_was && status_was.name,
-                     new_status: status_new && status_new.name
+          status_was = IssueStatus.find_by(id: status_id_was)
+          status_new = IssueStatus.find_by(id: status_id)
+          errors.add :status,
+                     :new_status_invalid,
+                     old_status: status_was&.name,
+                     new_status: status_new&.name
         end
 
         def before_save_custom_workflows
@@ -78,6 +82,7 @@ module RedmineCustomWorkflows
           CustomWorkflow.run_shared_code self
           CustomWorkflow.run_custom_workflows :issue, self, :before_save
           throw :abort if errors.any?
+
           errors.empty? && (@saved_attributes == attributes || valid?)
         ensure
           @saved_attributes = nil
@@ -89,22 +94,19 @@ module RedmineCustomWorkflows
 
         def before_destroy_custom_workflows
           res = CustomWorkflow.run_custom_workflows(:issue, self, :before_destroy)
-          if res == false
-            throw :abort
-          end
+          throw :abort if res == false
         end
 
         def after_destroy_custom_workflows
           CustomWorkflow.run_custom_workflows :issue, self, :after_destroy
         end
-
       end
     end
   end
 end
 
 # Apply the patch
-if Redmine::Plugin.installed?(:easy_extensions)
+if Redmine::Plugin.installed?('easy_extensions')
   RedmineExtensions::PatchManager.register_model_patch 'Issue', 'RedmineCustomWorkflows::Patches::Models::IssuePatch'
 else
   Issue.prepend RedmineCustomWorkflows::Patches::Models::IssuePatch

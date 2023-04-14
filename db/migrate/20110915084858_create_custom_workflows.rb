@@ -1,4 +1,4 @@
-# encoding: utf-8
+# frozen_string_literal: true
 #
 # Redmine plugin for Custom Workflows
 #
@@ -19,15 +19,15 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+# Create the model table
 class CreateCustomWorkflows < ActiveRecord::Migration[4.2]
-
   def change
     create_table :custom_workflows, force: true do |t|
       t.references :project
       t.text :script, null: true, default: nil
       t.boolean :is_enabled
+      t.timestamps
+      t.index :project_id, unique: true
     end
-    add_index :custom_workflows, [:project_id], unique: true
   end
-
 end

@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: true
 #
 # Redmine plugin for Custom Workflows
@@ -20,8 +19,9 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-require File.expand_path('../../test_helper', __FILE__)
+require File.expand_path('../test_helper', __dir__)
 
+# Custom workflow test class
 class CustomWorkflowTest < RedmineCustomWorkflows::Test::UnitTest
   fixtures :projects, :custom_workflows, :custom_workflows_projects
 
@@ -38,7 +38,7 @@ class CustomWorkflowTest < RedmineCustomWorkflows::Test::UnitTest
   end
 
   def test_import_from_xml
-    xml = %{
+    xml = %(
     <?xml version="1.0" encoding="UTF-8"?>
     <hash>
       <id type="integer">20</id>
@@ -65,7 +65,7 @@ class CustomWorkflowTest < RedmineCustomWorkflows::Test::UnitTest
       <ruby-version>3.0.2-p107</ruby-version>
       <rails-version>6.1.6.1</rails-version>
     </hash>
-    }
+    )
     cw = CustomWorkflow.import_from_xml(xml)
     assert cw
   end
@@ -74,5 +74,4 @@ class CustomWorkflowTest < RedmineCustomWorkflows::Test::UnitTest
     xml = @cw1.export_as_xml
     assert xml.include?("<name>#{@cw1}</name>")
   end
-
 end

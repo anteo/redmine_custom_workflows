@@ -1,4 +1,4 @@
-# encoding: utf-8
+# frozen_string_literal: true
 #
 # Redmine plugin for Custom Workflows
 #
@@ -19,17 +19,19 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+# Modify columns
 class AddAfterSaveToCustomWorkflows < ActiveRecord::Migration[4.2]
-
   def up
-    rename_column :custom_workflows, :script, :before_save
-    change_column :custom_workflows, :before_save, :text, null: true
-    add_column :custom_workflows, :after_save, :text, null: true, after: :before_save
+    change_table(:custom_workflows, bulk: true) do |t|
+      t.rename :script, :before_save
+      t.text :after_save, null: true, after: :before_save
+    end
   end
 
   def down
-    remove_column :custom_workflows, :after_save
-    rename_column :custom_workflows, :before_save, :script
+    change_table(:custom_workflows, bulk: true) do |t|
+      t.remove :after_save
+      t.rename :before_save, :script
+    end
   end
-
 end

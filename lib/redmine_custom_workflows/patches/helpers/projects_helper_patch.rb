@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: true
 #
 # Redmine plugin for Custom Workflows
@@ -23,24 +22,30 @@
 module RedmineCustomWorkflows
   module Patches
     module Helpers
+      # Project helper patch
       module ProjectsHelperPatch
-
         def project_settings_tabs
           tabs = super
-          tabs << { name: 'custom_workflows', action: :manage_project_workflow, partial: 'projects/settings/custom_workflow',
-                   label: :label_custom_workflow_plural } if User.current.allowed_to?(:manage_project_workflow, @project)
+          if User.current.allowed_to?(:manage_project_workflow, @project)
+            tabs << {
+              name: 'custom_workflows',
+              action: :manage_project_workflow,
+              partial: 'projects/settings/custom_workflow',
+              label: :label_custom_workflow_plural
+            }
+          end
           tabs
         end
-
       end
     end
   end
 end
 
 # Apply the patch
-if Redmine::Plugin.installed?(:easy_extensions)
+if Redmine::Plugin.installed?('easy_extensions')
   RedmineExtensions::PatchManager.register_helper_patch 'ProjectsHelper',
-    'RedmineCustomWorkflows::Patches::Helpers::ProjectsHelperPatch', prepend: true
+                                                        'RedmineCustomWorkflows::Patches::Helpers::ProjectsHelperPatch',
+                                                        prepend: true
 else
   ProjectsController.send :helper, RedmineCustomWorkflows::Patches::Helpers::ProjectsHelperPatch
 end

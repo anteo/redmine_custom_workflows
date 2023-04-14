@@ -1,4 +1,4 @@
-# encoding: utf-8
+# frozen_string_literal: true
 #
 # Redmine plugin for Custom Workflows
 #
@@ -19,14 +19,25 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+# Modify the table
 class AlterCustomWorkflows < ActiveRecord::Migration[4.2]
-
-  def self.up
-    remove_column :custom_workflows, :project_id
-    remove_column :custom_workflows, :is_enabled
-    add_column :custom_workflows, :name, :string, null: false, default: ''
-    add_column :custom_workflows, :description, :string, null: false, default: ''
-    add_column :custom_workflows, :position, :integer, null: false, default: 1
+  def up
+    change_table(:custom_workflows, bulk: true) do |t|
+      t.remove :project_id
+      t.remove :is_enabled
+      t.string :name, null: false, default: ''
+      t.string :description, :string, null: false, default: ''
+      t.integer :position, :integer, null: false, default: 1
+    end
   end
 
+  def down
+    change_table(:custom_workflows, bulk: true) do |t|
+      t.references :project
+      t.boolean :is_enabled
+      t.remove :name
+      t.remove :description
+      t.remove :position
+    end
+  end
 end
