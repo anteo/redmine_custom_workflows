@@ -18,7 +18,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-require File.expand_path('../test_helper', __dir__)
+require File.expand_path('../../test_helper', __FILE__)
 
 # Group controller patch test
 class GroupControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
@@ -40,10 +40,10 @@ class GroupControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
     assert_equal 'Custom workflow', @controller.flash[:notice]
   end
 
-  # def test_cw_env
-  #   @request.headers['Referer'] = edit_group_path(id: @group10.id)
-  #   put :update, params: { id: @group10.id, group: { name: 'Updated name' } }
-  #   assert_redirected_to edit_group_path(id: @group10.id)
-  #   assert_equal request.remote_ip, @controller.flash[:warning]
-  # end
+  def test_cw_env
+    @request.headers['Referer'] = edit_group_path(id: @group10.id)
+    put :update, params: { id: @group10.id, group: { name: 'Updated name' } }
+    assert_redirected_to edit_group_path(id: @group10.id)
+    assert_equal request.remote_ip, @controller.flash[:warning]
+  end
 end
