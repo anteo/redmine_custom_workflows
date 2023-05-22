@@ -56,5 +56,9 @@ Metrics/CyclomaticComplexity:
 Rails/HasAndBelongsToMany:
   Enabled: false
 
+Rails/SkipsModelValidations:
+  Exclude:
+    - db/migrate/20210210144000_change_default_active_boolean_value_to_custom_workflows.rb
+
 Style/ExpandPathArguments:
   Enabled: false

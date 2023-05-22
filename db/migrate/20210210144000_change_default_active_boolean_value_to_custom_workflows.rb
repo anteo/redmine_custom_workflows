@@ -25,15 +25,15 @@ class ChangeDefaultActiveBooleanValueToCustomWorkflows < ActiveRecord::Migration
     return unless ActiveRecord::Base.connection.adapter_name.match?(/sqlite/i)
 
     change_column_default :custom_workflows, :active, from: true, to: 1
-    CustomWorkflow.where(active: 't').each { |w| w.update(active: 1) }
-    CustomWorkflow.where(active: 'f').each { |w| w.update(active: 0) }
+    CustomWorkflow.where(active: 't').update_all active: 1
+    CustomWorkflow.where(active: 'f').update_all active: 0
   end
 
   def down
     return unless ActiveRecord::Base.connection.adapter_name.match?(/sqlite/i)
 
     change_column_default :custom_workflows, :active, from: 1, to: true
-    CustomWorkflow.where(active: 1).each { |w| w.update(active: 't') }
-    CustomWorkflow.where(active: 0).each { |w| w.update(active: 'f') }
+    CustomWorkflow.where(active: 1).update_all active: 't'
+    CustomWorkflow.where(active: 0).update_all active: 'f'
   end
 end
