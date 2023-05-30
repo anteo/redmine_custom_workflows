@@ -32,9 +32,6 @@ require:
   - rubocop-rails
 
 # Rules for CustomWorkflows
-Layout/EmptyLineAfterMagicComment:
-  Enabled: false
-
 Metrics/BlockLength:
   Enabled: false
 

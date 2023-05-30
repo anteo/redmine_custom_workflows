@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-#
+
 # Redmine plugin for Custom Workflows
 #
 # Copyright © 2015-19 Anton Argirov
