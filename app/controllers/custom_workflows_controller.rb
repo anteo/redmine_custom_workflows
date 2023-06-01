@@ -86,7 +86,7 @@ class CustomWorkflowsController < ApplicationController
         flash[:error] = @workflow.errors.full_messages.to_sentence
       end
     rescue StandardError => e
-      Rails.logger.warn { "Workflow import error: #{e.message}\n #{e.backtrace.join("\n ")}" }
+      Rails.logger.warn "Workflow import error: #{e.message}\n #{e.backtrace.join("\n ")}"
       flash[:error] = l(:error_failed_import)
     end
     respond_to do |format|
