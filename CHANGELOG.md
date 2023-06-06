@@ -1,8 +1,11 @@
 Changelog for Custom Workflows
 ==============================
 
-2.0.9 *????-??-??*
+2.0.9 *2023-06-06*
 ------------------
+
+    More robust XML import
+    Rubocop tests of plugin's source codes
 
 2.0.8 *2023-02-10*
 ------------------
