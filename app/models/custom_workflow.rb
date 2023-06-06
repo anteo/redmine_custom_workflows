@@ -53,10 +53,18 @@ class CustomWorkflow < ApplicationRecord
 
   def self.import_from_xml(xml)
     attributes = Hash.from_xml(xml).values.first
+    attributes.delete 'id'
     attributes.delete 'exported_at'
     attributes.delete 'plugin_version'
     attributes.delete 'ruby_version'
     attributes.delete 'rails_version'
+    name = attributes['name']
+    i = 1
+    while CustomWorkflow.exists?(name: name)
+      name = "#{attributes['name']}_#{i}"
+      i += 1
+    end
+    attributes['name'] = name
     CustomWorkflow.new attributes
   end
 
