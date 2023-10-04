@@ -55,6 +55,7 @@ Installation
 From a ZIP file:
 
 * Download the latest version of the plugin.
+* In case of an upgrade remove the original *plugins/redmine_custom_workflows* folder.
 * Unzip it to /plugins.
 
 From the Git repository:
