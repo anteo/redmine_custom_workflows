@@ -80,6 +80,8 @@ en:
     e.g. functions and classes needed by other workflows
   text_custom_workflow_user_code_note: Scripts are executed in the context of User object when user object changes
     (destroys). Use methods and properties of the user directly (or through `self`)
+  text_custom_workflow_member_code_note: Scripts are executed in the context of Member object when member object changes
+    (destroys). Use methods and properties of the @member directly (or through `self`)
   text_custom_workflow_group_code_note: Scripts are executed in the context of Group object when group object changes
     (destroys). Use methods and properties of the group directly (or through `self`)
   text_custom_workflow_group_users_code_note: These scripts are executed when user being added to group/removed from
@@ -115,6 +117,7 @@ en:
   custom_workflow_observable_issue_attachments: Issue Attachments
   custom_workflow_observable_group: Group
   custom_workflow_observable_user: User
+  custom_workflow_observable_member: Member
   custom_workflow_observable_attachment: Attachment
   custom_workflow_observable_project: Project
   custom_workflow_observable_project_attachments: Project Attachments / Files
