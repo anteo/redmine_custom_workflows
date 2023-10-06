@@ -35,6 +35,7 @@ require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/models/issue
 require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/models/project_patch"
 require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/models/time_entry_patch"
 require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/models/user_patch"
+require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/models/member_patch"
 require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/models/version_patch"
 require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/models/wiki_content_patch"
 require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/models/wiki_page_patch"
@@ -47,6 +48,7 @@ require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/controllers/
 require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/controllers/projects_controller_patch"
 require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/controllers/timelog_controller_patch"
 require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/controllers/users_controller_patch"
+require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/controllers/members_controller_patch"
 require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/controllers/versions_controller_patch"
 require "#{File.dirname(__FILE__)}/redmine_custom_workflows/patches/controllers/wiki_controller_patch"
 

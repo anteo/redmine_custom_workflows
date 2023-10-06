@@ -80,6 +80,8 @@ pt-BR:
     e.g. functions and classes needed by other workflows.
   text_custom_workflow_user_code_note: Both scripts are executed in the context of the user object when user object
     changes. Use methods and properties of the user directly (or through `self`)
+  text_custom_workflow_member_code_note: Scripts are executed in the context of Member object when member object changes
+    (destroys). Use methods and properties of the @member directly (or through `self`)
   text_custom_workflow_group_code_note: Both scripts are executed in the context of the group object when group object
     changes. Use methods and properties of the group directly (or through `self`)
   text_custom_workflow_group_users_code_note: These scripts are executed when user being added to group/removed from
@@ -115,6 +117,7 @@ pt-BR:
   custom_workflow_observable_group: Group
   custom_workflow_observable_user: User
   custom_workflow_observable_attachment: Attachment
+  custom_workflow_observable_member: Membro
   custom_workflow_observable_project: Project
   custom_workflow_observable_project_attachments: Project Attachments / Files
   custom_workflow_observable_wiki_content: Wiki Content

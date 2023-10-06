@@ -21,25 +21,25 @@
 
 require File.expand_path('../../test_helper', __FILE__)
 
-# User patch test class
-class UserPatchTest < RedmineCustomWorkflows::Test::UnitTest
-  fixtures :users
+# Member patch test class
+class MemberPatchTest < RedmineCustomWorkflows::Test::UnitTest
+  fixtures :members
 
   def setup
-    @user1 = User.find 1
+    @member1 = Member.find 1
   end
 
   def test_truth
-    assert_kind_of User, @user1
+    assert_kind_of Member, @member1
   end
 
   def test_custom_workflow_messages
-    @user1.custom_workflow_messages[:notice] = 'Okay'
-    assert_equal 'Okay', @user1.custom_workflow_messages[:notice]
+    @member1.custom_workflow_messages[:notice] = 'Okay'
+    assert_equal 'Okay', @member1.custom_workflow_messages[:notice]
   end
 
   def test_custom_workflow_env
-    @user1.custom_workflow_env[:remote_ip] = '127.0.0.1'
-    assert_equal '127.0.0.1', @user1.custom_workflow_env[:remote_ip]
+    @member1.custom_workflow_env[:remote_ip] = '127.0.0.1'
+    assert_equal '127.0.0.1', @member1.custom_workflow_env[:remote_ip]
   end
 end

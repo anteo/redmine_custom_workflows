@@ -79,7 +79,9 @@ es:
   text_custom_workflow_shared_code_note: Este código se ejecutará antes que cualquier otro workflow y puede contener código compartido,
     por ejemplo, funciones y clases necesarias para otros flujos de trabajo
   text_custom_workflow_user_code_note: Los scripts se ejecutan en el contexto del objeto User cuando el usuario cambia
-    (destruye). Utilice ​métodos y propiedades del usuario directamente (o a través de `self`)
+    (destruye). Utilice métodos y propiedades del usuario directamente (o a través de `self`)
+  text_custom_workflow_member_code_note: Scripts are executed in the context of Member object when member object changes
+    (destroys). Use methods and properties of the @member directly (or through `self`)
   text_custom_workflow_group_code_note: Los scripts se ejecutan en el contexto del objeto Group cuando el grupo cambia
     (destruye). Utilice métodos y propiedades del grupo directamente (o a través de `self`)
   text_custom_workflow_group_users_code_note: Estos scripts se ejecutan cuando el usuario se añade al grupo/se elimina del
@@ -115,6 +117,7 @@ es:
   custom_workflow_observable_issue_attachments: Ficheros de petición
   custom_workflow_observable_group: Grupo
   custom_workflow_observable_user: Usuario
+  custom_workflow_observable_member: Miembro
   custom_workflow_observable_attachment: Ficheros
   custom_workflow_observable_project: Proyecto
   custom_workflow_observable_project_attachments: Adjuntos de proyecto / Ficheros

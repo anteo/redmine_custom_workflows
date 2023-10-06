@@ -21,12 +21,13 @@
 
 # Custom workflow model
 class CustomWorkflow < ApplicationRecord
-  OBSERVABLES = %i[issue issue_relation issue_attachments user member attachment group group_users project project_attachments
-                   wiki_content wiki_page_attachments time_entry version shared].freeze
+  OBSERVABLES = %i[issue issue_relation issue_attachments user member attachment group group_users project
+                   project_attachments wiki_content wiki_page_attachments time_entry version shared].freeze
   PROJECT_OBSERVABLES = %i[issue issue_attachments project project_attachments wiki_content wiki_page_attachments
-                           time_entry version].freeze
+                           time_entry version member].freeze
   COLLECTION_OBSERVABLES = %i[group_users issue_attachments project_attachments wiki_page_attachments].freeze
-  SINGLE_OBSERVABLES = %i[issue issue_relation user member group attachment project wiki_content time_entry version].freeze
+  SINGLE_OBSERVABLES = %i[issue issue_relation user member group attachment project wiki_content time_entry version]
+                       .freeze
 
   acts_as_list
 

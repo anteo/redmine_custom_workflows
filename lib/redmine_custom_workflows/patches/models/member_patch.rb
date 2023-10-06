@@ -74,5 +74,5 @@ end
 if Redmine::Plugin.installed?('easy_extensions')
   RedmineExtensions::PatchManager.register_model_patch 'Member', 'RedmineCustomWorkflows::Patches::Models::MemberPatch'
 else
-  User.prepend RedmineCustomWorkflows::Patches::Models::MemberPatch
+  Member.prepend RedmineCustomWorkflows::Patches::Models::MemberPatch
 end

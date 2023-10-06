@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-# Redmine plugin for Custom Workflows
+# Redmine plugin for Document Management System "Features"
 #
-# Copyright © 2015-19 Anton Argirov
 # Copyright © 2019-23 Karel Pičman <karel.picman@kontron.com>
 #
 # This program is free software; you can redistribute it and/or
@@ -21,25 +20,26 @@
 
 require File.expand_path('../../test_helper', __FILE__)
 
-# User patch test class
-class UserPatchTest < RedmineCustomWorkflows::Test::UnitTest
-  fixtures :users
+# Users controller patch test
+class MembersControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
+  fixtures :user_preferences, :roles, :members, :member_roles, :custom_workflows, :custom_workflows_projects
 
   def setup
-    @user1 = User.find 1
+    super
+    @member1 = Member.find 1
+    @request.session[:user_id] = @jsmith.id
+    @controller = MembersController.new
   end
 
-  def test_truth
-    assert_kind_of User, @user1
+  def test_delete_with_cw
+    delete :destroy, params: { id: @member1 }
+    assert_response :redirect
+    assert_equal 'Custom workflow', @controller.flash[:notice]
   end
 
-  def test_custom_workflow_messages
-    @user1.custom_workflow_messages[:notice] = 'Okay'
-    assert_equal 'Okay', @user1.custom_workflow_messages[:notice]
-  end
-
-  def test_custom_workflow_env
-    @user1.custom_workflow_env[:remote_ip] = '127.0.0.1'
-    assert_equal '127.0.0.1', @user1.custom_workflow_env[:remote_ip]
+  def test_cw_env
+    delete :destroy, params: { id: @member1 }
+    assert_response :redirect
+    assert_equal request.remote_ip, @controller.flash[:warning]
   end
 end

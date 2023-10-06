@@ -76,9 +76,11 @@ cs:
   text_custom_workflow_issue_relation_code_note: Skripty jsou vykonávány v rámci objektu vazby mezi úkoly stejně jako
     volání `before_save` a `after_save` funkcí. Takže lze použít přímo vlastností vazby mezi úkoly. Proměnné (@variable)
     jsou rovněž dostupné a lze jich použít.
-  text_custom_workflow_shared_code_note: Tento kód bude spuštěn pře jakýmkoli jiným procesem a může obsahovat sdílený
+  text_custom_workflow_shared_code_note: Tento kód bude spuštěn před jakýmkoli jiným procesem a může obsahovat sdílený
     kód, např. funkce a třídy, které jsou potřeba v jiných procesech
   text_custom_workflow_user_code_note: Skripty jsou vykonávány v rámci objektu uživatel, když se objekt mění (maže).
+    Můžete přímo použít metody a vlastnosti objektu.
+  text_custom_workflow_member_code_note: Skripty jsou vykonávány v rámci objektu člen, když se objekt mění (maže).
     Můžete přímo použít metody a vlastnosti objektu.
   text_custom_workflow_group_code_note: Skripty jsou vykonávány v rámci objektu skupina, když se objekt mění (maže).
     Můžete přímo použít metody a vlastnosti objektu.
@@ -86,7 +88,7 @@ cs:
     skupiny. Pro přístup k objektům použijte proměnné @user a @group.
   text_custom_workflow_attachment_code_note: Skripty jsou vykonávány v rámci objektu příloha, když se tento objekt mění
     (maže se). Můžete přímo použít metody a vlastnosti objektu. Mějte na paměti, že se to týká všech typů příloh
-    (u úkolů, dokumentů, wiki stránek atd.), takže byste měli zkontrolovat proměnnou 'container_type' pro určení,
+    (u úkolů, dokumentů, wiki stránek, atd.), takže byste měli zkontrolovat proměnnou 'container_type' pro určení,
     o jakou přílohu se jedná.
   text_custom_workflow_issue_attachments_code_note: Tento skripty se vykonávají když je příloha přidána nebo odebrába
     z úkolu. Můžete použít proměnné @issue a @attachment pro přístup k těmto objektům ve skriptu.
@@ -115,6 +117,7 @@ cs:
   custom_workflow_observable_group: Skupina
   custom_workflow_observable_user: Uživatel
   custom_workflow_observable_attachment: Příloha
+  custom_workflow_observable_member: Člen
   custom_workflow_observable_project: Projekt
   custom_workflow_observable_project_attachments: Soubory
   custom_workflow_observable_wiki_content: Wiki

@@ -1,4 +1,4 @@
-Custom Workflows plug-in 2.0.10 devel
+Custom Workflows plug-in 2.1.0 devel
 =====================================
 
 [![GitHub CI](https://github.com/anteo/redmine_custom_workflows/actions/workflows/rubyonrails.yml/badge.svg?branch=devel)](https://github.com/anteo/redmine_custom_workflows/actions/workflows/rubyonrails.yml)
@@ -21,6 +21,7 @@ Supported observable objects:
 * Issue relations
 * Time entry
 * User
+* Member
 * Version
 * Wiki
 * \<Shared code\>
@@ -55,7 +56,7 @@ Installation
 From a ZIP file:
 
 * Download the latest version of the plugin.
-* In case of an upgrade remove the original *plugins/redmine_custom_workflows* folder.
+* In case of an upgrade, remove the original *plugins/redmine_custom_workflows* folder.
 * Unzip it to /plugins.
 
 From the Git repository:

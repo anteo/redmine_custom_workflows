@@ -221,3 +221,25 @@ custom_workflows_010:
   before_destroy: "self.custom_workflow_messages[:warning] = self.custom_workflow_env[:remote_ip]\n
                    Rails.logger.info \">>> #{self.class.name} #{self.id }#{self.custom_workflow_env[:remote_ip]}\""
   after_destroy:  ''
+
+custom_workflows_011:
+  id: 11
+  before_save: ''
+  after_save: ''
+  name: 'Member CW test'
+  description: 'Testing workflow'
+  position: 11
+  is_for_all: 0
+  author: 'karel.picman@kontron.com'
+  created_at: 2023-10-06 09:29:27 +02:00
+  updated_at: 2023-10-06 09:29:27 +02:00
+  active: 1
+  observable: 'member'
+  shared_code: NULL
+  before_add: NULL
+  after_add: NULL
+  before_remove: NULL
+  after_remove: NULL
+  before_destroy: "self.custom_workflow_messages[:notice] = 'Custom workflow'\n
+                   self.custom_workflow_messages[:warning] = self.custom_workflow_env[:remote_ip]"
+  after_destroy: ''

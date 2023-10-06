@@ -22,3 +22,7 @@ custom_workflows_projects_005:
 custom_workflows_projects_006:
   project_id:         1
   custom_workflow_id: 10 # Wiki page
+
+custom_workflows_projects_007:
+  project_id:         1
+  custom_workflow_id: 11 # Member
