@@ -34,7 +34,7 @@ class WikiControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
   end
 
   def test_update_with_cw
-    put "/projects/#{@projects1.id}/wiki/Another_page",
+    put "/projects/#{@project1.id}/wiki/Another_page",
         params: {
           content: { comments: 'my comments', text: 'edited', version: 1 }
         }
