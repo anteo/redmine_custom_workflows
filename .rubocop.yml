@@ -18,7 +18,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 AllCops:
-  TargetRubyVersion: 2.7
+  TargetRubyVersion: 3.1
   TargetRailsVersion: 6.1
 
   NewCops: enable
@@ -58,4 +58,7 @@ Rails/SkipsModelValidations:
     - db/migrate/20210210144000_change_default_active_boolean_value_to_custom_workflows.rb
 
 Style/ExpandPathArguments:
+  Enabled: false
+
+Style/HashSyntax:
   Enabled: false
