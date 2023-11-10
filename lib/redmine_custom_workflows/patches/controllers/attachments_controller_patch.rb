@@ -52,7 +52,7 @@ module RedmineCustomWorkflows
             next if o&.custom_workflow_messages&.empty?
 
             o.custom_workflow_messages.each do |key, value|
-              if value&.present?
+              if value.present?
                 flash[key] = value
               else
                 flash.delete key

@@ -25,7 +25,7 @@ class CreateCustomWorkflows < ActiveRecord::Migration[4.2]
     create_table :custom_workflows, force: true do |t|
       t.references :project
       t.text :script, null: true, default: nil
-      t.boolean :is_enabled
+      t.boolean :is_enabled, null: false, default: false
       t.timestamps
       t.index :project_id, unique: true
     end

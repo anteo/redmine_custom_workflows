@@ -22,7 +22,7 @@
 module RedmineCustomWorkflows
   module Test
     # Test case base class
-    class TestCase < ActionController::TestCase
+    class TestCase < ActionDispatch::IntegrationTest
       fixtures :users, :email_addresses, :projects
 
       # Allow us to override the fixtures method to implement fixtures for our plugin.

@@ -26,19 +26,19 @@ class UsersControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
 
   def setup
     super
-    @request.session[:user_id] = @admin.id
+    post '/login', params: { username: 'admin', password: 'admin' }
     @controller = UsersController.new
   end
 
   def test_update_with_cw
-    put :update, params: { id: @jsmith.id, user: { lastname: 'updated_lastname' } }
-    assert_redirected_to edit_user_path(id: @jsmith.id)
+    put "/users/#{@jsmith.id}", params: { user: { lastname: 'updated_lastname' } }
+    assert_redirected_to edit_user_path(@jsmith)
     assert_equal 'Custom workflow', @controller.flash[:notice]
   end
 
   def test_cw_env
-    put :update, params: { id: @jsmith.id, user: { lastname: 'updated_lastname' } }
-    assert_redirected_to edit_user_path(id: @jsmith.id)
+    put "/users/#{@jsmith.id}", params: { user: { lastname: 'updated_lastname' } }
+    assert_redirected_to edit_user_path(@jsmith)
     assert_equal request.remote_ip, @controller.flash[:warning]
   end
 end

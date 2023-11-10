@@ -28,22 +28,22 @@ class GroupControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
   def setup
     super
     @group10 = Group.find 10
-    @request.session[:user_id] = @admin.id
+    post '/login', params: { username: 'admin', password: 'admin' }
     @controller = GroupsController.new
-    default_url_options[:host] = 'test.host'
+    default_url_options[:host] = 'www.example.com'
   end
 
   def test_update_with_cw
     @request.headers['Referer'] = edit_group_path(id: @group10.id)
-    put :update, params: { id: @group10.id, group: { name: 'Updated name' } }
-    assert_redirected_to edit_group_path(id: @group10.id)
+    put "/groups/#{@group10.id}", params: { group: { name: 'Updated name' } }
+    assert_redirected_to groups_path
     assert_equal 'Custom workflow', @controller.flash[:notice]
   end
 
   def test_cw_env
     @request.headers['Referer'] = edit_group_path(id: @group10.id)
-    put :update, params: { id: @group10.id, group: { name: 'Updated name' } }
-    assert_redirected_to edit_group_path(id: @group10.id)
+    put "/groups/#{@group10.id}/", params: { group: { name: 'Updated name' } }
+    assert_redirected_to groups_path
     assert_equal request.remote_ip, @controller.flash[:warning]
   end
 end

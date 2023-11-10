@@ -28,8 +28,6 @@ class CustomWorkflowsControllerTest < RedmineCustomWorkflows::Test::TestCase
   def setup
     super
     @cw1 = CustomWorkflow.find 1
-    User.current = nil
-    @request.session[:user_id] = @admin.id
   end
 
   def test_truth
@@ -37,13 +35,14 @@ class CustomWorkflowsControllerTest < RedmineCustomWorkflows::Test::TestCase
   end
 
   def test_index_admin
-    get :index
+    post '/login', params: { username: 'admin', password: 'admin' }
+    get '/custom_workflows'
     assert_response :success
   end
 
   def test_index_non_admin
-    @request.session[:user_id] = @jsmith.id
-    get :index
+    post '/login', params: { username: 'jsmith', password: 'jsmith' }
+    get '/custom_workflows'
     assert_response :forbidden
   end
 end

@@ -65,8 +65,6 @@ class CustomWorkflowsController < ApplicationController
     end
   end
 
-  def edit; end
-
   def new
     @workflow = CustomWorkflow.new
     @workflow.author = cookies[:custom_workflows_author]
@@ -74,6 +72,8 @@ class CustomWorkflowsController < ApplicationController
       format.html
     end
   end
+
+  def edit; end
 
   def import
     xml = params[:file].read

@@ -34,7 +34,7 @@ class AlterCustomWorkflows < ActiveRecord::Migration[4.2]
   def down
     change_table(:custom_workflows, bulk: true) do |t|
       t.references :project
-      t.boolean :is_enabled
+      t.boolean :is_enabled, null: false, default: false
       t.remove :name
       t.remove :description
       t.remove :position

@@ -27,18 +27,18 @@ class ProjectsControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
 
   def setup
     super
-    @request.session[:user_id] = @jsmith.id
+    post '/login', params: { username: 'jsmith', password: 'jsmith' }
     @controller = ProjectsController.new
   end
 
   def test_update_with_cw
-    post :update, params: { id: @project1.id, project: { name: 'Updated name' } }
+    patch "/projects/#{@project1.id}", params: { project: { name: 'Updated name' } }
     assert_redirected_to settings_project_path(@project1)
     assert_equal 'Custom workflow', @controller.flash[:notice]
   end
 
   def test_cw_env
-    post :update, params: { id: @project1.id, project: { name: 'Updated name' } }
+    patch "/projects/#{@project1.id}", params: { project: { name: 'Updated name' } }
     assert_redirected_to settings_project_path(@project1)
     assert_equal request.remote_ip, @controller.flash[:warning]
   end

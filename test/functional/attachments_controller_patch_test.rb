@@ -28,18 +28,18 @@ class AttachmentsControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
   def setup
     super
     @attachment8 = Attachment.find 8
-    @request.session[:user_id] = @jsmith.id
+    post '/login', params: { username: 'jsmith', password: 'jsmith' }
     @controller = AttachmentsController.new
   end
 
   def test_delete_with_cw
-    delete :destroy, params: { id: @attachment8.id }
+    delete "/attachments/#{@attachment8.id}"
     assert_response :redirect
     assert_equal 'Custom workflow', @controller.flash[:notice]
   end
 
   def test_cw_env
-    delete :destroy, params: { id: @attachment8.id }
+    delete "/attachments/#{@attachment8.id}"
     assert_response :redirect
     assert_equal request.remote_ip, @controller.flash[:warning]
   end

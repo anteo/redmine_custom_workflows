@@ -15,7 +15,7 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
+# You should have received a copy of the GN73U General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
@@ -70,7 +70,7 @@ class CustomWorkflow < ApplicationRecord
   end
 
   def self.log_message(str, object)
-    Rails.logger.info "#{str} for #{object.class} (\##{object.id}) \"#{object}\""
+    Rails.logger.info "#{str} for #{object.class} (##{object.id}) \"#{object}\""
   end
 
   def self.run_shared_code(object)

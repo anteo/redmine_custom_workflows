@@ -29,18 +29,18 @@ class TimelogControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
   def setup
     super
     @te1 = TimeEntry.find 1
-    @request.session[:user_id] = @jsmith.id
+    post '/login', params: { username: 'jsmith', password: 'jsmith' }
     @controller = TimelogController.new
   end
 
   def test_delete_with_cw
-    delete :destroy, params: { id: @te1 }
+    delete "/time_entries/#{@te1.id}"
     assert_response :redirect
     assert_equal 'Custom workflow', @controller.flash[:notice]
   end
 
   def test_cw_env
-    delete :destroy, params: { id: @te1 }
+    delete "/time_entries/#{@te1.id}"
     assert_response :redirect
     assert_equal request.remote_ip, @controller.flash[:warning]
   end

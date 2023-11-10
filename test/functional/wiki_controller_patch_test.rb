@@ -29,15 +29,13 @@ class WikiControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
   def setup
     super
     @wp1 = WikiPage.find 1
-    @request.session[:user_id] = @jsmith.id
+    post '/login', params: { username: 'jsmith', password: 'jsmith' }
     @controller = WikiController.new
   end
 
   def test_update_with_cw
-    put :update,
+    put "/projects/#{@projects1.id}/wiki/Another_page",
         params: {
-          project_id: @project1.id,
-          id: 'Another_page',
           content: { comments: 'my comments', text: 'edited', version: 1 }
         }
     assert_response :redirect

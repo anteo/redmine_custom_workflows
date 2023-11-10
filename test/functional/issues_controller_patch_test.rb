@@ -29,26 +29,26 @@ class IssuesControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
   def setup
     super
     @issue1 = Issue.find 1
-    @request.session[:user_id] = @jsmith.id
+    post '/login', params: { username: 'jsmith', password: 'jsmith' }
     @controller = IssuesController.new
   end
 
   def test_update_with_cw
-    put :update, params: { id: @issue1.id, issue: { subject: 'Updated subject' } }
-    assert_redirected_to action: 'show', id: @issue1.id
+    put "/issues/#{@issue1.id}", params: { issue: { subject: 'Updated subject' } }
+    assert_redirected_to issue_path(@issue1)
     assert_equal 'Custom workflow', @controller.flash[:notice]
   end
 
   def test_delete_with_cw
-    delete :destroy, params: { id: @issue1.id, todo: 'destroy' }
+    delete "/issues/#{@issue1.id}", params: { todo: 'destroy' }
     assert_response :redirect
     assert_equal 'Issue cannot be deleted', @controller.flash[:error]
     assert Issue.find_by(id: @issue1.id)
   end
 
   def test_cw_env
-    put :update, params: { id: @issue1.id, issue: { subject: 'Updated subject' } }
-    assert_redirected_to action: 'show', id: @issue1.id
+    put "/issues/#{@issue1.id}", params: { issue: { subject: 'Updated subject' } }
+    assert_redirected_to issue_path(@issue1)
     assert_equal request.remote_ip, @controller.flash[:warning]
   end
 end
