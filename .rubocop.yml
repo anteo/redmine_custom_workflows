@@ -61,4 +61,4 @@ Style/ExpandPathArguments:
   Enabled: false
 
 Style/HashSyntax:
-  Enabled: false
+  EnforcedShorthandSyntax: either
