@@ -1,8 +1,11 @@
 Changelog for Custom Workflows
 ==============================
 
-2.1.0 *2023-11-15*
+2.1.1 *????-??-??*
 -------------------
+
+2.1.0 *2023-11-15*
+------------------
     Member as an observable object
     Redmine 5.1 compatibility
 
