@@ -1,9 +1,14 @@
 Changelog for Custom Workflows
 ==============================
 
-2.1.0 *????-??-??*
+2.1.0 *2023-11-15*
 -------------------
     Member as an observable object
+    Redmine 5.1 compatibility
+
+* New: #324 - Add Member as a observable object
+* Bug: #322 - Problem with upgrading from 2.0.3 to 2.0.9
+* New: #320 - Interference with other redmine-plugins
 
 2.0.9 *2023-06-06*
 ------------------
