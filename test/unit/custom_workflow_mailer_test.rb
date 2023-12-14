@@ -40,7 +40,7 @@ class CustomWorkflowMailerTest < RedmineCustomWorkflows::Test::UnitTest
   end
 
   def test_custom_email
-    CustomWorkflowMailer.deliver_custom_email @user2, 'Subject', 'Body'
+    CustomWorkflowMailer.deliver_custom_email @user2, subject: 'Subject', text_body: 'Body', html_body: 'Body'
     email = last_email
     assert text_part(email).body.include? 'Body'
     assert html_part(email).body.include? 'Body'

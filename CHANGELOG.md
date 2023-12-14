@@ -4,6 +4,16 @@ Changelog for Custom Workflows
 2.1.1 *????-??-??*
 ------------------
 
+IMPORTANT: Parameters of *CustomWorkflowMailer.deliver_custom_email* method has changed.
+
+before: `CustomWorkflowMailer.deliver_custom_email(user, subject, text)`
+
+now: `CustomWorkflowMailer.deliver_custom_email(user, headers = {})`
+
+To achieve the same behaviour you have to modify an existing callig as follows
+
+`CustomWorkflowMailer.deliver_custom_email(user, subject: subject, text_body: text)`
+
 2.1.0 *2023-11-15*
 ------------------
     Member as an observable object

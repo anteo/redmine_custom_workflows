@@ -122,6 +122,14 @@ E.g.:
 self.custom_workflow_env[:remote_ip]
 ```
 
+An email can be sent from within a script.
+
+E.g.:
+
+```ruby
+CustomWorkflowMailer.deliver_custom_email(user, subject: subject, text_body: text)
+```
+
 Enabling custom workflows for projects
 --------------------------------------
 

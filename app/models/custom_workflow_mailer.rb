@@ -25,13 +25,29 @@ require 'mailer'
 class CustomWorkflowMailer < Mailer
   layout 'mailer'
 
-  def self.deliver_custom_email(user, subject, text)
-    custom_email(user, subject, text).deliver_later
+  def self.deliver_custom_email(user, headers = {})
+    custom_email(user, headers).deliver_later
   end
 
-  def custom_email(user, subject, text)
-    set_language_if_valid user.language
-    @text = text
-    mail to: user, subject: subject
+  def custom_email(user, headers)
+    headers[:to] = user.mail if user
+    text_body = headers.delete :text_body
+    html_body = headers.delete :html_body
+    template_name = headers.delete :template_name
+    template_params = headers.delete(:template_params) || {}
+    if text_body || html_body
+      mail headers do |format|
+        format.text { render text: text_body } if text_body
+        format.html { render text: html_body } if html_body
+      end
+    elsif template_name
+      template_params.each { |k, v| instance_variable_set("@#{k}", v) }
+      mail headers do |format|
+        format.text { render template_name }
+        format.html { render template_name } unless Setting.plain_text_mail?
+      end
+    else
+      raise 'Not :text_body, :html_body or :template_name specified'
+    end
   end
 end
