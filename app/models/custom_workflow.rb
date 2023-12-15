@@ -134,7 +134,7 @@ class CustomWorkflow < ApplicationRecord
     object.instance_eval(self[event]) if respond_to?(event) && self[event]
   rescue RedmineCustomWorkflows::Errors::WorkflowError => _e
     # Do nothing
-  rescue StandardError => e
+  rescue StandardError, ScriptError => e
     errors.add event, :invalid_script, error: e
   end
 

@@ -42,8 +42,22 @@ class CustomWorkflowMailerTest < RedmineCustomWorkflows::Test::UnitTest
   def test_custom_email
     CustomWorkflowMailer.deliver_custom_email @user2, subject: 'Subject', text_body: 'Body', html_body: 'Body'
     email = last_email
-    assert text_part(email).body.include? 'Body'
-    assert html_part(email).body.include? 'Body'
+    text = text_part(email).body
+    html = html_part(email).body
+    assert text.include?('Body'), "'Body' expected\n'#{text}' present'"
+    assert html.include?('Body'), "'Body' expected\n'#{html}' present'"
+  end
+
+  def test_custom_email_template
+    CustomWorkflowMailer.deliver_custom_email @user2,
+                                              subject: 'Subject',
+                                              template_name: 'mailer/test_email',
+                                              template_params: { url: Setting.host_name }
+    email = last_email
+    text = text_part(email).body
+    html = html_part(email).body
+    assert text.include?(Setting.host_name), "'#{Setting.host_name} expected\n'#{text}' present'"
+    assert html.include?(Setting.host_name), "'#{Setting.host_name} expected\n'#{html}' present'"
   end
 
   private

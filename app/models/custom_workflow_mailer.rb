@@ -37,8 +37,8 @@ class CustomWorkflowMailer < Mailer
     template_params = headers.delete(:template_params) || {}
     if text_body || html_body
       mail headers do |format|
-        format.text { render text: text_body } if text_body
-        format.html { render text: html_body } if html_body
+        format.text { render plain: text_body } if text_body.present?
+        format.html { render plain: html_body } if html_body.present? && !Setting.plain_text_mail?
       end
     elsif template_name
       template_params.each { |k, v| instance_variable_set("@#{k}", v) }
