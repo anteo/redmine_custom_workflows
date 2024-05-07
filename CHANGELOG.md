@@ -1,8 +1,12 @@
 Changelog for Custom Workflows
 ==============================
 
-2.1.1 *????-??-??*
+2.1.1 *2024-05-07*
 ------------------
+    Email notifications
+
+* New: #330 - Send mail to the author when an issue is created
+* Bug: #328 - Mail sending from custom workflows
 
 IMPORTANT: Parameters of *CustomWorkflowMailer.deliver_custom_email* method has changed.
 
