@@ -25,15 +25,15 @@ class CustomWorkflowMailer < Mailer
   layout 'mailer'
 
   def self.deliver_custom_email(user, headers = {})
-    custom_email(user, headers).deliver_later
+    custom_email(user, headers, headers.dup).deliver_later
   end
 
-  def custom_email(user, headers)
-    headers[:to] = user.mail if user
-    text_body = headers.delete :text_body
-    html_body = headers.delete :html_body
-    template_name = headers.delete :template_name
-    template_params = headers.delete(:template_params) || {}
+  def custom_email(user, headers, cw_headers)
+    headers[:to] ||= user.mail
+    text_body = cw_headers[:text_body]
+    html_body = cw_headers[:html_body]
+    template_name = cw_headers[:template_name]
+    template_params = cw_headers[:template_params] || {}
     if text_body || html_body
       mail headers do |format|
         format.text { render plain: text_body } if text_body.present?
