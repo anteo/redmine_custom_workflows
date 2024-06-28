@@ -1,8 +1,12 @@
 Changelog for Custom Workflows
 ==============================
 
-2.1.2 *????-??-??*
+2.1.2 *2024-06-28*
 ------------------
+
+    Custom emails
+
+* Bug: #340 - Send email to address in custom field?
 
 2.1.1 *2024-05-07*
 ------------------
