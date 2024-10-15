@@ -77,6 +77,10 @@ jobs:
       RAILS_ENV: test
       NAME: redmine_custom_workflows
     steps:
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install subversion
       - name: Clone Redmine
         # Get the latest stable Redmine
         run: svn export http://svn.redmine.org/redmine/branches/5.1-stable/ /opt/redmine
@@ -87,10 +91,10 @@ jobs:
         run: | 
           ln -s $(pwd) /opt/redmine/plugins/redmine_custom_workflows
       - name: Install Ruby and gems
-        uses: ruby/setup-ruby@0a29871fe2b0200a17a4497bae54fe5df0d973aa # v1.115.3
+        uses: ruby/setup-ruby@v1 # v1.115.3
         with:
           bundler-cache: true
-          ruby-version: '3.1'
+          ruby-version: '3.2'
       - name: Setup database
         # Create the database
         run: | 
