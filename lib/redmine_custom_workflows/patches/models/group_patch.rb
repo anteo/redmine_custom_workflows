@@ -38,22 +38,24 @@ module RedmineCustomWorkflows
             before_destroy :before_destroy_custom_workflows
             after_destroy :after_destroy_custom_workflows
 
+            has_and_belongs_to_many :users, # inherited
+                                    join_table: "#{table_name_prefix}groups_users#{table_name_suffix}", # inherited
+                                    before_add: proc {}, # => before_add_for_users
+                                    after_add: :user_added, # inherited
+                                    before_remove: proc {}, # => before_remove_for_users
+                                    after_remove: :user_removed # inherited
+
             def self.users_callback(event, group, user)
               group.instance_variable_set :@group, group
               group.instance_variable_set :@user, user
               CustomWorkflow.run_shared_code(group) if event.to_s.starts_with? 'before_'
               CustomWorkflow.run_custom_workflows :group_users, group, event
             end
+
             %i[before_add before_remove after_add after_remove].each do |observable|
-              send("#{observable}_for_users") << if Rails::VERSION::MAJOR >= 4
-                                                   lambda { |event, group, user|
-                                                     Group.users_callback(event, group, user)
-                                                   }
-                                                 else
-                                                   lambda { |group, user|
-                                                     Group.users_callback(observable, group, user)
-                                                   }
-                                                 end
+              send(:"#{observable}_for_users") << lambda { |event, group, user|
+                Group.users_callback(event, group, user)
+              }
             end
           end
         end

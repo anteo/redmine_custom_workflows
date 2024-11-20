@@ -40,7 +40,7 @@ class CustomWorkflowMailer < Mailer
         format.html { render plain: html_body } if html_body.present? && !Setting.plain_text_mail?
       end
     elsif template_name
-      template_params.each { |k, v| instance_variable_set("@#{k}", v) }
+      template_params.each { |k, v| instance_variable_set(:"@#{k}", v) }
       mail headers do |format|
         format.text { render template_name }
         format.html { render template_name } unless Setting.plain_text_mail?

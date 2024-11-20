@@ -39,6 +39,11 @@ module RedmineCustomWorkflows
             after_destroy :after_destroy_custom_workflows
             validate :validate_status
 
+            acts_as_attachable before_add: proc {}, # => before_add_for_attachments
+                               after_add: :attachment_added, # inherited
+                               before_remove: proc {}, # => before_remove_for_attachments
+                               after_remove: :attachment_removed # inherited
+
             def self.attachments_callback(event, issue, attachment)
               issue.instance_variable_set :@issue, issue
               issue.instance_variable_set :@attachment, attachment
@@ -47,15 +52,9 @@ module RedmineCustomWorkflows
             end
 
             %i[before_add before_remove after_add after_remove].each do |observable|
-              send("#{observable}_for_attachments") << if Rails::VERSION::MAJOR >= 4
-                                                         lambda { |event, issue, attachment|
-                                                           Issue.attachments_callback event, issue, attachment
-                                                         }
-                                                       else
-                                                         lambda { |issue, attachment|
-                                                           Issue.attachments_callback observable, issue, attachment
-                                                         }
-                                                       end
+              send(:"#{observable}_for_attachments") << lambda { |event, issue, attachment|
+                Issue.attachments_callback event, issue, attachment
+              }
             end
           end
         end

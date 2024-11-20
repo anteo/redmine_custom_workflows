@@ -38,7 +38,6 @@ class CustomWorkflowTest < RedmineCustomWorkflows::Test::UnitTest
 
   def test_import_from_xml
     xml = %(
-    <?xml version="1.0" encoding="UTF-8"?>
     <hash>
       <id type="integer">20</id>
       <before-save>Rails.logger.info '&gt;&gt;&gt; Okay'</before-save>

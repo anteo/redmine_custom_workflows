@@ -25,7 +25,8 @@ def custom_workflows_init
   # Administration menu extension
   Redmine::MenuManager.map :admin_menu do |menu|
     menu.push :custom_workflows, { controller: 'custom_workflows', action: 'index' },
-              caption: :label_custom_workflow_plural, html: { class: 'icon icon-workflows workflows' }
+              caption: :label_custom_workflow_plural, icon: 'workflows',
+              html: { class: 'icon icon-workflows workflows' }
   end
 end
 

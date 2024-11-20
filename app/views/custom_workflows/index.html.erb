@@ -20,9 +20,9 @@
 
 <% html_title l(:label_custom_workflow_plural) %>
 <div class="contextual">
-  <%= link_to l(:label_custom_workflow_new), new_custom_workflow_path, class: 'icon icon-add' %>
+  <%= link_to sprite_icon('add', l(:label_custom_workflow_new)), new_custom_workflow_path, class: 'icon icon-add' %>
   <%= actions_dropdown do %>
-    <%= link_to l(:label_custom_workflow_import), '#', class: 'icon icon-move',
+    <%= link_to sprite_icon('import', l(:label_custom_workflow_import)), '#', class: 'icon icon-move',
                 onclick: "showModal('import-dialog', '450px'); return false;" %>
     <% end %>
 </div>
@@ -49,16 +49,18 @@
           <td class="buttons">
             <%= reorder_handle workflow, url: url_for(action: 'reorder', id: workflow) %>
             <% if workflow.active? %>
-              <%= link_to l(:button_custom_workflow_deactivate), custom_workflow_status_path(workflow, active: false),
-                          class: 'icon icon-lock', method: :post %>
+              <%= link_to sprite_icon('lock', l(:button_custom_workflow_deactivate)),
+                          custom_workflow_status_path(workflow, active: false), class: 'icon icon-lock',
+                          method: :post %>
             <% else %>
-              <%= link_to l(:button_activate), custom_workflow_status_path(workflow, active: true),
-                          class: 'icon icon-unlock', method: :post %>
+              <%= link_to sprite_icon('unlock', l(:button_activate)),
+                          custom_workflow_status_path(workflow, active: true), class: 'icon icon-unlock',
+                          method: :post %>
             <% end %>
-            <%= link_to l(:label_custom_workflow_export), export_custom_workflow_path(workflow),
-                        class: 'icon icon-download', method: :get %>
-            <%= link_to l(:button_delete), workflow, class: 'icon icon-del', data: { confirm: l(:text_are_you_sure) },
-                        confirm: l(:text_are_you_sure), method: :delete %>
+            <%= link_to sprite_icon('download', l(:label_custom_workflow_export)),
+                        export_custom_workflow_path(workflow), class: 'icon icon-download', method: :get %>
+            <%= link_to sprite_icon('del', l(:button_delete)), workflow, class: 'icon icon-del',
+                        data: { confirm: l(:text_are_you_sure) }, confirm: l(:text_are_you_sure), method: :delete %>
           </td>
         </tr>
       <% end %>

@@ -45,6 +45,14 @@ module RedmineCustomWorkflows
             before_destroy :before_destroy_custom_workflows
             after_destroy :after_destroy_custom_workflows
 
+            acts_as_attachable view_permission: :view_files, # inherited
+                               edit_permission: :manage_files, # inherited
+                               delete_permission: :manage_files, # inherited
+                               before_add: proc {}, # => before_add_for_attachments
+                               after_add: proc {}, # => after_add_for_attachments
+                               before_remove: proc {}, # => before_remove_for_attachments
+                               after_remove: proc {} # => after_remove_for_attachments
+
             def self.attachments_callback(event, project, attachment)
               project.instance_variable_set(:@project, project)
               project.instance_variable_set(:@attachment, attachment)
@@ -53,7 +61,7 @@ module RedmineCustomWorkflows
             end
 
             %i[before_add before_remove after_add after_remove].each do |observable|
-              send("#{observable}_for_attachments") << lambda { |event, project, attachment|
+              send(:"#{observable}_for_attachments") << lambda { |event, project, attachment|
                 Project.attachments_callback event, project, attachment
               }
             end

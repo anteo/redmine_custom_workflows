@@ -32,6 +32,20 @@ module RedmineCustomWorkflows
         end
         super(table_names)
       end
+
+      protected
+
+      def last_email
+        ActionMailer::Base.deliveries.last
+      end
+
+      def text_part(email)
+        email.parts.detect { |part| part.content_type.include?('text/plain') }
+      end
+
+      def html_part(email)
+        email.parts.detect { |part| part.content_type.include?('text/html') }
+      end
     end
   end
 end
