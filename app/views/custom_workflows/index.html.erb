@@ -59,8 +59,7 @@
             <% end %>
             <%= link_to sprite_icon('download', l(:label_custom_workflow_export)),
                         export_custom_workflow_path(workflow), class: 'icon icon-download', method: :get %>
-            <%= link_to sprite_icon('del', l(:button_delete)), workflow, class: 'icon icon-del',
-                        data: { confirm: l(:text_are_you_sure) }, confirm: l(:text_are_you_sure), method: :delete %>
+            <%= delete_link custom_workflow_path(workflow) %>
           </td>
         </tr>
       <% end %>

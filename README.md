@@ -76,6 +76,8 @@ After download:
 cd redmine
 bundle install
 RAILS_ENV=production bundle exec rake redmine:plugins:migrate NAME=redmine_custom_workflows
+RAILS_ENV=production bundle exec rake assets:precompile
+chown -R www-data:www-data redmine
 systemctl restart apache2
 ```
 
@@ -201,4 +203,4 @@ fall into infinite loop.
 Compatibility
 -------------
 
-This plug-in is compatible with Redmine 4.1.x., 4.2.x. and 5.0.x.
+Redmine 6.x required.
