@@ -1,5 +1,5 @@
-Custom Workflows plug-in 3.0.0
-==============================
+Custom Workflows plug-in 3.0.1 devel
+====================================
 
 [![GitHub CI](https://github.com/anteo/redmine_custom_workflows/actions/workflows/rubyonrails.yml/badge.svg?branch=master)](https://github.com/anteo/redmine_custom_workflows/actions/workflows/rubyonrails.yml)
 [![Support Ukraine Badge](https://bit.ly/support-ukraine-now)](https://github.com/support-ukraine/support-ukraine)
