@@ -203,4 +203,11 @@ fall into infinite loop.
 Compatibility
 -------------
 
-Redmine 6.x required.
+This plugin requires **Redmine 6.x** to function properly. Ensure that your Redmine installation is up-to-date before proceeding with the installation.
+
+If you are using an older version of Redmine, please check the available plugin releases:  
+👉 [Redmine Custom Workflows Releases](https://github.com/anteo/redmine_custom_workflows/releases)  
+
+**Note:**  
+When downloading the plugin from a ZIP file, ensure that the extracted folder does **not** contain version numbers in its name (e.g., `redmine_custom_workflows-3.0.0`). Rename the folder to just `redmine_custom_workflows` before proceeding with the installation to avoid any compatibility issues.
+
