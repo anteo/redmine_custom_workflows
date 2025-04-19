@@ -22,6 +22,7 @@
 class AlterCustomWorkflows < ActiveRecord::Migration[4.2]
   def up
     change_table(:custom_workflows, bulk: true) do |t|
+      t.remove_index :project_id
       t.remove :project_id
       t.remove :is_enabled
       t.string :name, null: false, default: ''
@@ -33,6 +34,7 @@ class AlterCustomWorkflows < ActiveRecord::Migration[4.2]
   def down
     change_table(:custom_workflows, bulk: true) do |t|
       t.references :project
+      t.index :project_id, unique: true
       t.boolean :is_enabled, null: false, default: false
       t.remove :name
       t.remove :description
