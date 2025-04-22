@@ -24,6 +24,7 @@ class AlterCustomWorkflows < ActiveRecord::Migration[4.2]
     change_table(:custom_workflows, bulk: true) do |t|
       t.remove_index :project_id
       t.remove :project_id
+      t.change_null :is_enabled, true # To remove a not-null constraint in SQL server
       t.remove :is_enabled
       t.string :name, null: false, default: ''
       t.string :description, :string, null: false, default: ''
