@@ -26,9 +26,7 @@ class AlterCustomWorkflows < ActiveRecord::Migration[4.2]
       t.remove :project_id
       # TODO: The column cannot be removed on SQL server due to NOT NULL constraint.
       # The constraint's name is random and therefore cannot be easily removed.
-      if ActiveRecord::Base.connection.adapter_name.downcase != 'sqlserver'
-        t.remove :is_enabled
-      end
+      t.remove :is_enabled if ActiveRecord::Base.connection.adapter_name.downcase != 'sqlserver'
       t.string :name, null: false, default: ''
       t.string :description, :string, null: false, default: ''
       t.integer :position, :integer, null: false, default: 1
