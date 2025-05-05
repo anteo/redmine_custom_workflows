@@ -75,9 +75,8 @@ After download:
 ```shell
 cd redmine
 bundle install
-RAILS_ENV=production bundle exec rake redmine:plugins:migrate NAME=redmine_custom_workflows
-RAILS_ENV=production bundle exec rake assets:precompile
-chown -R www-data:www-data redmine
+bundle exec rake redmine:plugins:migrate NAME=redmine_custom_workflows RAILS_ENV=production
+chown -R www-data:www-data plugins/redmine_custom_workflows
 systemctl restart apache2
 ```
 
