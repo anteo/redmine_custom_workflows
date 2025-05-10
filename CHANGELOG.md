@@ -1,8 +1,14 @@
 Changelog for Custom Workflows
 ==============================
 
-3.0.1 *????-??-??*
+3.0.1 *2025-05-10*
 ------------------
+
+    SQL Server compatibility
+
+* Bug: #359 - Can't install plugin with redmine 6.0.5 in docker container
+* Bug: #358 - Plugin failed to install
+* New: #354 - Update compatibility section in README
 
 3.0.0 *2024-12-06*
 ------------------
