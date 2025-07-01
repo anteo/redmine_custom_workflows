@@ -87,9 +87,4 @@ module RedmineCustomWorkflows
 end
 
 # Apply the patch
-if Redmine::Plugin.installed?('easy_extensions')
-  RedmineExtensions::PatchManager.register_model_patch 'IssueRelation',
-                                                       'RedmineCustomWorkflows::Patches::Models::IssueRelationPatch'
-else
-  IssueRelation.prepend RedmineCustomWorkflows::Patches::Models::IssueRelationPatch
-end
+IssueRelation.prepend RedmineCustomWorkflows::Patches::Models::IssueRelationPatch

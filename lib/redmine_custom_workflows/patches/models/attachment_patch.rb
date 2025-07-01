@@ -69,9 +69,4 @@ module RedmineCustomWorkflows
 end
 
 # Apply the patch
-if Redmine::Plugin.installed?('easy_extensions')
-  RedmineExtensions::PatchManager.register_model_patch 'Attachment',
-                                                       'RedmineCustomWorkflows::Patches::Models::AttachmentPatch'
-else
-  Attachment.prepend RedmineCustomWorkflows::Patches::Models::AttachmentPatch
-end
+Attachment.prepend RedmineCustomWorkflows::Patches::Models::AttachmentPatch

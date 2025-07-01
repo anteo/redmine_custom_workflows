@@ -89,8 +89,4 @@ module RedmineCustomWorkflows
 end
 
 # Apply the patch
-if Redmine::Plugin.installed?('easy_extensions')
-  RedmineExtensions::PatchManager.register_model_patch 'Group', 'RedmineCustomWorkflows::Patches::Models::GroupPatch'
-else
-  Group.prepend RedmineCustomWorkflows::Patches::Models::GroupPatch
-end
+Group.prepend RedmineCustomWorkflows::Patches::Models::GroupPatch

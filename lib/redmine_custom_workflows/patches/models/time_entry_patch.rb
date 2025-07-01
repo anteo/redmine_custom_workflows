@@ -69,9 +69,4 @@ module RedmineCustomWorkflows
 end
 
 # Apply the patch
-if Redmine::Plugin.installed?('easy_extensions')
-  RedmineExtensions::PatchManager.register_model_patch 'TimeEntry',
-                                                       'RedmineCustomWorkflows::Patches::Models::TimeEntryPatch'
-else
-  TimeEntry.prepend RedmineCustomWorkflows::Patches::Models::TimeEntryPatch
-end
+TimeEntry.prepend RedmineCustomWorkflows::Patches::Models::TimeEntryPatch

@@ -24,7 +24,6 @@ module RedmineCustomWorkflows
       module GroupsControllerPatch
         ################################################################################################################
         # New methods
-        #
 
         def self.prepended(base)
           base.class_eval do

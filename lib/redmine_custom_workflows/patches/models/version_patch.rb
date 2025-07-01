@@ -69,9 +69,4 @@ module RedmineCustomWorkflows
 end
 
 # Apply the patch
-if Redmine::Plugin.installed?('easy_extensions')
-  RedmineExtensions::PatchManager.register_model_patch 'Version',
-                                                       'RedmineCustomWorkflows::Patches::Models::VersionPatch'
-else
-  Version.prepend RedmineCustomWorkflows::Patches::Models::VersionPatch
-end
+Version.prepend RedmineCustomWorkflows::Patches::Models::VersionPatch

@@ -58,9 +58,4 @@ module RedmineCustomWorkflows
 end
 
 # Apply the patch
-if Redmine::Plugin.installed?('easy_extensions')
-  RedmineExtensions::PatchManager.register_model_patch 'WikiPage',
-                                                       'RedmineCustomWorkflows::Patches::Models::WikiPagePatch'
-else
-  WikiPage.prepend RedmineCustomWorkflows::Patches::Models::WikiPagePatch
-end
+WikiPage.prepend RedmineCustomWorkflows::Patches::Models::WikiPagePatch

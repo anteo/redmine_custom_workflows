@@ -17,6 +17,9 @@
 # You should have received a copy of the GNU General Public License along with Redmine Custom Workflows plugin. If not,
 # see <https://www.gnu.org/licenses/>.
 
+require 'redmine'
+require "#{File.dirname(__FILE__)}/lib/redmine_custom_workflows"
+
 Redmine::Plugin.register :redmine_custom_workflows do
   name 'Redmine Custom Workflow plugin'
   url 'https://www.redmine.org/plugins/redmine_custom_workflows'
@@ -30,4 +33,9 @@ Redmine::Plugin.register :redmine_custom_workflows do
   permission :manage_project_workflow, {}, require: :member
 end
 
-require_relative 'after_init' unless Redmine::Plugin.installed?('easy_extensions')
+# Administration menu extension
+Redmine::MenuManager.map :admin_menu do |menu|
+  menu.push :custom_workflows, { controller: 'custom_workflows', action: 'index' },
+            caption: :label_custom_workflow_plural, icon: 'workflows',
+            html: { class: 'icon icon-workflows workflows' }
+end
