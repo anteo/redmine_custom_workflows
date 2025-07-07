@@ -1,11 +1,12 @@
 # Changelog for Custom Workflows
 
-3.0.1 *????-??-??*
+3.0.2 *????-??-??*
 ------------------
 
 3.0.1 *2025-07-07*
 ------------------
     SQL Server compatibility
+    Change of the license from GNU GPL v2 to v3
 
 * New: #360 - GNU GPL v2 -> v3
 * Bug: #359 - Can't install plugin with redmine 6.0.5 in docker container
