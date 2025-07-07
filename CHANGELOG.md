@@ -1,20 +1,16 @@
 # Changelog for Custom Workflows
 
-3.0.2 *????-??-??*
+3.0.1 *2025-07-07*
 ------------------
-
-3.0.1 *2025-05-10*
-------------------
-
     SQL Server compatibility
 
+* New: #360 - GNU GPL v2 -> v3
 * Bug: #359 - Can't install plugin with redmine 6.0.5 in docker container
 * Bug: #358 - Plugin failed to install
 * New: #354 - Update compatibility section in README
 
 3.0.0 *2024-12-06*
 ------------------
-
     Redmine 6
 
 * New: #350 - Redmine 6.0.0
