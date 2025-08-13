@@ -1,0 +1,109 @@
+# encoding: utf-8
+#
+# Redmine plugin for Custom Workflows
+#
+# Anton Argirov, Karel Pičman <karel.picman@kontron.com>
+#
+# This file is part of Redmine OAuth plugin.
+#
+# Redmine Custom Workflows plugin is free software: you can redistribute it and/or modify it under the terms of the GNU
+# General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your
+#  option) any later version.
+#
+# Redmine Custom Workflows plugin is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+# even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+# for more details.
+#
+# You should have received a copy of the GNU General Public License along with Redmine Custom Workflows plugin. If not,
+# see <https://www.gnu.org/licenses/>.
+
+zh:
+  project_module_custom_workflows_module: 自定义工作流
+  permission_manage_project_workflow: 管理项目自定义工作流
+
+  label_custom_workflow: 自定义工作流
+  label_custom_workflow_plural: 自定义工作流
+  label_custom_workflow_new: 创建自定义工作流
+  label_workflow_scripts: 工作流脚本
+  label_custom_workflow_export: 导出
+  label_custom_workflow_import: 导入工作流
+  label_save_workflows: 保存可观察对象
+  label_destroy_workflows: 删除可观察对象
+  label_add_workflows: 将可观察对象添加到集合
+  label_remove_workflows: 从集合中移除可观察对象
+
+  button_custom_workflow_deactivate: 停用
+
+  field_after_save: 保存可观察对象后执行的工作流脚本
+  field_before_save: 保存可观察对象前执行的工作流脚本
+  field_after_destroy: 删除可观察对象后执行的工作流脚本
+  field_before_destroy: 删除可观察对象前执行的工作流脚本
+  field_after_add: 添加可观察对象到集合后执行的工作流脚本
+  field_before_add: 添加可观察对象到集合前执行的工作流脚本
+  field_after_remove: 从集合中移除可观察对象后执行的工作流脚本
+  field_before_remove: 从集合中移除可观察对象前执行的工作流脚本
+  field_shared_code: 共享代码
+  field_observable: 可观察对象
+  field_enabled_for_all_projects: 对所有项目启用
+  field_custom_workflow_author: 作者邮箱
+  field_custom_workflow_file: 选择之前导出的 XML 流程文件
+  field_custom_workflow:
+    script: 工作流脚本
+
+  notice_successful_import: 自定义工作流已成功导入
+  notice_successful_status_change: 状态已成功更改
+  error_failed_import: 导入自定义工作流出错（未知格式？请查看日志）
+
+  activerecord:
+    errors:
+      messages:
+        invalid_script: "包含错误：%{error}"
+        custom_workflow_error: 自定义工作流错误（请联系管理员）
+        new_status_invalid: "禁止从 '%{old_status}' 转换到 '%{new_status}'"
+        scripts_absent: 至少应定义一个脚本
+
+  text_select_project_custom_workflows: 选择项目自定义工作流
+  text_custom_workflow_before_save_note: 你可以在此更改问题的属性。请勿在此脚本中创建或更新相关问题。
+    若需以错误结束，请使用 `raise RedmineCustomWorkflows::Errors::WorkflowError, '给用户的信息'`。
+  text_custom_workflow_after_save_note: 你可以在此更新或创建相关问题。注意，此脚本也会在新建问题时执行，请做好适当检查以防止无限递归。
+
+  text_custom_workflow_issue_code_note: 脚本在 Issue 对象上下文中执行，类似普通的 before_save 和 after_save 回调。
+    可直接（或通过 `self`）使用问题的方法和属性。也允许使用实例变量（@变量）。
+  text_custom_workflow_issue_relation_code_note: 脚本在 IssueRelation 对象上下文中执行，类似普通的 before_save 和 after_save 回调。
+    可直接（或通过 `self`）使用问题关系的方法和属性。也允许使用实例变量（@变量）。
+  text_custom_workflow_shared_code_note: 此代码将在其他工作流之前运行，可包含共享代码，如其他工作流需要的函数和类
+  text_custom_workflow_user_code_note: 当用户对象变更（删除）时，脚本在 User 对象上下文中执行。可直接（或通过 `self`）使用用户的方法和属性
+  text_custom_workflow_member_code_note: 当成员对象变更（删除）时，脚本在 Member 对象上下文中执行。可直接（或通过 `self`）使用 @member 的方法和属性
+  text_custom_workflow_group_code_note: 当群组对象变更（删除）时，脚本在 Group 对象上下文中执行。可直接（或通过 `self`）使用群组的方法和属性
+  text_custom_workflow_group_users_code_note: 当用户被添加到群组/从群组移除时执行这些脚本。可在脚本中使用变量 @user 和 @group 访问相关对象。
+  text_custom_workflow_attachment_code_note: 当附件对象变更（删除）时，脚本在 Attachment 对象上下文中执行。可直接（或通过 `self`）使用附件的方法和属性。
+    注意，这些脚本会影响所有附件类型（问题、文档、Wiki 页面等），因此你应在脚本中额外检查 'container_type' 字段，或选择特定的“...附件”可观察对象。
+  text_custom_workflow_issue_attachments_code_note: 当附件被添加到问题/从问题移除时执行这些脚本。可在脚本中使用变量 @issue 和 @attachment 访问相关对象。
+  text_custom_workflow_project_code_note: 当项目对象变更（删除）时，脚本在 Project 对象上下文中执行。可直接（或通过 `self`）使用项目的方法和属性
+  text_custom_workflow_project_attachments_code_note: 当文件被添加到项目/从项目移除时执行这些脚本。可在脚本中使用变量 @project 和 @attachment 访问相关对象。
+  text_custom_workflow_wiki_content_code_note: 当 Wiki 内容对象变更（删除）时，脚本在 Wiki Content 对象上下文中执行。可直接（或通过 `self`）使用项目的方法和属性
+  text_custom_workflow_wiki_page_attachments_code_note: 当文件被添加到 Wiki 页面/从 Wiki 页面移除时执行这些脚本。可在脚本中使用变量 @page 和 @attachment 访问相关对象。
+  text_custom_workflow_time_entry_code_note: 当工时对象变更（删除）时，脚本在 TimeEntry 对象上下文中执行。可直接（或通过 `self`）使用工时的方法和属性
+  text_custom_workflow_version_code_note: 当版本对象变更（删除）时，脚本在 Version 对象上下文中执行。可直接（或通过 `self`）使用版本的方法和属性
+  text_custom_workflow_before_destroy_note: 若需阻止对象删除，请使用 `return false`。
+
+  text_no_enabled_projects: 无项目
+  text_custom_workflow_author: 将包含在导出的 XML 中
+  text_custom_workflow_disabled: 已被管理员禁用
+  text_custom_workflow_is_for_all: 对所有项目启用
+
+  custom_workflow_observable_shared: <共享代码>
+  custom_workflow_observable_issue: 问题
+  custom_workflow_observable_issue_relation: 问题关系
+  custom_workflow_observable_issue_attachments: 问题附件
+  custom_workflow_observable_group: 组
+  custom_workflow_observable_user: 用户
+  custom_workflow_observable_member: 成员
+  custom_workflow_observable_attachment: 附件
+  custom_workflow_observable_project: 项目
+  custom_workflow_observable_project_attachments: 项目附件/文件
+  custom_workflow_observable_wiki_content: Wiki 内容
+  custom_workflow_observable_wiki_page_attachments: Wiki 页面附件
+  custom_workflow_observable_group_users: 组用户
+  custom_workflow_observable_time_entry: 耗时
+  custom_workflow_observable_version: 版本
