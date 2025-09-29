@@ -22,7 +22,6 @@ require File.expand_path('../../test_helper', __FILE__)
 # Group controller patch test
 class GroupControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
   include Rails.application.routes.url_helpers
-  fixtures :custom_workflows, :custom_workflows_projects
 
   def setup
     super

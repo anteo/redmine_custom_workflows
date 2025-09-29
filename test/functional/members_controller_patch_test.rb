@@ -21,7 +21,6 @@ require File.expand_path('../../test_helper', __FILE__)
 
 # Users controller patch test
 class MembersControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
-  fixtures :user_preferences, :roles, :members, :member_roles, :custom_workflows, :custom_workflows_projects
 
   def setup
     super

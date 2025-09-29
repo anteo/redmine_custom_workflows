@@ -21,9 +21,6 @@ require File.expand_path('../../test_helper', __FILE__)
 
 # Wiki controller patch test
 class WikiControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
-  fixtures :user_preferences, :issues, :versions, :trackers, :projects_trackers, :enabled_modules,
-           :enumerations, :wikis, :wiki_pages, :wiki_contents, :custom_workflows, :custom_workflows_projects,
-           :roles, :members, :member_roles
 
   def setup
     super

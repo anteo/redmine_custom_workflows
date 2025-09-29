@@ -21,7 +21,6 @@ require File.expand_path('../../test_helper', __FILE__)
 
 # Time entry patch test class
 class TimeEntryPatchTest < RedmineCustomWorkflows::Test::UnitTest
-  fixtures :time_entries
 
   def setup
     @time_entry1 = TimeEntry.find 1

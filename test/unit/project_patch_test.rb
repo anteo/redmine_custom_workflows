@@ -21,7 +21,6 @@ require File.expand_path('../../test_helper', __FILE__)
 
 # Project patch test class
 class ProjectPatchTest < RedmineCustomWorkflows::Test::UnitTest
-  fixtures :projects
 
   def setup
     @project1 = Project.find 1

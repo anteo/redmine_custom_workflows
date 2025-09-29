@@ -21,7 +21,6 @@ require File.expand_path('../../test_helper', __FILE__)
 
 # Version controller patch test
 class VersionsControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
-  fixtures :versions, :custom_workflows, :custom_workflows_projects, :roles, :members, :member_roles
 
   def setup
     super
