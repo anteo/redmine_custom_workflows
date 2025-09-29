@@ -21,7 +21,6 @@ require File.expand_path('../../test_helper', __FILE__)
 
 # Version controller patch test
 class VersionsControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
-
   def setup
     super
     @version1 = Version.find 1

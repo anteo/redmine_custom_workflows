@@ -21,7 +21,6 @@ require File.expand_path('../../test_helper', __FILE__)
 
 # Group patch test class
 class GroupPatchTest < RedmineCustomWorkflows::Test::UnitTest
-
   def setup
     @group10 = Group.find 10
   end

@@ -21,7 +21,6 @@ require File.expand_path('../../test_helper', __FILE__)
 
 # Users controller patch test
 class UsersControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
-
   def setup
     super
     post '/login', params: { username: 'admin', password: 'admin' }

@@ -21,7 +21,6 @@ require File.expand_path('../../test_helper', __FILE__)
 
 # User patch test class
 class UserPatchTest < RedmineCustomWorkflows::Test::UnitTest
-
   def setup
     @user1 = User.find 1
   end

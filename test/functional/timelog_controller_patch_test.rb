@@ -21,7 +21,6 @@ require File.expand_path('../../test_helper', __FILE__)
 
 # Time controller patch test
 class TimelogControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
-
   def setup
     super
     @te1 = TimeEntry.find 1

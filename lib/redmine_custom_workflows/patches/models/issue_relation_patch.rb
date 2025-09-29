@@ -60,8 +60,8 @@ module RedmineCustomWorkflows
           def before_save_custom_workflows
             @issue_relation = self
             @saved_attributes = attributes.dup
-            CustomWorkflow.run_shared_code self
-            CustomWorkflow.run_custom_workflows :issue_relation, self, :before_save
+            CustomWorkflow.run_shared_code? self
+            CustomWorkflow.run_custom_workflows? :issue_relation, self, :before_save
             throw :abort if errors.any?
             errors.empty? && (@saved_attributes == attributes || valid?)
           ensure
@@ -69,16 +69,16 @@ module RedmineCustomWorkflows
           end
 
           def after_save_custom_workflows
-            CustomWorkflow.run_custom_workflows :issue_relation, self, :after_save
+            CustomWorkflow.run_custom_workflows? :issue_relation, self, :after_save
           end
 
           def before_destroy_custom_workflows
-            res = CustomWorkflow.run_custom_workflows :issue_relation, self, :before_destroy
+            res = CustomWorkflow.run_custom_workflows? :issue_relation, self, :before_destroy
             throw :abort if res == false
           end
 
           def after_destroy_custom_workflows
-            CustomWorkflow.run_custom_workflows :issue_relation, self, :after_destroy
+            CustomWorkflow.run_custom_workflows? :issue_relation, self, :after_destroy
           end
         end
       end

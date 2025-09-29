@@ -21,9 +21,8 @@ module RedmineCustomWorkflows
   module Test
     # Test case base class
     class TestCase < ActionDispatch::IntegrationTest
-
       def initialize(name)
-        super(name)
+        super
         # Load all plugin's fixtures
         dir = File.join(File.dirname(__FILE__), 'fixtures')
         ext = '.yml'

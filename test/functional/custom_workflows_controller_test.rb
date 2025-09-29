@@ -21,7 +21,6 @@ require File.expand_path('../../test_helper', __FILE__)
 
 # Custom workflows controller test
 class CustomWorkflowsControllerTest < RedmineCustomWorkflows::Test::TestCase
-
   def setup
     super
     @cw1 = CustomWorkflow.find 1

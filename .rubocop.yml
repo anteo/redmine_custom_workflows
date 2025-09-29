@@ -18,14 +18,12 @@
 AllCops:
   TargetRubyVersion: 3.2
   TargetRailsVersion: 7.1
+  SuggestExtensions: false
 
   NewCops: enable
 
   Exclude:
     - '**/vendor/**/*'
-
-plugins:
-  - rubocop-performance
 
 # Rules for CustomWorkflows
 Metrics/BlockLength:

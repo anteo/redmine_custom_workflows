@@ -21,7 +21,6 @@ require File.expand_path('../../test_helper', __FILE__)
 
 # Attachment patch test class
 class AttachmentPatchTest < RedmineCustomWorkflows::Test::UnitTest
-
   def setup
     @attachment1 = Attachment.find 1
   end

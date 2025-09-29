@@ -21,7 +21,6 @@ require File.expand_path('../../test_helper', __FILE__)
 
 # Issue relation controller patch test
 class IssueRelationsControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
-
   def setup
     super
     @ir1 = IssueRelation.find 1

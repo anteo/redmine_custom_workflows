@@ -21,7 +21,6 @@ require File.expand_path('../../test_helper', __FILE__)
 
 # Wiki controller patch test
 class WikiControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
-
   def setup
     super
     @wp1 = WikiPage.find 1
