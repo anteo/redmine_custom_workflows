@@ -26,7 +26,6 @@ AllCops:
 
 plugins:
   - rubocop-performance
-  - rubocop-rails
 
 # Rules for CustomWorkflows
 Metrics/BlockLength:
