@@ -82,7 +82,7 @@ jobs:
           sudo apt-get install subversion
       - name: Clone Redmine
         # Get the latest stable Redmine
-        run: svn export http://svn.redmine.org/redmine/branches/6.0-stable/ /opt/redmine
+        run: svn export http://svn.redmine.org/redmine/branches/6.1-stable/ /opt/redmine
       - name: Checkout code
         uses: actions/checkout@v3        
       - name: Link the plugin

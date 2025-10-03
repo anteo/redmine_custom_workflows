@@ -22,7 +22,6 @@ require File.expand_path('../../test_helper', __FILE__)
 # Custom mailer test class
 class CustomWorkflowMailerTest < RedmineCustomWorkflows::Test::UnitTest
   include Redmine::I18n
-  fixtures :users, :email_addresses
 
   def setup
     @user2 = User.find 2

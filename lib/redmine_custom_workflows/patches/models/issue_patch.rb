@@ -46,8 +46,8 @@ module RedmineCustomWorkflows
             def self.attachments_callback(event, issue, attachment)
               issue.instance_variable_set :@issue, issue
               issue.instance_variable_set :@attachment, attachment
-              CustomWorkflow.run_shared_code(issue) if event.to_s.starts_with? 'before_'
-              CustomWorkflow.run_custom_workflows :issue_attachments, issue, event
+              CustomWorkflow.run_shared_code?(issue) if event.to_s.starts_with? 'before_'
+              CustomWorkflow.run_custom_workflows? :issue_attachments, issue, event
             end
 
             %i[before_add before_remove after_add after_remove].each do |observable|
@@ -76,8 +76,8 @@ module RedmineCustomWorkflows
         def before_save_custom_workflows
           @issue = self
           @saved_attributes = attributes.dup
-          CustomWorkflow.run_shared_code self
-          CustomWorkflow.run_custom_workflows :issue, self, :before_save
+          CustomWorkflow.run_shared_code? self
+          CustomWorkflow.run_custom_workflows? :issue, self, :before_save
           throw :abort if errors.any?
 
           errors.empty? && (@saved_attributes == attributes || valid?)
@@ -86,16 +86,16 @@ module RedmineCustomWorkflows
         end
 
         def after_save_custom_workflows
-          CustomWorkflow.run_custom_workflows :issue, self, :after_save
+          CustomWorkflow.run_custom_workflows? :issue, self, :after_save
         end
 
         def before_destroy_custom_workflows
-          res = CustomWorkflow.run_custom_workflows(:issue, self, :before_destroy)
+          res = CustomWorkflow.run_custom_workflows?(:issue, self, :before_destroy)
           throw :abort if res == false
         end
 
         def after_destroy_custom_workflows
-          CustomWorkflow.run_custom_workflows :issue, self, :after_destroy
+          CustomWorkflow.run_custom_workflows? :issue, self, :after_destroy
         end
       end
     end

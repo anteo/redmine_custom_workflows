@@ -41,8 +41,8 @@ module RedmineCustomWorkflows
             def self.attachments_callback(event, page, attachment)
               page.instance_variable_set :@page, page
               page.instance_variable_set :@attachment, attachment
-              CustomWorkflow.run_shared_code(page) if event.to_s.starts_with? 'before_'
-              CustomWorkflow.run_custom_workflows :wiki_page_attachments, page, event
+              CustomWorkflow.run_shared_code?(page) if event.to_s.starts_with? 'before_'
+              CustomWorkflow.run_custom_workflows? :wiki_page_attachments, page, event
             end
 
             %i[before_add before_remove after_add after_remove].each do |observable|

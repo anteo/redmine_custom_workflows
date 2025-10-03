@@ -21,9 +21,6 @@ require File.expand_path('../../test_helper', __FILE__)
 
 # Attachment controller patch test
 class AttachmentsControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
-  fixtures :attachments, :enabled_modules, :custom_workflows, :custom_workflows_projects,
-           :roles, :members, :member_roles
-
   def setup
     super
     @attachment8 = Attachment.find 8

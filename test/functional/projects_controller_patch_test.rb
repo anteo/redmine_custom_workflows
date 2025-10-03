@@ -21,9 +21,6 @@ require File.expand_path('../../test_helper', __FILE__)
 
 # Project controller patch test
 class ProjectsControllerPatchTest < RedmineCustomWorkflows::Test::TestCase
-  fixtures :user_preferences, :issues, :versions, :trackers, :projects_trackers, :enabled_modules,
-           :enumerations, :custom_workflows, :custom_workflows_projects, :roles, :members, :member_roles
-
   def setup
     super
     post '/login', params: { username: 'jsmith', password: 'jsmith' }

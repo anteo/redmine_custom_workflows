@@ -21,8 +21,6 @@ require File.expand_path('../../test_helper', __FILE__)
 
 # Issue relation patch test class
 class IssueRelationPatchTest < RedmineCustomWorkflows::Test::UnitTest
-  fixtures :issue_relations
-
   def setup
     @issue_relation1 = IssueRelation.find 1
   end

@@ -21,15 +21,15 @@ module RedmineCustomWorkflows
   module Test
     # Unit test base class
     class UnitTest < ActiveSupport::TestCase
-      # Allow us to override the fixtures method to implement fixtures for our plugin.
-      # Ultimately it allows for better integration without blowing redmine fixtures up,
-      # and allowing us to suppliment redmine fixtures if we need to.
-      def self.fixtures(*table_names)
-        dir = File.join(File.dirname(__FILE__), '/fixtures')
-        table_names.each do |x|
-          ActiveRecord::FixtureSet.create_fixtures(dir, x) if File.exist?("#{dir}/#{x}.yml")
+      def initialize(name)
+        super
+        # Load all plugin's fixtures
+        dir = File.join(File.dirname(__FILE__), 'fixtures')
+        ext = '.yml'
+        Dir.glob("#{dir}/**/*#{ext}").each do |file|
+          fixture = File.basename(file, ext)
+          ActiveRecord::FixtureSet.create_fixtures dir, fixture
         end
-        super(table_names)
       end
 
       protected

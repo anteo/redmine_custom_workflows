@@ -21,8 +21,6 @@ require File.expand_path('../../test_helper', __FILE__)
 
 # Wiki content patch test class
 class WikiContentPatchTest < RedmineCustomWorkflows::Test::UnitTest
-  fixtures :wiki_contents
-
   def setup
     @wiki_content1 = WikiContent.find 1
   end

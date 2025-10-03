@@ -21,22 +21,15 @@ module RedmineCustomWorkflows
   module Test
     # Test case base class
     class TestCase < ActionDispatch::IntegrationTest
-      fixtures :users, :email_addresses, :projects
-
-      # Allow us to override the fixtures method to implement fixtures for our plugin.
-      # Ultimately it allows for better integration without blowing redmine fixtures up,
-      # and allowing us to suppliment redmine fixtures if we need to.
-      def self.fixtures(*table_names)
+      def initialize(name)
+        super
+        # Load all plugin's fixtures
         dir = File.join(File.dirname(__FILE__), 'fixtures')
-        redmine_table_names = []
-        table_names.each do |x|
-          if File.exist?(File.join(dir, "#{x}.yml"))
-            ActiveRecord::FixtureSet.create_fixtures(dir, x)
-          else
-            redmine_table_names << x
-          end
+        ext = '.yml'
+        Dir.glob("#{dir}/**/*#{ext}").each do |file|
+          fixture = File.basename(file, ext)
+          ActiveRecord::FixtureSet.create_fixtures dir, fixture
         end
-        super(redmine_table_names) if redmine_table_names.any?
       end
 
       def setup

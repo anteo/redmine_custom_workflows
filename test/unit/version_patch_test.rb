@@ -21,8 +21,6 @@ require File.expand_path('../../test_helper', __FILE__)
 
 # Version patch test class
 class VersionPatchTest < RedmineCustomWorkflows::Test::UnitTest
-  fixtures :versions
-
   def setup
     @version1 = Version.find 1
   end

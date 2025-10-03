@@ -71,7 +71,7 @@ class CustomWorkflow < ApplicationRecord
     Rails.logger.info "#{str} for #{object.class} (##{object.id}) \"#{object}\""
   end
 
-  def self.run_shared_code(object)
+  def self.run_shared_code?(object)
     # Due to DB migration
     if CustomWorkflow.table_exists? && CustomWorkflow.active.exists?(observable: :shared)
       log_message '= Running shared code', object
@@ -86,7 +86,7 @@ class CustomWorkflow < ApplicationRecord
     true
   end
 
-  def self.run_custom_workflows(observable, object, event)
+  def self.run_custom_workflows?(observable, object, event)
     if CustomWorkflow.table_exists? # Due to DB migration
       workflows = CustomWorkflow.active.where(observable: observable)
       if PROJECT_OBSERVABLES.include? observable
@@ -153,12 +153,12 @@ class CustomWorkflow < ApplicationRecord
   def validate_syntax
     case observable.to_sym
     when :shared
-      CustomWorkflow.run_shared_code self
+      CustomWorkflow.run_shared_code? self
       validate_syntax_for self, :shared_code
     when *SINGLE_OBSERVABLES
       object = observable.camelize.constantize.new
       object.send :instance_variable_set, "@#{observable}", object # compatibility with 0.0.1
-      CustomWorkflow.run_shared_code object
+      CustomWorkflow.run_shared_code? object
       %i[before_save after_save before_destroy after_destroy].each { |field| validate_syntax_for object, field }
     when *COLLECTION_OBSERVABLES
       object = nil
@@ -180,7 +180,7 @@ class CustomWorkflow < ApplicationRecord
         object.send :instance_variable_set, :@attachment, Attachment.new
         object.send :instance_variable_set, :@page, object
       end
-      CustomWorkflow.run_shared_code object
+      CustomWorkflow.run_shared_code? object
       %i[before_add after_add before_remove after_remove].each { |field| validate_syntax_for object, field }
     end
   end
