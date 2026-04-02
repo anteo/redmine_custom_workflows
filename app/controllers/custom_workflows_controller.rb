@@ -77,7 +77,7 @@ class CustomWorkflowsController < ApplicationController
     xml = params[:file].read
     begin
       @workflow = CustomWorkflow.import_from_xml(xml)
-      @workflow.active = false
+      
       if @workflow.save
         flash[:notice] = l(:notice_successful_import)
       else
