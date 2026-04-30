@@ -38,7 +38,7 @@ module RedmineCustomWorkflows
             after_destroy :after_destroy_custom_workflows
 
             # TODO: Here is the origin of the following warnings. It is caused by the second call of
-            # 'has_and_belong_many' but without that we miss 'before_add_for_users' and 'before_remove_for_users'
+            # 'has_and_belong_to_many' but without that we miss 'before_add_for_users' and 'before_remove_for_users'
             # methods. I've no idea how to solve it
             # warning: already initialized constant Group::HABTM_Users
             # warning: previous definition of HABTM_Users was here
