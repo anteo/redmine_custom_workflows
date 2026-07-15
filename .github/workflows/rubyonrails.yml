@@ -20,9 +20,9 @@
 name: "GitHub CI"
 on:
   push:
-    branches: ["devel"]
+    branches: ["master"]
   pull_request:
-    branches: ["devel"]
+    branches: ["master"]
 jobs:
   plugin_tests:
     strategy:
@@ -45,7 +45,7 @@ jobs:
             sql3: GRANT ALL PRIVILEGES ON test.* TO 'redmine'@'localhost';
             # SQL client command
             database_command: mysql -uroot -proot -e
-            # SQl service
+            # SQL service
             database_service: mysql
           - engine: postgresql
             # Database configuration for Redmine
@@ -82,7 +82,7 @@ jobs:
           sudo apt-get install subversion
       - name: Clone Redmine
         # Get the latest stable Redmine
-        run: svn export http://svn.redmine.org/redmine/branches/7.0-stable/ /opt/redmine
+        run: svn export https://svn.redmine.org/redmine/branches/7.0-stable/ /opt/redmine
       - name: Checkout code
         uses: actions/checkout@v3        
       - name: Link the plugin
