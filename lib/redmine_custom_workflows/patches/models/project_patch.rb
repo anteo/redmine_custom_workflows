@@ -52,7 +52,7 @@ module RedmineCustomWorkflows
                                before_remove: proc {}, # => before_remove_for_attachments
                                after_remove: proc {} # => after_remove_for_attachments
 
-            def self.attachments_callback(event, project, attachment)
+            def self.attachments_callback?(event, project, attachment)
               project.instance_variable_set(:@project, project)
               project.instance_variable_set(:@attachment, attachment)
               CustomWorkflow.run_shared_code?(project) if event.to_s.starts_with? 'before_'
@@ -61,7 +61,7 @@ module RedmineCustomWorkflows
 
             %i[before_add before_remove after_add after_remove].each do |observable|
               send(:"#{observable}_for_attachments") << lambda { |event, project, attachment|
-                Project.attachments_callback event, project, attachment
+                Project.attachments_callback? event, project, attachment
               }
             end
           end
@@ -80,16 +80,18 @@ module RedmineCustomWorkflows
         end
 
         def after_save_custom_workflows
-          CustomWorkflow.run_custom_workflows? :project, self, :after_save
+          res = CustomWorkflow.run_custom_workflows?(:project, self, :after_save)
+          throw :abort if res == false
         end
 
         def before_destroy_custom_workflows
-          res = CustomWorkflow.run_custom_workflows? :project, self, :before_destroy
+          res = CustomWorkflow.run_custom_workflows?(:project, self, :before_destroy)
           throw :abort if res == false
         end
 
         def after_destroy_custom_workflows
-          CustomWorkflow.run_custom_workflows? :project, self, :after_destroy
+          res = CustomWorkflow.run_custom_workflows?(:project, self, :after_destroy)
+          throw :abort if res == false
         end
       end
     end
