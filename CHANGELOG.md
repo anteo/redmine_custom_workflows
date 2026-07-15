@@ -1,5 +1,10 @@
 # Changelog for Custom Workflows
 
+3.1.0 *2026-07-15*
+------------------
+
+    Compatibility with Redmine 7.0
+
 3.0.2 *2025-10-03*
 ------------------
 

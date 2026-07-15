@@ -37,6 +37,11 @@ module RedmineCustomWorkflows
             before_destroy :before_destroy_custom_workflows
             after_destroy :after_destroy_custom_workflows
 
+            # TODO: Here is the origin of the following warnings. It is caused by the second call of
+            # 'has_and_belong_to_many' but without that we miss 'before_add_for_users' and 'before_remove_for_users'
+            # methods. I've no idea how to solve it
+            # warning: already initialized constant Group::HABTM_Users
+            # warning: previous definition of HABTM_Users was here
             has_and_belongs_to_many :users, # inherited
                                     join_table: "#{table_name_prefix}groups_users#{table_name_suffix}", # inherited
                                     before_add: proc {}, # => before_add_for_users
@@ -44,7 +49,7 @@ module RedmineCustomWorkflows
                                     before_remove: proc {}, # => before_remove_for_users
                                     after_remove: :user_removed # inherited
 
-            def self.users_callback(event, group, user)
+            def self.users_callback?(event, group, user)
               group.instance_variable_set :@group, group
               group.instance_variable_set :@user, user
               CustomWorkflow.run_shared_code?(group) if event.to_s.starts_with? 'before_'
@@ -53,7 +58,7 @@ module RedmineCustomWorkflows
 
             %i[before_add before_remove after_add after_remove].each do |observable|
               send(:"#{observable}_for_users") << lambda { |event, group, user|
-                Group.users_callback(event, group, user)
+                Group.users_callback? event, group, user
               }
             end
           end
@@ -72,16 +77,18 @@ module RedmineCustomWorkflows
         end
 
         def after_save_custom_workflows
-          CustomWorkflow.run_custom_workflows? :group, self, :after_save
+          res = CustomWorkflow.run_custom_workflows?(:group, self, :after_save)
+          throw :abort if res == false
         end
 
         def before_destroy_custom_workflows
-          res = CustomWorkflow.run_custom_workflows? :group, self, :before_destroy
+          res = CustomWorkflow.run_custom_workflows?(:group, self, :before_destroy)
           throw :abort if res == false
         end
 
         def after_destroy_custom_workflows
-          CustomWorkflow.run_custom_workflows? :group, self, :after_destroy
+          res = CustomWorkflow.run_custom_workflows?(:group, self, :after_destroy)
+          throw :abort if res == false
         end
       end
     end

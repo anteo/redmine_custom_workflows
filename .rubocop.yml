@@ -19,8 +19,7 @@ plugins:
   rubocop-rails
 
 AllCops:
-  TargetRubyVersion: 3.2
-  TargetRailsVersion: 7.1
+  TargetRubyVersion: 3.4
   SuggestExtensions: false
 
   Exclude:
