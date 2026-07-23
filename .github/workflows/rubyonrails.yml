@@ -84,7 +84,7 @@ jobs:
         # Get the latest stable Redmine
         run: svn export https://svn.redmine.org/redmine/branches/7.0-stable/ /opt/redmine
       - name: Checkout code
-        uses: actions/checkout@v3        
+        uses: actions/checkout@v4        
       - name: Link the plugin
         # Link the plugin to the Redmine folder
         run: | 
