@@ -1,7 +1,12 @@
 # Changelog for Custom Workflows
 
-3.1.1 *????-??-??*
+3.1.1 *2026-07-24*
 ------------------
+
+    Chinese localization
+
+* New: #371 - chore: ci bump
+* Bug: #368 - Warnings with redmine:plugins:migrate
 
 3.1.0 *2026-07-15*
 ------------------
@@ -18,6 +23,7 @@
 
 3.0.1 *2025-07-07*
 ------------------
+
     SQL Server compatibility
     Change of the license from GNU GPL v2 to v3
 
@@ -28,6 +34,7 @@
 
 3.0.0 *2024-12-06*
 ------------------
+
     Redmine 6
 
 * New: #350 - Redmine 6.0.0
@@ -41,6 +48,7 @@
 
 2.1.1 *2024-05-07*
 ------------------
+
     Email notifications
 
 * New: #330 - Send mail to the author when an issue is created
@@ -58,6 +66,7 @@ To achieve the same behaviour you have to modify an existing callig as follows
 
 2.1.0 *2023-11-15*
 ------------------
+
     Member as an observable object
     Redmine 5.1 compatibility
 
@@ -67,23 +76,27 @@ To achieve the same behaviour you have to modify an existing callig as follows
 
 2.0.9 *2023-06-06*
 ------------------
+
     More robust XML import
     Rubocop tests of plugin's source codes
 
 2.0.8 *2023-02-10*
 ------------------
+
     Better error log messages
 
 * New: #295 - production.log 
 
 2.0.7 *2022-11-09*
 ------------------
+
     Bug fix
 
 * Bug: #285 - Viewing wiki version raises a error
 
 2.0.6 *2022-11-01*
 ------------------
+
     Flash messages
 
 * Bug: #281 - Internal error 500
@@ -94,28 +107,33 @@ To achieve the same behaviour you have to modify an existing callig as follows
 
 2.0.5 *2022-09-20*
 ------------------
+
     GitHub CI
 
 2.0.4 *2022-06-24*
 ------------------
+
     Maintenance release
 
 * Bug: #261 - Uninitialized constant CustomWorkflow::WorkflowError
 
 2.0.3 *2022-05-26*
 ------------------
+
     Redmine 4.2 compatibility
 
 * Bug: #260 - Upgrade from 1.0.4 to 2.0.2, has an error, redmine 4.2.3 to 4.2.6
 
 2.0.2 *2022-05-18*
 ------------------
+
     Ruby 3.0 compatibility
 
 * Bug: #258 - Tried to create Proc object without a block (again and better)
 
 2.0.1 *2022-05-13*
 ------------------
+
     Ruby 2.7 backward compatibility
 
 * Bug: #257 - IssueRelation.to_s is broken after #257 bug
@@ -123,6 +141,7 @@ To achieve the same behaviour you have to modify an existing callig as follows
 
 2.0.0 *2022-04-27*
 ------------------
+
     Redmine 5.0
 
 * New: #255 - Can you update it to Redmine 5.0.0
@@ -132,20 +151,24 @@ To achieve the same behaviour you have to modify an existing callig as follows
 
 1.0.7 *2021-10-20*
 ------------------
+
     Spanish localisation
 
 1.0.6 *2021-10-08*
 ------------------
+
     Maintenance release
 
 1.0.5 *2021-04-30*
 ------------------
+
     SQLite 3 compatibility
 
 * Bug: #204 - Rails 4: sqlite3 t/f -> 1/0
 
 1.0.4 *2020-11-25*
 ------------------
+
     Maintenance release
     
 * Bug: #193 - Error after install on fresh 4.1.1
@@ -155,6 +178,7 @@ To achieve the same behaviour you have to modify an existing callig as follows
 
 1.0.3 *2020-06-12*
 ------------------
+
     Redmine's look&feel
         
 * Bug: #168 - Check last version of plugin KO
@@ -162,6 +186,7 @@ To achieve the same behaviour you have to modify an existing callig as follows
 
 1.0.2 *2020-01-21*
 ------------------
+
     Redmine 4.1 compatibility
         
 * Bug: #149 - Error install on Redmine 4.1.0
@@ -169,6 +194,7 @@ To achieve the same behaviour you have to modify an existing callig as follows
 
 1.0.1 *2019-09-13*
 ------------------
+
     Custom emails
         
 * Bug: #128 - Undefined method `custom_email`
@@ -177,6 +203,7 @@ To achieve the same behaviour you have to modify an existing callig as follows
 
 1.0.0
 -----
+
     Redmine 4.0 compatibility
     
 * Bug: #116 - raise errors bug
