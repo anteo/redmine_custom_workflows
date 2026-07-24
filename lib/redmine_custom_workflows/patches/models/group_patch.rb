@@ -37,17 +37,20 @@ module RedmineCustomWorkflows
             before_destroy :before_destroy_custom_workflows
             after_destroy :after_destroy_custom_workflows
 
-            # TODO: Here is the origin of the following warnings. It is caused by the second call of
+            # Here is the origin of the following warnings. It is caused by the second call of
             # 'has_and_belong_to_many' but without that we miss 'before_add_for_users' and 'before_remove_for_users'
-            # methods. I've no idea how to solve it
+            # methods.
             # warning: already initialized constant Group::HABTM_Users
             # warning: previous definition of HABTM_Users was here
-            has_and_belongs_to_many :users, # inherited
-                                    join_table: "#{table_name_prefix}groups_users#{table_name_suffix}", # inherited
-                                    before_add: proc {}, # => before_add_for_users
-                                    after_add: :user_added, # inherited
-                                    before_remove: proc {}, # => before_remove_for_users
-                                    after_remove: :user_removed # inherited
+            # As a workaround we just silence the warnings.
+            Kernel.silence_warnings do
+              has_and_belongs_to_many :users, # inherited
+                                      join_table: "#{table_name_prefix}groups_users#{table_name_suffix}", # inherited
+                                      before_add: proc {}, # => before_add_for_users
+                                      after_add: :user_added, # inherited
+                                      before_remove: proc {}, # => before_remove_for_users
+                                      after_remove: :user_removed # inherited
+            end
 
             def self.users_callback?(event, group, user)
               group.instance_variable_set :@group, group
