@@ -1,0 +1,105 @@
+# encoding: utf-8
+#
+# Redmine plugin for Custom Workflows
+#
+# Anton Argirov, Karel Pičman <karel.picman@kontron.com>
+#
+# This file is part of Redmine OAuth plugin.
+#
+# Redmine Custom Workflows plugin is free software: you can redistribute it and/or modify it under the terms of the GNU
+# General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your
+#  option) any later version.
+#
+# Redmine Custom Workflows plugin is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+# even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+# for more details.
+#
+# You should have received a copy of the GNU General Public License along with Redmine Custom Workflows plugin. If not,
+# see <https://www.gnu.org/licenses/>.
+
+de:
+  project_module_custom_workflows_module: Benutzerdefinierte Workflows
+  permission_manage_project_workflow: Benutzerdefinierte Workflows des Projekts verwalten
+
+  label_custom_workflow: Benutzerdefinierter Workflow
+  label_custom_workflow_plural: Benutzerdefinierte Workflows
+  label_custom_workflow_new: Benutzerdefinierten Workflow anlegen
+  label_workflow_scripts: Workflow-Skripte
+  label_custom_workflow_export: Exportieren
+  label_custom_workflow_import: Workflow importieren
+  label_save_workflows: Speichern beobachteter Objekte
+  label_destroy_workflows: Löschen beobachteter Objekte
+  label_add_workflows: Hinzufügen beobachteter Objekte zu einer Sammlung
+  label_remove_workflows: Entfernen beobachteter Objekte aus einer Sammlung
+
+  button_custom_workflow_deactivate: Deaktivieren
+
+  field_after_save: Workflow-Skript nach dem Speichern des beobachteten Objekts
+  field_before_save: Workflow-Skript vor dem Speichern des beobachteten Objekts
+  field_after_destroy: Workflow-Skript nach dem Löschen des beobachteten Objekts
+  field_before_destroy: Workflow-Skript vor dem Löschen des beobachteten Objekts
+  field_after_add: Workflow-Skript nach dem Hinzufügen des beobachteten Objekts zu einer Sammlung
+  field_before_add: Workflow-Skript vor dem Hinzufügen des beobachteten Objekts zu einer Sammlung
+  field_after_remove: Workflow-Skript nach dem Entfernen des beobachteten Objekts aus einer Sammlung
+  field_before_remove: Workflow-Skript vor dem Entfernen des beobachteten Objekts aus einer Sammlung
+  field_shared_code: Gemeinsamer Code
+  field_observable: Beobachtetes Objekt
+  field_enabled_for_all_projects: Für alle Projekte aktiviert
+  field_custom_workflow_author: E-Mail-Adresse des Autors
+  field_custom_workflow_file: XML-Datei eines zuvor exportierten Workflows auswählen
+  field_custom_workflow:
+    script: Workflow-Skript
+
+  notice_successful_import: Benutzerdefinierter Workflow wurde erfolgreich importiert
+  notice_successful_status_change: Status wurde erfolgreich geändert
+  error_failed_import: Fehler beim Import des benutzerdefinierten Workflows (unbekanntes Format? Bitte das Log prüfen)
+
+  activerecord:
+    errors:
+      messages:
+        invalid_script: "enthält einen Fehler: %{error}"
+        custom_workflow_error: Fehler im benutzerdefinierten Workflow (bitte wenden Sie sich an einen Administrator)
+        new_status_invalid: "Übergang von '%{old_status}' nach '%{new_status}' ist nicht erlaubt"
+        scripts_absent: Es muss mindestens ein Skript angegeben werden
+
+  text_select_project_custom_workflows: Benutzerdefinierte Workflows für das Projekt auswählen
+  text_custom_workflow_before_save_note: Hier können Eigenschaften der Tickets geändert werden. Legen Sie in diesem Skript keine verknüpften Tickets an und ändern Sie keine. Um mit einem Fehler abzubrechen, verwenden Sie `raise RedmineCustomWorkflows::Errors::WorkflowError, 'Nachricht an den Benutzer'`.
+  text_custom_workflow_after_save_note: Hier können verknüpfte Tickets angelegt oder geändert werden. Dieses Skript wird auch für neu angelegte Tickets ausgeführt. Bauen Sie deshalb passende Prüfungen ein, um eine endlose Rekursion zu vermeiden.
+
+  text_custom_workflow_issue_code_note: Die Skripte laufen im Kontext des Issue-Objekts wie gewöhnliche before_save- und after_save-Callbacks. Methoden und Eigenschaften des Tickets können also direkt (oder über `self`) verwendet werden. Instanzvariablen (@variable) sind ebenfalls erlaubt.
+  text_custom_workflow_issue_relation_code_note: Die Skripte laufen im Kontext des IssueRelation-Objekts wie gewöhnliche before_save- und after_save-Callbacks. Methoden und Eigenschaften der Ticket-Beziehung können also direkt (oder über `self`) verwendet werden. Instanzvariablen (@variable) sind ebenfalls erlaubt.
+  text_custom_workflow_shared_code_note: Dieser Code läuft vor allen anderen Workflows und kann gemeinsamen Code enthalten, z. B. Funktionen und Klassen, die andere Workflows benötigen.
+  text_custom_workflow_user_code_note: Die Skripte laufen im Kontext des User-Objekts, wenn ein Benutzer geändert oder gelöscht wird. Methoden und Eigenschaften des Benutzers direkt (oder über `self`) verwenden.
+  text_custom_workflow_member_code_note: Die Skripte laufen im Kontext des Member-Objekts, wenn ein Mitglied geändert oder gelöscht wird. Methoden und Eigenschaften von @member direkt (oder über `self`) verwenden.
+  text_custom_workflow_group_code_note: Die Skripte laufen im Kontext des Group-Objekts, wenn eine Gruppe geändert oder gelöscht wird. Methoden und Eigenschaften der Gruppe direkt (oder über `self`) verwenden.
+  text_custom_workflow_group_users_code_note: Diese Skripte laufen, wenn ein Benutzer einer Gruppe hinzugefügt oder aus ihr entfernt wird. Über die Variablen @user und @group greifen Sie in Ihren Skripten auf die Objekte zu.
+  text_custom_workflow_attachment_code_note: Die Skripte laufen im Kontext des Attachment-Objekts, wenn ein Dateianhang geändert oder gelöscht wird. Methoden und Eigenschaften des Dateianhangs direkt (oder über `self`) verwenden. Diese Skripte betreffen alle Arten von Dateianhängen (Tickets, Dokumente, Wiki-Seiten usw.). Prüfen Sie deshalb im Skript zusätzlich das Feld 'container_type' oder wählen Sie ein bestimmtes beobachtetes Objekt '... Dateianhänge'.
+  text_custom_workflow_issue_attachments_code_note: Diese Skripte laufen, wenn einem Ticket ein Dateianhang hinzugefügt oder entfernt wird. Über die Variablen @issue und @attachment greifen Sie in Ihren Skripten auf die Objekte zu.
+  text_custom_workflow_project_code_note: Die Skripte laufen im Kontext des Project-Objekts, wenn ein Projekt geändert oder gelöscht wird. Methoden und Eigenschaften des Projekts direkt (oder über `self`) verwenden.
+  text_custom_workflow_project_attachments_code_note: Diese Skripte laufen, wenn einem Projekt eine Datei hinzugefügt oder entfernt wird. Über die Variablen @project und @attachment greifen Sie in Ihren Skripten auf die Objekte zu.
+  text_custom_workflow_wiki_content_code_note: Die Skripte laufen im Kontext des WikiContent-Objekts, wenn ein Wiki-Inhalt geändert oder gelöscht wird. Methoden und Eigenschaften des Wiki-Inhalts direkt (oder über `self`) verwenden.
+  text_custom_workflow_wiki_page_attachments_code_note: Diese Skripte laufen, wenn einer Wiki-Seite eine Datei hinzugefügt oder entfernt wird. Über die Variablen @page und @attachment greifen Sie in Ihren Skripten auf die Objekte zu.
+  text_custom_workflow_time_entry_code_note: Die Skripte laufen im Kontext des TimeEntry-Objekts, wenn eine Zeitbuchung geändert oder gelöscht wird. Methoden und Eigenschaften der Zeitbuchung direkt (oder über `self`) verwenden.
+  text_custom_workflow_version_code_note: Die Skripte laufen im Kontext des Version-Objekts, wenn eine Version geändert oder gelöscht wird. Methoden und Eigenschaften der Version direkt (oder über `self`) verwenden.
+  text_custom_workflow_before_destroy_note: Um das Löschen des Objekts zu verhindern, `return false` verwenden.
+
+  text_no_enabled_projects: Keine Projekte
+  text_custom_workflow_author: Wird in die exportierte XML-Datei übernommen
+  text_custom_workflow_disabled: vom Administrator deaktiviert
+  text_custom_workflow_is_for_all: für alle Projekte aktiviert
+
+  custom_workflow_observable_shared: <gemeinsamer Code>
+  custom_workflow_observable_issue: Ticket
+  custom_workflow_observable_issue_relation: Ticket-Beziehung
+  custom_workflow_observable_issue_attachments: Ticket-Dateianhänge
+  custom_workflow_observable_group: Gruppe
+  custom_workflow_observable_user: Benutzer
+  custom_workflow_observable_member: Mitglied
+  custom_workflow_observable_attachment: Dateianhang
+  custom_workflow_observable_project: Projekt
+  custom_workflow_observable_project_attachments: Projekt-Dateianhänge / Dateien
+  custom_workflow_observable_wiki_content: Wiki-Inhalt
+  custom_workflow_observable_wiki_page_attachments: Wiki-Seiten-Dateianhänge
+  custom_workflow_observable_group_users: Gruppenmitglieder
+  custom_workflow_observable_time_entry: Zeitbuchung
+  custom_workflow_observable_version: Version

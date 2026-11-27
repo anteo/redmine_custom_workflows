@@ -95,7 +95,7 @@ es:
   text_custom_workflow_project_attachments_code_note: Estos scripts se ejecutan cuando un fichero se añade o elimina
     del proyecto. Use variables @project and @attachment para acceder a los objetos apropiados en sus scripts.
   text_custom_workflow_wiki_content_code_note: Los scripts se ejecutan en el contexto del objeto Wiki Content object cuando el objeto
-    project cambia (destruye). Use methods and properties del proyecto directamente (o mediante `self`)
+    project cambia (destruye). Use methods and properties del objeto Wiki Content directamente (o mediante `self`)
   text_custom_workflow_wiki_page_attachments_code_note: Estos scripts se ejecutan cuando se añade un archivo a la página wiki
     o se retira de la página wiki. Utilice las variables @page y @attachment para acceder a los objetos adecuados en sus scripts.
   text_custom_workflow_time_entry_code_note: Los scripts se ejecutan en el contexto del objeto TimeEntry cuando el objeto
